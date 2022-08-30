@@ -1,0 +1,54 @@
+.answer {
+    border: solid yellow 10px;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.liked-answer {
+    border: solid red 10px;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.answer .text {
+    margin-bottom: 16px;
+    margin-top: 10px;
+}
+
+.answer .like-btn {
+    background-color: white;
+    width: 13%;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+}
+
+.answer .info {
+    margin: 0;
+    width: 80%;
+}
+
+.answer .answer-footer p {
+    margin: 0;
+}
+
+.answer .question-text {
+    margin: 0;
+    color: black;
+}
+
+.answer .like-user-names {
+    width: 80%;
+    display: none;
+}
+
+.answer .vote-msg {
+    display: none;
+    color: red;
+    margin: 0;
+}
+
+.answer .on {
+    display: block;
+}
+
