@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Rules\checkNgWord;
+
+
+class Answer extends Model
+{
+    use HasFactory;
+
+    protected $guarded = array('id');
+
+    public function scopeWithInPeriod ($query, $period) {
+        if($period === 'all') {
+            $start = ('2021-10-01 00:00:00');
+            $last = date('Y-m-d 23:59:59', strtotime('+1day'));
+        }else{
+            $year = mb_substr($period, 0, 4);
+            $month = mb_substr($period, 4, 2);
+    
+            $start = date($year . '-' . $month . '-' . '01 00:00:00');
+            $last = date($year . '-' . $month . '-' . 't 23:59:59');
+    
+        }
+
+        return $query->where('created_at', '>=', $start)->where('created_at', '<=', $last);
+    }
+
+    public function scopeQuestionIdEquall($query, $question_id)
+    {
+        return $query->where('question_id', $question_id);
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function answer_likes()
+    {
+        return $this->hasMany(answer_like::class);
+    }
+
+    public function getLikeUserNames()
+    {
+        $likeUserName = array();
+        for($i=0; $i<count($this->answer_likes); $i++)
+        {
+            if($this->answer_likes[$i]->kind === 0)
+            {
+                $likeUserName[] = $this->answer_likes[$i]->getUserName();
+            }
+        }
+        return $likeUserName;
+    }
+
+
+
+
+    public function getQuestionText()
+    {
+        return $this->question->text;
+    }
+
+    public  function getQuestionId()
+    {
+        return $this->question->id;
+    }
+
+    public function getMaker()
+    {
+        return $this->user->name;
+    }
+
+
+
+
+}
