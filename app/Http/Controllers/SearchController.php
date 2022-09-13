@@ -33,7 +33,7 @@ class searchController extends Controller
             if(Auth::check()){
                 $items = Functions::judgeLiked($items, Auth::user()->id);
                 $items = Functions::judgeVoted($items, Auth::user()->id);
-    
+                $items = Functions::judgeWin($items);
             }
 
             $items = $items->sortByDesc('created_at');

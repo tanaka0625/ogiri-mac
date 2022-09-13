@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\User;
 use App\Rules\checkNgWord;
 use App\Http\Requests\AddAnswerRequest;
 use App\Library\Functions;
@@ -18,21 +19,32 @@ class Grouped_answersController extends Controller
 {
     public function index($question_id)
     {
-        $entryAnswers = Answer::questionIdEquall($question_id)->where('kind', 1)->get();
+        $entryAnswers = Answer::questionIdEquall($question_id)->where('kind', '<>', 0)->get();
         $lateAnswers = Answer::questionIdEquall($question_id)->where('kind', 0)->get();
 
         $items = $entryAnswers->concat($lateAnswers);
 
-
         $question = Question::find($question_id);
         $questionSituation = $question->getSituation($question_id);
 
-        $items = $items->prepend($question);
+        if($questionSituation === "voting")
+        {
+            $btnType = "vote";
+        }else{
+            $btnType = "like";
+        }
+
+        $items = $items->prepend($question)->values();
 
         if(Auth::check()){
             $items = Functions::judgeLiked($items, Auth::user()->id);
             $items = Functions::judgeVoted($items, Auth::user()->id);
+            $items = Functions::judgeBattleVoted($items, Auth::user()->id);
+            $items = Functions::judgeWin($items);
         }
+
+        $now = date("Y-m-d H:i:s");
+
 
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
@@ -41,8 +53,10 @@ class Grouped_answersController extends Controller
             'jsonItems' => $jsonItems,
             'question' => $question,
             'questionSituation' => $questionSituation,
+            'btnType' => $btnType,
             'questionId' => $question_id
         ];
+
 
         return view('Grouped_answers.index', $data);
     }
@@ -63,6 +77,15 @@ class Grouped_answersController extends Controller
         $answer_number = Answer::where('question_id', $question_id)->count();
         $Question->answer_number = $answer_number;
         $Question->save();
+
+        if($request->kind === "1")
+        {
+            // minus energy
+            $user = User::find(Auth::user()->id);
+            $user->energy = $user->energy - 100;
+            $user->save();
+        }
+
 
         return redirect('/grouped_answer/' . $question_id);
     }

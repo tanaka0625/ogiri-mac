@@ -2,12 +2,17 @@
     border: solid yellow 10px;
     margin-bottom: 4px;
     position: relative;
+    word-break: break-all;
 }
 
 .liked-answer {
     border: solid red 10px;
     margin-bottom: 4px;
     position: relative;
+}
+
+.won-answer .text {
+    color: gold;
 }
 
 .answer .text {
@@ -17,7 +22,21 @@
 
 .answer .like-btn {
     background-color: white;
-    width: 13%;
+    width: 10%;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+}
+
+.answer .vote-btn {
+    background-color: white;
+    width: 10%;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+}
+
+.answer .delete-btn {
     position: absolute;
     right: 0%;
     bottom: 0%;
@@ -47,6 +66,8 @@
     color: red;
     margin: 0;
 }
+
+
 
 .answer .on {
     display: block;

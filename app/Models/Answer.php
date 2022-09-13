@@ -80,7 +80,35 @@ class Answer extends Model
         return $this->user->name;
     }
 
+    public function isWonAnswer()
+    {
+        $question = $this->question;
 
+        $now = date('Y-m-d H:i:s');
+        if($now < $question->limit_vote)
+        {
+            return false;
+        }
+        $answers = self::where('question_id', $question->id)->get();
+        $maxVote = $answers->max('vote');
+
+        if($maxVote < 1)
+        {
+            return false;
+        }
+
+        $maxVoteAnswers = $answers->where('vote', $maxVote);
+        $maxVoteAnswers = $maxVoteAnswers->sortBy('created_at')->values();
+        $wonAnswer = $maxVoteAnswers[0];
+
+        if($wonAnswer->id === $this->id)
+        {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
 
 }

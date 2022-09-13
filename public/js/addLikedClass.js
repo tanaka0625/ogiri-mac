@@ -1,4 +1,3 @@
-let item = document.getElementsByClassName('item');
 
 for(let i=0; i<items.length; i++){
     if(items[i]['myLikeAnswer'] === 1)

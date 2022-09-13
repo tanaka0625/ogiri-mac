@@ -14,8 +14,6 @@ $(function(){
 
         let index = $(this).closest('.item').index('.item');
 
-
-
         // 自分の投稿にはいいね出来ない
         if(Number(userId) === items[index]['user_id']) {
             return;
@@ -64,11 +62,7 @@ $(function(){
                     item.eq(i).find('.like').text(data['like'] + 'コーラ');
 
                 }
-                
             }
-
-            console.log(data['item']);
-
 
         }).fail(function(XMLHttpRequest, status, e){
             alert(e);

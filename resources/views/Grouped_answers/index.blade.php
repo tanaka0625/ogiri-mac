@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('fileLink')
-<link rel="stylesheet" href="/css/answer.css">
-<link rel="stylesheet" href="/css/question.css">
+<link rel="stylesheet" href=" {{ asset('/css/answer.css') }} ">
+<link rel="stylesheet" href=" {{ asset('/css/question.css') }} ">
 @endsection
 
 @section('title', '回答')
@@ -10,7 +10,6 @@
 @section('header-title', '回答')
 
 @section('content')
-
 
 
 <h3>
@@ -47,14 +46,24 @@
         @csrf
         <label for="text">回答</label>
         <textarea name="text" id="text" cols="30" rows="10"></textarea>
-        @if($questionSituation === 'recruti')
+        @if($questionSituation === 'recruting')
         <input type="hidden" name='kind' value=1>
         @else
         <input type="hidden" name='kind' value=0>
         @endif
         <br>
+        @if($questionSituation === "recruting" && Auth::user()->energy < 100)
+        <p>お金が無いので回答できないよ💦ナゲットをすると200円貰えます</p>
+        @else
         <button type="submit">送信</button>
+        @endif
     </form>
+
+    @if($questionSituation === "recruting")
+    <p>あなたの所持金 {{Auth::user()->energy}}円</p>
+    <p>このお題に回答すると100円消費します</p>
+    @endif
+
 </div>
 @else
 <p style="color: red;">お題・回答の投稿、ポテトにはログインが必要です。ログインにはメールアドレス等は必要ありません。</p>
@@ -64,25 +73,27 @@
     <h3>エントリーマック</h3>
     @foreach($items as $item)
 
-        @if($item->kind != 1 || $item instanceof App\Models\Question)
+        @if($item->kind === 0 || $item instanceof App\Models\Question)
             @continue;
+        @else
+            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :btnType='$btnType' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+                {{$item->created_at}}
+            </x-answer>
         @endif
-
-        <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :questionSituation='$questionSituation' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
-            {{$item->created_at}}
-        </x-answer>
     @endforeach
 </div>
 
 <div class="late-answers">
     <h3>遅マック</h3>
     @foreach($items as $item)
-    @if($item->kind != 0 || $item instanceof App\Models\Question)
-        @continue
-    @endif
-    <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :questionSituation="$questionSituation" :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
-        {{$item->created_at}}
-    </x-answer>
+
+        @if($item->kind != 0 || $item instanceof App\Models\Question)
+            @continue;
+        @else
+
+            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType="like" :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+            </x-answer>
+        @endif
     @endforeach
 </div>
 
@@ -100,21 +111,20 @@
 @endsection
 
 @section('script')
-    <script src="/js/AnswerLikeUserNames.js"></script>
+    @parent
+    <script>
+        let items = <?php echo $jsonItems;?>;
+    </script>
+    <script src=" {{ asset('/js/add-won-class.js') }} "></script>
+    <script src=" {{ asset('/js/AnswerLikeUserNames.js') }} "></script>
     @if(Auth::check())
         <script>
-            let items = <?php echo $jsonItems;?>;
             let userId = "<?php echo Auth::user()->id;?>";
-            let questionId = <?php echo $questionId;?>
+            let questionId = <?php echo $questionId;?>;
         </script>
-
-        @if($questionSituation === 'voting')
-            <script src="/js/vote.js"></script>
-        @else
-            <script src="/js/like.js"></script>
-        @endif
-
-        <script src="/js/addLikedClass.js"></script>
-        <script src="/js/addVoteMsg.js"></script>
+        <script src=" {{ asset('/js/vote.js') }} "></script>
+        <script src=" {{ asset('/js/like.js') }} "></script>
+        <script src=" {{ asset('/js/addLikedClass.js') }} "></script>
+        <script src=" {{ asset('/js/addVoteMsg.js') }}"></script>
     @endif
 @endsection

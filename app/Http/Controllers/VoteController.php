@@ -17,6 +17,8 @@ class VoteController extends Controller
         $answer_id = $request->id;
         $questionId = $request->questionId;
         $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+
         $judgeVoted = Answer_like::where('answer_id', $answer_id)->where('user_id', $user_id)->where('kind', 1)->count();
         $judgeLiked = Answer_like::where('answer_id', $answer_id)->where('user_id', $user_id)->where('kind', 0)->count();
         $Answer = Answer::find($answer_id);
@@ -25,8 +27,25 @@ class VoteController extends Controller
 
         for($i=0; $i<$entryAnswers->count(); $i++)
         {
-            Answer_like::where('answer_id', $entryAnswers[$i]->id)->where('user_id', $user_id)->where('kind', 1)->delete();
-            Answer::find($entryAnswers[$i]->id)->vote = Answer_like::where('answer_id', $entryAnswers[$i]->id)->where('kind', 1)->count();
+            if(Answer_like::where('answer_id', $entryAnswers[$i]->id)->where('user_id', $user_id)->where('kind', 1)->count() > 0)
+            {
+                Answer_like::where('answer_id', $entryAnswers[$i]->id)->where('user_id', $user_id)->where('kind', 1)->delete();
+
+                $entryAnswer = Answer::find($entryAnswers[$i]->id);
+                $entryAnswer_vote = Answer_like::where('answer_id', $entryAnswers[$i]->id)->where('kind', 1)->count();
+                $entryAnswer->vote = $entryAnswer_vote;
+                $entryAnswer->save();
+
+                $maker = User::find($entryAnswer->user_id);
+                $maker->user_point = $maker->user_point - 1;
+                $maker->save();
+
+                // minus energy
+                $user->energy = $user->energy - 200;
+                $user->save();
+
+                break;
+            }
         }
 
     
@@ -43,6 +62,14 @@ class VoteController extends Controller
             $Answer->vote = $newVoteNumber;
             $Answer->save();
 
+            $maker = User::find($Answer->user_id);
+            $maker->user_point = $maker->user_point + 1;
+            $maker->save();
+
+            // plus energy
+            $user->energy = $user->energy + 200;
+            $user->save();
+
             if($judgeLiked === 0)
             {
                 $Answer_like = new Answer_like;
@@ -55,20 +82,23 @@ class VoteController extends Controller
     
                 $Answer->like = $newLikeNumber;
                 $Answer->save();
+
+                $maker = User::find($Answer->user_id);
+                $maker->user_point = $maker->user_point + 1;
+                $maker->save();
             }
-
         }
-
 
 
         $data = [
             'like' => $Answer->like,
             'item' => $Answer,
             'vote' => $Answer->vote,
-            'judgeVoted' => $judgeVoted
+            'judgeVoted' => $judgeVoted,
+            "point" => $maker["user_point"]
         ];
 
         return response()->json($data);
 
-    } 
+    }
 }

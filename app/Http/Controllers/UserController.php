@@ -11,10 +11,45 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index($id, $category='post',$order='created_at', $page=1)
+    public function index($id)
     {
-        $user = User::find($id);
 
+        if(!empty($_GET['category']))
+        {
+            $category = $_GET['category'];
+        }else{
+            $category = "post";
+        }
+
+        if(!empty($_GET['order']))
+        {
+            $order = $_GET['order'];
+        }else{
+            $order = "created_at";
+        }
+
+        if(!empty($_GET['page']))
+        {
+            $page = $_GET['page'];
+        }else{
+            $page = 1;
+        }
+
+        $user = User::find($id);
+        $point = Functions::calculatePoint($id);
+
+
+        if($user->user_point != $point["total"])
+        {
+            $user->user_point = $point["total"];
+            $user->save();
+        }
+
+        // 300kg以外のアバター
+        for($i=150; $point["total"] % 300 < $i * 2; $i--) {
+            $avatorNumber = $i;
+        }
+ 
         if($category === 'post')
         {
             $answers = $user->getAnswers();
@@ -26,15 +61,7 @@ class UserController extends Controller
             $questions = $user->getLikedQuestions();
         }
 
-
         $items = $answers->merge($questions);
-
-        if(Auth::check()){
-            $items = Functions::judgeLiked($items, Auth::user()->id);
-            $items = Functions::judgeVoted($items, Auth::user()->id);
-
-        }
-
 
         $makePageLinks = Functions::makePageLinks(count($items), $page);
         $pageLinks = $makePageLinks['pageLinks'];
@@ -51,11 +78,15 @@ class UserController extends Controller
             $items = $items->sortByDesc('like');
         }
 
+        $items = $items->forPage($page, 30)->values();
 
-        $items = $items->forPage($page, 30);
+        if(Auth::check()){
+            $items = Functions::judgeLiked($items, Auth::user()->id);
+            $items = Functions::judgeVoted($items, Auth::user()->id);
+            $items = Functions::judgeWin($items);
+        }
 
-        $jsonItems = json_encode(array_values($items->toArray()),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
+        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
         
         $data = [
             'items' => $items,
@@ -66,10 +97,11 @@ class UserController extends Controller
             'pageLinks' => $pageLinks,
             'maxPage' => $maxPage,
             'id' => $id,
-            'page' => $page
+            'page' => $page,
+            "point" => $point,
+            'avatorNumber' => $avatorNumber
         ];
 
         return view('User.index', $data);
-
     }
 }

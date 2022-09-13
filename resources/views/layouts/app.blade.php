@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta  name="viewport" content="width=device-width,initial-scale=1.0">
 
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/menu.css">
@@ -24,7 +25,7 @@
 <body>
     <div class="header">
         <div class="title">
-            <h2>@yield('header-title')</h2>
+            <h3>@yield('header-title')</h3>
         </div>
 
         <button class="menu-btn on">メニュー</button>
@@ -33,14 +34,13 @@
             <p class="link-btn"><a href=" {{ url('/answer_list') }} " >回答一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/question_list') }} " >お題一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/search') }} " >検索</a></p>
+            <p class="link-btn"><a href=" {{ url('/battle') }} ">ファスト</a></p>
             @if(Auth::check())
                 <p class="link-btn"><a href=" {{ url('/logout') }} ">ログアウト</a></p>
-                <p class="link-btn"><a href=" {{ url('/my_page/' .Auth::user()->id) }} ">マイページ</a></p>
+                <p class="link-btn"><a href=" {{ url('/my_page') }} ">マイページ</a></p>
             @else
                 <p class="link-btn"><a href=" {{ url('/login') }} ">ログイン</a></p>
             @endif
-            
-            
             
             <p class="close">閉じる</p>
         </div>
@@ -57,7 +57,7 @@
             <img src="/images/icon/chicken_nugget.png" alt="">
             <img src="/images/icon/frenchfry.png" alt="">
             <img src="/images/icon/cola.png" alt="">
-            <img src="/images/avator/avator (75).png" alt="">
+            <img src="/images/avator/avator(75).png" alt="">
         <?php endfor;?>
 
         <div>
@@ -70,13 +70,16 @@
             <img src="/images/icon/chicken_nugget.png" alt="">
             <img src="/images/icon/frenchfry.png" alt="">
             <img src="/images/icon/cola.png" alt="">
-            <img src="/images/avator/avator (75).png" alt="">
+            <img src="/images/avator/avator(75).png" alt="">
         <?php endfor;?>
 
     </div>
 
-    <script src="{{ asset('/js/menu.js') }}"></script>
-    @yield('script')
+    @section('script')
+    <script src=" {{ asset('/js/menu.js') }} "></script>
+    <script src=" {{ asset('/js/app.js') }} "></script>
+
+    @show
 
 </body>
 </html>

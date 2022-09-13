@@ -1,3 +1,4 @@
+
 .footer img { 
     width:30px;
 }
@@ -8,7 +9,7 @@
     left: 0;
     background-color:yellow;
     z-index: 1;
-    width: 100%;
+    width: 375px;
 }
 
 .title {
@@ -17,14 +18,59 @@
     margin: 0;
 }
 
-.title h2 {
+.title h3 {
     margin: 0;
+    word-break: break-all;
 }
 
 .content {
     margin-top: 120px;
 }
 
+button {
+    background-color: black;
+    color: aliceblue;
+}
+
+.btns {
+    margin-bottom: 10px;
+}
+
 .on {
     display: block;
+}
+
+.off {
+    display: none;
+}
+
+/* デザインB（タブレット） */
+@media screen and (min-width: 600px) {
+    html {
+        position: relative;
+    }
+
+    body {
+        width: 375px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+
+    }
+}
+
+
+/* デザインC(PC) */
+@media screen and (min-width: 1025px) {
+    html {
+        position: relative;
+    }
+
+    body {
+        width: 375px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+
+    }
 }

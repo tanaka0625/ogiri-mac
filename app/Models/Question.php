@@ -29,17 +29,22 @@ class Question extends Model
 
     public function scopeRecruting($query)
     {
-        return $query->where('limit_answer', '>', date("Y-m-d H:i:s"));
+        return $query->where('limit_answer', '>', date("Y-m-d H:i:s"))->where("kind", 0);
     }
 
     public function scopeVoting($query)
     {
-        return $query->where('limit_vote', '>', date("Y-m-d H:i:s"))->where('limit_answer', '<', date("Y-m-d H:i:s"));
+        return $query->where('limit_vote', '>', date("Y-m-d H:i:s"))->where('limit_answer', '<', date("Y-m-d H:i:s"))->where("kind", 0);
     }
 
     public function scopeFinished($query)
     {
-        return $query->where('limit_vote', '<', date("Y-m-d H:i:s"));
+        return $query->where('limit_vote', '<', date("Y-m-d H:i:s"))->where("kind", 0);
+    }
+
+    public function scopeFast($query)
+    {
+        return $query->where('kind', 1);
     }
 
     public function getSituation($id)
@@ -47,7 +52,11 @@ class Question extends Model
         $limitAnswer = $this->limit_answer;
         $limitVote = $this->limit_vote;
         $now = date('Y-m-d H:i:s');
-        if($now < $limitAnswer)
+
+        if($this->kind === 1)
+        {
+            $situation = 'fast';
+        }elseif($now < $limitAnswer)
         {
             $situation = 'recruting';
         }elseif($limitAnswer < $now && $now < $limitVote)
@@ -77,4 +86,5 @@ class Question extends Model
         }
         return $likeUserName;
     }
+
 }

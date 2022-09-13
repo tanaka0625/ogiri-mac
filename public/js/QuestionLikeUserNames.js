@@ -1,4 +1,3 @@
-let question = document.getElementsByClassName('question')
 for(let i=0; i<question.length; i++) {
 
     let likeUserNames = question[i].getElementsByClassName('like-user-names');

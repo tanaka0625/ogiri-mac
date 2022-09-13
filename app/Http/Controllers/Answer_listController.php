@@ -10,14 +10,35 @@ use App\Library\Functions;
 
 class Answer_listController extends Controller
 {
-    public function index(Request $request, $order='like', $period='all', $page=1) {
+    public function index(Request $request) {
 
-        $items = Answer::withInPeriod($period)->orderBy($order, 'desc')->offset(($page-1)*30)->limit(30)->get();
+        if(!empty($_GET['order']))
+        {
+            $order = $_GET['order'];
+        }else{
+            $order = "like";
+        }
+
+        if(!empty($_GET['period']) && $_GET['period'] > '202109')
+        {
+            $period = $_GET['period'];
+        }else{
+            $period = "all";
+        }
+
+        if(!empty($_GET['page']))
+        {
+            $page = $_GET['page'];
+        }else{
+            $page = 1;
+        }
+
+        $items = Answer::withInPeriod($period)->orderBy($order, 'desc')->forpage($page, 30)->get();
 
         if(Auth::check()){
             $items = Functions::judgeLiked($items, Auth::user()->id);
             $items = Functions::judgeVoted($items, Auth::user()->id);
-
+            $items = Functions::judgeWin($items);
         }
 
 
@@ -37,6 +58,7 @@ class Answer_listController extends Controller
             $itemsTitle = '新着順' . mb_substr($period, 0, 4) . "年" . mb_substr($period, 4, 2) . "月の回答一覧";
         }
 
+
         $data = [
             'items' => $items,
             'jsonItems' => $jsonItems,
@@ -49,9 +71,11 @@ class Answer_listController extends Controller
             'maxPage' => $maxPage
         ];
 
+
         if($period != 'all') {
-            $data['previousPeriod'] = $request->previousPeriod;
-            $data['nextPeriod'] = $request->nextPeriod;
+            $periods = Functions::getPeriods($period);
+            $data['previousPeriod'] = $periods['previousPeriod'];
+            $data['nextPeriod'] = $periods['nextPeriod'];
         }
 
         return view('Answer_list.index', $data);

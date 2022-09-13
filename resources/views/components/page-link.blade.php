@@ -1,1 +1,0 @@
-<a href='{{ url({{$url}}) }}'>{{$pageLink}}</a>

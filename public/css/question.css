@@ -2,6 +2,8 @@
     border: solid black 10px;
     margin-bottom: 4px;
     position: relative;
+    word-break: break-all;
+
 }
 
 .liked-question {
@@ -19,7 +21,7 @@
 
 .question .like-btn {
     background-color: white;
-    width: 13%;
+    width: 10%;
     position: absolute;
     right: 0%;
     bottom: 0%;

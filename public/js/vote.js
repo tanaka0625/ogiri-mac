@@ -1,6 +1,6 @@
 $(function(){
 
-    let voteBtn = $('.answer').find('.like-btn');
+    let voteBtn = $('.answer').find('.vote-btn');
     voteBtn.on('click', function(event){
 
         let index = $(this).closest('.item').index('.item');
@@ -31,12 +31,11 @@ $(function(){
 
         }).done(function(data){
 
+
             for(let i=0; i<item.length; ++i) {
                 if(items[i]['id'] === id && item.eq(i).hasClass('answer') && items[i]['like'] != data['like']) {
-
                     item.eq(i).addClass('liked-answer');
                     item.eq(i).find('.like').text(data['like'] + 'ポテト');
-
                 }
             }
 

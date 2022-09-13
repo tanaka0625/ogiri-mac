@@ -21,8 +21,12 @@ class LikeController extends Controller
             $user_id = Auth::user()->id;
             $judgeAleadyLike = Answer_like::where('answer_id', $answer_id)->where('user_id', $user_id)->where('kind', 0)->count();
             $Answer = Answer::find($answer_id);
-    
-    
+            $maker = User::find($Answer->user_id);
+
+            $newVoteNumber = Answer_like::where('answer_id', $answer_id)->where('kind', 1)->count();
+            $Answer->vote = $newVoteNumber;
+
+
             if($judgeAleadyLike === 0)
             {
                 $Answer_like = new Answer_like;
@@ -31,20 +35,20 @@ class LikeController extends Controller
                 $Answer_like->kind = 0;
                 $Answer_like->save();
 
-                $newLikeNumber = Answer_like::where('answer_id', $answer_id)->where('kind', 0)->count();
-    
-                $Answer->like = $newLikeNumber;
-                $Answer->save();
-    
+                $maker->user_point = $maker->user_point + 1;
+                $maker->save();
+
             }else
             {
                 Answer_like::where('answer_id', $answer_id)->where('user_id', $user_id)->where('kind', 0)->delete();
-                $newLikeNumber = Answer_like::where('answer_id', $answer_id)->where('kind', 0)->count();
 
-                $Answer = Answer::find($answer_id);
-                $Answer->like = $newLikeNumber;
-                $Answer->save();
+                $maker->user_point = $maker->user_point - 1;
+                $maker->save();
             }
+
+            $newLikeNumber = Answer_like::where('answer_id', $answer_id)->where('kind', 0)->count();
+            $Answer->like = $newLikeNumber;
+            $Answer->save();
     
             $data = [
                 'like' => $Answer->like,
@@ -59,8 +63,8 @@ class LikeController extends Controller
             $user_id = Auth::user()->id;
             $judgeAleadyLike = Question_like::where('question_id', $question_id)->where('user_id', $user_id)->where('kind', 0)->count();
             $Question = Question::find($question_id);
-    
-    
+            $maker = User::find($Question->user_id);
+
             if($judgeAleadyLike === 0)
             {
                 $Question_like = new Question_like;
@@ -69,21 +73,20 @@ class LikeController extends Controller
                 $Question_like->kind = 0;
                 $Question_like->save();
 
-                $newLikeNumber = Question_like::where('question_id', $question_id)->where('kind', 0)->count();
+                $maker->user_point = $maker->user_point + 1;
+                $maker->save();
 
-                $Question->like = $newLikeNumber;
-                $Question->save();
-    
             }else
             {
                 Question_like::where('question_id', $question_id)->where('user_id', $user_id)->where('kind', 0)->delete();
 
-                $newLikeNumber = Question_like::where('question_id', $question_id)->where('kind', 0)->count();
-    
-                $Question = Question::find($question_id);
-                $Question->like = $newLikeNumber;
-                $Question->save();
+                $maker->user_point = $maker->user_point - 1;
+                $maker->save();
             }
+
+            $newLikeNumber = Question_like::where('question_id', $question_id)->where('kind', 0)->count();
+            $Question->like = $newLikeNumber;
+            $Question->save();
     
             $data = [
                 'like' => $Question->like,

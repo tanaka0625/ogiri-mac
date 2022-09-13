@@ -1,0 +1,19 @@
+.user-info td img { 
+    width:30px;
+}
+
+.user-info {
+    position: relative;
+}
+
+.avator {
+    width: 100%;
+}
+
+.comment {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    word-break: break-all;
+}

@@ -11,15 +11,12 @@ use App\Models\User;
 
 class My_pageController extends Controller
 {
-    public function index($id)
+    public function index(Request $request)
     {
-
-        if(!Auth::check() || Auth::user()->id != $id)
-        {
-            return redirect('/answer_list');
-        }
+        $id = $request->id;
 
         $user = User::find($id);
+
 
         if(!empty($_GET['category']))
         {
@@ -42,7 +39,18 @@ class My_pageController extends Controller
             $page = 1;
         }
 
-        
+        $user = User::find($id);
+        $point = Functions::calculatePoint($id);
+        if($user->user_point != $point["total"])
+        {
+            $user->user_point = $point["total"];
+            $user->save();
+        }
+
+        // 300kg以外のアバター
+        for($i=150; $point["total"] % 300 < $i * 2; $i--) {
+            $avatorNumber = $i;
+        }
 
         if($category === 'post')
         {
@@ -78,11 +86,11 @@ class My_pageController extends Controller
 
         $items = Functions::judgeLiked($items, Auth::user()->id);
         $items = Functions::judgeVoted($items, Auth::user()->id);
+        $items = Functions::judgeWin($items);
 
 
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-        
         $data = [
             'items' => $items,
             'jsonItems' => $jsonItems,
@@ -92,8 +100,9 @@ class My_pageController extends Controller
             'pageLinks' => $pageLinks,
             'maxPage' => $maxPage,
             'id' => $id,
-            'page' => $page
-        ];
+            'page' => $page,
+            "point" => $point,
+            "avatorNumber" => $avatorNumber        ];
 
         return view('My_page.index', $data);
 

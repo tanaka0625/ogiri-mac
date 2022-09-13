@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(Question::class);
     }
 
+    public function clothes()
+    {
+        return $this->hasMany(Clothe::class);
+    }
+
     public function getAnswers()
     {
         return $this->answers;

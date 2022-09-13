@@ -1,5 +1,4 @@
 
-let answer = document.getElementsByClassName('answer')
 for(let i=0; i<answer.length; i++) {
 
     let likeUserNames = answer[i].getElementsByClassName('like-user-names');

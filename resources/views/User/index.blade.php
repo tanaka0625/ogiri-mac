@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
 @section('fileLink')
-    <link rel="stylesheet" href="/css/answer.css">
-    <link rel="stylesheet" href="/css/question.css">
+    <link rel="stylesheet" href=" {{ asset('/css/answer.css') }} ">
+    <link rel="stylesheet" href=" {{ asset('/css/question.css') }} ">
+    <link rel="stylesheet" href=" {{ asset('/css/user.css') }} ">
+    <link rel="stylesheet" href="  {{ asset('/css/page-links.css') }}  ">
+
 @endsection
 
 @section('title', 'ユーザー')
@@ -11,11 +14,57 @@
 
 @section('content')
 
-<a href="/user/{{$id}}/{{$category}}/{{$order}}/1">最初</a>
-@foreach($pageLinks as $pageLink)
-<a href="/user/{{$id}}/{{$category}}/{{$order}}/{{$pageLink}}">{{$pageLink}}</a>
-@endforeach
-<a href="/user/{{$id}}/{{$category}}/{{$order}}/{{$maxPage}}">最後</a>
+
+@if($page == 1)
+<div class="user-info">
+
+    <div class="avators">
+        @for($i=0; $i < floor($point["total"]/300); $i++)
+            <img class="avator" src=" {{ asset('/images/' .$user->avator. '/' .$user->avator. '(150).png') }} " alt="">
+        @endfor
+
+        <img src=" {{ asset('/images/' .$user->avator. '/' .$user->avator. '(' .$avatorNumber. ').png') }} " alt="" class="avator">
+    </div>
+
+    <p>体重: {{$point["total"]}}kg</p>
+    <table>
+        <tr>
+            <td><img src=" {{ asset('/images/icon/frenchfry.png') }} " alt=""></td>
+            <td>{{$point["answerLike"]}}kg</td>
+        </tr>
+
+        <tr>
+            <td><img src=" {{ asset('/images/icon/chicken_nugget.png') }} " alt=""></td>
+            <td>{{$point["vote"]}}kg</td>
+        </tr>
+
+        <tr>
+            <td><img src=" {{ asset('/images/icon/shake.png') }} " alt=""></td>
+            <td>{{$point["battleVote"]}}kg</td>
+        </tr>
+
+        <tr>
+            <td><img src=" {{ asset('/images/icon/cola.png') }} " alt=""></td>
+            <td>{{$point["questionLike"]}}kg</td>
+        </tr>
+
+        <tr>
+            <td><img src=" {{ asset('/images/icon/hamburger.png') }} " alt=""></td>
+            <td>{{$point["won"]}}kg</td>
+        </tr>
+
+        <tr>
+            <td>所持金</td>
+            <td>{{$user->energy}}円</td>
+        </tr>
+    </table>
+
+    <p class="comment">{{$user->comment}}</p>
+
+</div>
+@endif
+
+<x-page url="user/{{$id}}?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 <div class="items-title">
     @if($category === 'post' && $order === 'created_at')
@@ -29,27 +78,28 @@
     @endif
 </div>
 
-<div class="order-btns">
+<div class="btns">
+
     @if($order === 'like')
-    <a class="order-btn" href="/user/{{$id}}/{{$category}}/created_at"><button>新着順に並び替える</button></a>
+    <a class="order-btn" href=" {{ url('/user/' .$id. '?category=' .$category. '&order=created_at') }} "><button>新着順に並び替える</button></a>
     @else
-    <a class="order-btn" href="/user/{{$id}}/{{$category}}/like"><button>いいね順に並び替える</button></a>
+    <a class="order-btn" href=" {{ url('/user/' .$id. '?category=' .$category. '&order=like') }} "><button>いいね順に並び替える</button></a>
     @endif
+
+    @if($category === 'post')
+    <a href=" {{ url('/user/' .$id. '?category=like&order=' .$order) }} " class="category-btn"><button>いいね</button></a>
+    @elseif($category === 'like')
+    <a href=" {{ url('/user/' .$id. '?category=post&order=' .$order) }} " class="category-btn"><button>投稿</button></a>
+    @endif
+
 </div>
 
-<div class="category-btns">
-    @if($category === 'post')
-    <a href="/user/{{$id}}/like/{{$order}}" class="category-btn"><button>いいね</button></a>
-    @elseif($category === 'like')
-    <a href="/user/{{$id}}/post/{{$order}}" class="category-btn"><button>投稿</button></a>
-    @endif
-</div>
 
 
 
 @foreach($items as $item)
     @if($item instanceof App\Models\Answer)
-    <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :questionText='$item->getQuestionText() ' :questionId='$item->getQuestionId()' questionSituation='recruting' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+    <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText() ' :questionId='$item->getQuestionId()' btnType='like' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
         {{$item->created_at}}
     </x-answer>
     @elseif($item instanceof App\Models\Question)
@@ -59,30 +109,24 @@
     @endif
 @endforeach
 
-<a href="/user/{{$id}}/{{$category}}/{{$order}}/1">最初</a>
-@foreach($pageLinks as $pageLink)
-<a href="/user/{{$id}}/{{$category}}/{{$order}}/{{$pageLink}}">{{$pageLink}}</a>
-@endforeach
-<a href="/user/{{$id}}/{{$category}}/{{$order}}/{{$maxPage}}">最後</a>
+<x-page url="user/{{$id}}?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 @section('script')
-    <script src="/js/AnswerLikeUserNames.js"></script>
-    <script src="/js/QuestionLikeUserNames.js"></script>
-
+    @parent
+    <script>
+        let items = <?php echo $jsonItems;?>;
+    </script>
+    <script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
+    <script src="{{ asset('/js/QuestionLikeUserNames.js') }}"></script>
+    <script src=" {{ asset('/js/add-won-class.js') }} "></script>
     @if(Auth::check())
-        <script>
-            let items = <?php echo $jsonItems;?>;
-            let userId = "<?php echo Auth::user()->id;?>";
-        </script>
-        <script src="/js/like.js"></script>
-        <script src="/js/addLikedClass.js"></script>
-        <script src="/js/addVoteMsg.js"></script>
-
+    <script>
+        let userId = "<?php echo Auth::user()->id;?>";
+    </script>
+    <script src="{{ asset('/js/like.js') }}"></script>
+    <script src="{{ asset('/js/addLikedClass.js') }}"></script>
+    <script src="{{ asset('/js/addVoteMsg.js') }}"></script>
     @endif
-
 @endsection
-
-
-
 
 @endsection
