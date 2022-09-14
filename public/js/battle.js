@@ -27,7 +27,9 @@ $(function(){
                 "</h3>" +
                 "<p class='info'>" +
                     "作者: " +
-                    data["questionMakerName"] +
+                    "<a href='user/" + data["question"]["user_id"] + "'>" +
+                        data["questionMakerName"] +
+                    "</a>" +
                 "</p>" +
             "</div>";
 
@@ -73,11 +75,11 @@ $(function(){
                         "</h3>" +
                         "<p class='info'>" +
                             "作: " +
-                            answer["makerName"] +
-                                " <span class='vote'>" +
-                                    answer["battle_vote"] +
-                                    "シェイク" +
-                                "</span>" +
+                            "<a href='user/" + answer["user_id"] + "'>" + answer["makerName"] + "</a>" +
+                            " <span class='vote'>" +
+                                answer["battle_vote"] +
+                                "シェイク" +
+                            "</span>" +
                         "</p>" +
                     "</div>";
                 }
@@ -118,11 +120,11 @@ $(function(){
                         "</h3>" +
                         "<p class='info'>" +
                             "作: " +
-                            answer["makerName"] +
-                                " <span class='vote'>" +
-                                    answer["battle_vote"] +
-                                    "シェイク" +
-                                "</span>" +
+                            "<a href='user/" + answer["user_id"] + "'>" + answer["makerName"] + "</a>" +
+                            " <span class='vote'>" +
+                                answer["battle_vote"] +
+                                "シェイク" +
+                            "</span>" +
                         "</p>" +
                     "</div>";
                 }
