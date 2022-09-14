@@ -24,7 +24,7 @@ class Question extends Model
 
     public function question_likes()
     {
-        return $this->hasMany(question_like::class);
+        return $this->hasMany(Question_like::class);
     }
 
     public function scopeRecruting($query)

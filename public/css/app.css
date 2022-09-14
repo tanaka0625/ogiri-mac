@@ -9,7 +9,7 @@
     left: 0;
     background-color:yellow;
     z-index: 1;
-    width: 375px;
+    width: 100%;
 }
 
 .title {

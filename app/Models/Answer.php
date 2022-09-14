@@ -46,7 +46,7 @@ class Answer extends Model
 
     public function answer_likes()
     {
-        return $this->hasMany(answer_like::class);
+        return $this->hasMany(Answer_like::class);
     }
 
     public function getLikeUserNames()

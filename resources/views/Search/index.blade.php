@@ -61,9 +61,9 @@
 @endsection
 
 @section('script')
+@parent
 
 @if(!empty($keyWord))
-    @parent
     <script>
         let items = <?php echo $jsonItems;?>;
     </script>

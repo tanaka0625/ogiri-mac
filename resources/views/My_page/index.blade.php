@@ -84,15 +84,15 @@
 <div class="btns">
 
     @if($order === 'like')
-        <a class="order-btn" href=" {{ url('my_page/' .$id. '?category=' .$category. '&order=created_at') }} "><button>新着順に並び替える</button></a>
+        <a class="order-btn" href=" {{ url('my_page?category=' .$category. '&order=created_at') }} "><button>新着順に並び替える</button></a>
         @else
-        <a class="order-btn" href=" {{ url('my_page/' .$id. '?category=' .$category. '&order=like') }} "><button>いいね順に並び替える</button></a>
+        <a class="order-btn" href=" {{ url('my_page?category=' .$category. '&order=like') }} "><button>いいね順に並び替える</button></a>
     @endif
 
     @if($category === 'post')
-        <a href=" {{ url('/my_page/' .$id. '?category=like&order=' .$order) }} " class="category-btn"><button>いいね</button></a>
+        <a href=" {{ url('/my_page?category=like&order=' .$order) }} " class="category-btn"><button>いいね</button></a>
     @elseif($category === 'like')
-        <a href=" {{ url('/my_page/' .$id. '?category=post&order=' .$order) }} " class="category-btn"><button>投稿</button></a>
+        <a href=" {{ url('/my_page?category=post&order=' .$order) }} " class="category-btn"><button>投稿</button></a>
     @endif
 
 </div>
