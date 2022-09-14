@@ -31,7 +31,7 @@
         <button class="menu-btn on">メニュー</button>
 
         <div class="menu">
-            <p class="link-btn"><a href=" {{ url('/answer_list') }} " >回答一覧</a></p>
+            <p class="link-btn"><a href=" {{ url('/') }} " >回答一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/question_list') }} " >お題一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/search') }} " >検索</a></p>
             <p class="link-btn"><a href=" {{ url('/battle') }} ">ファスト</a></p>

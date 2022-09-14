@@ -31,7 +31,7 @@ use App\Http\Middleware\JudgeLikeMiddleware;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/answer_list', [Answer_listController::class, 'index']);
+Route::get('/', [Answer_listController::class, 'index']);
 Route::get('/question_list', [Question_listController::class, 'index']);
 Route::post('/question_list', [Question_listController::class, 'add']);
 Route::get('/grouped_answer/{question_id}', [Grouped_answersController::class, 'index']);

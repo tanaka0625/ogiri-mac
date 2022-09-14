@@ -21,7 +21,7 @@ class CheckLoginMiddleware
 
         if(!Auth::check())
         {
-            return redirect('/answer_list');
+            return redirect('/');
         }else{
             $request->id = Auth::user()->id;
         }
