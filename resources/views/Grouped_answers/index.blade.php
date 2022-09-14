@@ -76,7 +76,7 @@
         @if($item->kind === 0 || $item instanceof App\Models\Question)
             @continue;
         @else
-            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :btnType='$btnType' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :btnType='$btnType' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
                 {{$item->created_at}}
             </x-answer>
         @endif
@@ -91,7 +91,7 @@
             @continue;
         @else
 
-            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType="like" :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType="like" :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' kind='$item->kind'>
             </x-answer>
         @endif
     @endforeach

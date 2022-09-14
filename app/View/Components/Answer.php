@@ -16,12 +16,14 @@ class Answer extends Component
     public $btnType;
     public $likeUserNames;
     public $userId;
+    public $questionSituation;
+    public $kind;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($text, $maker, $like, $vote, $questionText, $questionId, $btnType, $likeUserNames, $userId)
+    public function __construct($text, $maker, $like, $vote, $questionText, $questionId, $btnType, $likeUserNames, $userId, $questionSituation, $kind)
     {
         $this->text = $text;
         $this->maker = $maker;
@@ -32,6 +34,8 @@ class Answer extends Component
         $this->btnType = $btnType;
         $this->likeUserNames = $likeUserNames;
         $this->userId = $userId;
+        $this->questionSituation = $questionSituation;
+        $this->kind = $kind;
     }
 
     /**

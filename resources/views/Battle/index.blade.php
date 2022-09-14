@@ -14,6 +14,10 @@
 
 <p class="situation-msg"></p>
 
+@if(!Auth::check())
+    <p style="color: red;">お題・回答の投稿、ポテトにはログインが必要です。ログインにはメールアドレス等は必要ありません。</p>
+@endif
+
 <div id="question-form" class="off">
     <form action=/battle/addQuestion  method="post">
         @csrf

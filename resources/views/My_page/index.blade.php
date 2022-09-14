@@ -103,13 +103,13 @@
 @foreach($items as $item)
     @if($item instanceof App\Models\Answer && $category === "like")
 
-        <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType='like' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+        <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType='like' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
             {{$item->created_at}}
         </x-answer>
 
     @elseif($item instanceof App\Models\Answer && $category === "post")
 
-        <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType='delete' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id'>
+        <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType='delete' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
             {{$item->created_at}}
         </x-answer>
 

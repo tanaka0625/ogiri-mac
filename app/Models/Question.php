@@ -47,7 +47,7 @@ class Question extends Model
         return $query->where('kind', 1);
     }
 
-    public function getSituation($id)
+    public function getSituation()
     {
         $limitAnswer = $this->limit_answer;
         $limitVote = $this->limit_vote;
