@@ -67,7 +67,7 @@ class BattleController extends Controller
         $now = date("Y-m-d H:i:s");
         $question = Question::where('kind', "1")->latest()->first();
         $questionMakerName = $question->getMaker();
-        $answers = Answer::where("question_id", $question->id)->oldest()->get();
+        $answers = Answer::where("question_id", $question->id)->where("kind", 2)->oldest()->get();
         $answerCount = $answers->count();
 
         for($i=0; $i<$answers->count(); $i++)
