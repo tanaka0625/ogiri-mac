@@ -66,7 +66,7 @@
 </div>
 @endif
 
-<x-page url="my_pager?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
+<x-page url="my_page?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 <div class="items-title">
     @if($category === 'post' && $order === 'created_at')
@@ -121,7 +121,7 @@
     @endif
 @endforeach
 
-<x-page url="my_pager?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
+<x-page url="my_page?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 @section('script')
     @parent
