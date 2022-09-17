@@ -91,7 +91,7 @@ $(function(){
                 let answers = data["answers"];
                 let $answer = $('.answer');
                 for(let i=0; i<answers.length; i++){
-                    if(answers[i]['myVoteAnswer'] == 1){
+                    if(answers[i]['myBattleVoteAnswer'] == 1){
                         $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
                         $answer.eq(i).find('.vote-msg').addClass('on');
 
@@ -135,7 +135,7 @@ $(function(){
                 let answers = data["answers"];
                 let $answer = $('.answer');
                 for(let i=0; i<answers.length; i++){
-                    if(answers[i]['myVoteAnswer'] == 1){
+                    if(answers[i]['myBattleVoteAnswer'] == 1){
                         $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
                         $answer.eq(i).find('.vote-msg').addClass('on');
 
@@ -176,7 +176,7 @@ $(function(){
                 let $answer = $('.answer');
                 let answers = data["answers"];
                 for(let i=0; i<answers.length; i++){
-                    if(answers[i]['myVoteAnswer'] == 1){
+                    if(answers[i]['myBattleVoteAnswer'] == 1){
                         $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
                         $answer.eq(i).find('.vote-msg').addClass('on');
 
@@ -225,6 +225,6 @@ $(function(){
             alert(e);
         });
 
-    }, 800);
+    }, 900);
 
 });

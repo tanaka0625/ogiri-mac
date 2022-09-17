@@ -84,9 +84,9 @@ class Functions
             if($items[$i] instanceof Answer){
                 $judgeVoted = Answer_like::where('answer_id', $items[$i]->id)->where('user_id', $userId)->where('kind', 2)->count();
                 if($judgeVoted > 0){
-                    $items[$i]->myVoteAnswer = 1;
+                    $items[$i]->myBattleVoteAnswer = 1;
                 }else{
-                    $items[$i]->myVoteAnswer = 0;
+                    $items[$i]->myBattleVoteAnswer = 0;
                 }
             }
         }
