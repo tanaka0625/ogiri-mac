@@ -12,6 +12,15 @@
 
 @section('content')
 
+<button id="rule-btn">ルール</button>
+<p id="rule-msg" class="off">
+    回答時間2分→シェイク時間2分で1位の回答を決めます。<br>
+    1位になった人が次のお題を投稿します。1位になった人がお題を投稿しなかった場合お題を募集します。<br>
+    回答は制限時間内なら何答でも出来ます。<br>
+    シェイクが同数の場合、先に投稿された回答の勝利となります。
+
+</p>
+
 <p class="situation-msg"></p>
 
 @if(!Auth::check())
@@ -58,4 +67,5 @@
         </script>
     @endif
     <script src=" {{ asset('js/battle.js') }} "></script>
+    <script src=" {{ asset('js/rule.js') }} "></script>
 @endsection
