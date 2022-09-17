@@ -12,6 +12,8 @@ class Answer_listController extends Controller
 {
     public function index(Request $request) {
 
+        echo 1;
+
         if(!empty($_GET['order']))
         {
             $order = $_GET['order'];
