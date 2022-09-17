@@ -7,10 +7,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta  name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/menu.css">
-    <link rel="icon" href="/images/favicon.ico" id="favicon">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png">
+    <link rel="stylesheet" href=" {{ asset('/css/app.css') }} ">
+    <link rel="stylesheet" href=" {{ asset('/css/menu.css') }} ">
+    <link rel="icon" href=" {{ asset('/images/icon/favicon.ico') }} " id="favicon">
+    <link rel="apple-touch-icon" sizes="180x180" href=" {{ asset('/images/icon/apple-touch-icon-180x180.png') }} ">
     <link href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" rel="stylesheet">
 
     @yield('fileLink')
