@@ -53,8 +53,8 @@ class BattleController extends Controller
             $question->text = $request->text;
             $question->user_id = Auth::user()->id;
             $question->kind = 1;
-            $question->limit_answer = date('Y-m-d H:i:s', strtotime('+60second'));
-            $question->limit_vote = date('Y-m-d H:i:s', strtotime('+80second'));
+            $question->limit_answer = date('Y-m-d H:i:s', strtotime('+120second'));
+            $question->limit_vote = date('Y-m-d H:i:s', strtotime('+140second'));
             $question->save();
         }
 
@@ -148,8 +148,8 @@ class BattleController extends Controller
 
 
         }else{
-            $question->limit_answer = date("Y-m-d H:i:s", strtotime("+60second"));
-            $question->limit_vote = date("Y-m-d H:i:s", strtotime("+80second"));
+            $question->limit_answer = date("Y-m-d H:i:s", strtotime("+120second"));
+            $question->limit_vote = date("Y-m-d H:i:s", strtotime("+140second"));
             $question->save();
 
             $situation = "recrutingAnswer";
