@@ -15,6 +15,10 @@
     color: gold;
 }
 
+.answer .question-img {
+    width: 100%;
+}
+
 .answer .text {
     margin-bottom: 16px;
     margin-top: 10px;
