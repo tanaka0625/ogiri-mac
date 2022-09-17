@@ -18,6 +18,8 @@
     （回答募集中）
     @elseif($questionSituation === 'voting')
     （ナゲット受付中）
+    @elseif($questionSituation === "fast")
+    （ファストマック）
     @else
     （終マック）
     @endif
