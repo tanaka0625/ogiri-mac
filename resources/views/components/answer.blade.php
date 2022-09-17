@@ -12,14 +12,12 @@
 
             <a class="maker" href=" {{ url('/user/' .$userId) }} ">{{$maker}}</a> 
              <span class="like">{{$like}}ポテト</span> 
-
              <span class="vote">{{$vote}}ナゲット</span>
 
         @elseif($questionSituation === "fast" && $kind === 2)
 
             <a class="maker" href=" {{ url('/user/' .$userId) }} ">{{$maker}}</a> 
              <span class="like">{{$like}}ポテト</span> 
-
              <span class="vote">{{$vote}}シェイク</span>
 
         @elseif($kind === 0)
