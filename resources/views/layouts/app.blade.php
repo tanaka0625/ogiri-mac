@@ -45,6 +45,8 @@
             <p class="close">閉じる</p>
         </div>
 
+        <p id="logined-user-cnt"></p>
+
     </div>
 
     <div class="content">
@@ -78,6 +80,7 @@
     @section('script')
     <script src=" {{ asset('/js/menu.js') }} "></script>
     <script src=" {{ asset('/js/app.js') }} "></script>
+    <script src=" {{ asset('/js/count-logined-user.js') }} "></script>
 
     @show
 

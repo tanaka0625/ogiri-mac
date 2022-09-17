@@ -14,6 +14,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ChoiceAvatorController;
 use App\Http\Controllers\BattleController;
 use App\Http\Controllers\BattleVoteController;
+use App\Http\Controllers\CountLoginedUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\PeriodMiddleware;
 use App\Http\Middleware\JudgeLikeMiddleware;
@@ -31,26 +32,32 @@ use App\Http\Middleware\JudgeLikeMiddleware;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/', [Answer_listController::class, 'index']);
-Route::get('/question_list', [Question_listController::class, 'index']);
-Route::post('/question_list', [Question_listController::class, 'add']);
-Route::get('/grouped_answer/{question_id}', [Grouped_answersController::class, 'index']);
-Route::post('/grouped_answer/{question_id}', [Grouped_answersController::class, 'add']);
-Route::get('/user/{id}', [UserController::class, 'index']);
-Route::get('/my_page', [My_pageController::class, 'index'])->middleware('checkLogin');
-Route::get('/search', [SearchController::class, 'index']);
-Route::post('/like', [LikeController::class, 'index']);
-Route::post('/vote', [VoteController::class, 'index']);
-Route::post('/delete', [DeleteController::class, 'index']);
-Route::get('/setting', [SettingController::class, 'index'])->middleware('checkLogin');;
-Route::post('/setting/changeComment', [SettingController::class, 'changeComment'])->middleware('checkLogin');;
-Route::post('/avator', [ChoiceAvatorController::class, 'index']);
-Route::get('/battle', [BattleController::class, 'index']);
-Route::post('/battle', [BattleController::class, 'makeHtml']);
-Route::post('/battle/addAnswer', [BattleController::class, 'addAnswer']);
-Route::post('/battle/addQuestion', [BattleController::class, 'addQuestion']);
-Route::post('/battle/vote', [BattleVoteController::class, 'index']);
 
+Route::group(['middleware' => ['lastLogin']], function () {
+
+    Route::get('/', [Answer_listController::class, 'index']);
+    Route::get('/question_list', [Question_listController::class, 'index']);
+    Route::get('/grouped_answer/{question_id}', [Grouped_answersController::class, 'index']);
+    Route::get('/user/{id}', [UserController::class, 'index']);
+    Route::get('/my_page', [My_pageController::class, 'index'])->middleware('checkLogin');
+    Route::get('/search', [SearchController::class, 'index']);
+    Route::post('/like', [LikeController::class, 'index']);
+    Route::post('/vote', [VoteController::class, 'index']);
+    Route::post('/delete', [DeleteController::class, 'index']);
+    Route::get('/setting', [SettingController::class, 'index'])->middleware('checkLogin');
+    Route::post('/avator', [ChoiceAvatorController::class, 'index']);
+    Route::get('/battle', [BattleController::class, 'index']);
+    Route::post('/battle/vote', [BattleVoteController::class, 'index']);
+    Route::post('/battle/addAnswer', [BattleController::class, 'addAnswer']);
+    Route::post('/battle/addQuestion', [BattleController::class, 'addQuestion']);
+    
+});
+
+Route::post('/question_list', [Question_listController::class, 'add']);
+Route::post('/grouped_answer/{question_id}', [Grouped_answersController::class, 'add']);
+Route::post('/setting/changeComment', [SettingController::class, 'changeComment'])->middleware('checkLogin');
+Route::post('/battle', [BattleController::class, 'makeHtml']);
+Route::post('/countLoginedUser', [CountLoginedUserController::class, 'index']);
 Auth::routes();
 Route::get('/logout', [LoginController::class, 'logout']);
 
