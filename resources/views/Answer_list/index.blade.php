@@ -11,10 +11,6 @@
 
 @section('content')
 
-@php
- echo 1;
-@endphp
-
     <x-page url="/?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
     <div class="items-title">
