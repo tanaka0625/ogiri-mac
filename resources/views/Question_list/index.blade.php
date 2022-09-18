@@ -32,11 +32,12 @@
     </div>
     @endif
 
-    <form action=/question_list  method="post">
+    <form action=/question_list  method="post" enctype="multipart/form-data">
         @csrf
         <label for="text">お題</label>
         <textarea name="text" id="text" cols="30" rows="10"></textarea>
         <br>
+        <input id="image" type="file" name="image">
         <button type="submit">送信</button>
         <input type="hidden" name="kind" value="0">
     </form>

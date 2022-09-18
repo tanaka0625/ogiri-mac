@@ -79,13 +79,39 @@ class Question_listController extends Controller
     public function add(AddAnswerRequest $request)
     {
 
-        $Question = new Question;
-        $Question->text = $request->text;
-        $Question->user_id = Auth::user()->id;
-        $Question->kind = $request->kind;
-        $Question->limit_answer = date('Y-m-d H:i:s', strtotime('+4day'));
-        $Question->limit_vote = date('Y-m-d H:i:s', strtotime('+8day'));
-        $Question->save();
+        if(!empty($request->file("image")))
+        {
+            $request->validate([
+                'image' => 'max:1024|mimes:jpg,jpeg,png,gif'
+            ]);
+
+ 
+
+            $Question = new Question;
+            $Question->text = $request->text;
+            $Question->user_id = Auth::user()->id;
+            $Question->kind = $request->kind;
+            $Question->limit_answer = date('Y-m-d H:i:s', strtotime('+4day'));
+            $Question->limit_vote = date('Y-m-d H:i:s', strtotime('+8day'));
+            $Question->save();
+
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $date = date('YmdHis');
+            $request->file('image')->storeAs('public/questionImgs', $date . '.' . $Question->id . '.' . $extension);
+            $Question->image_name = $date . '.' . $Question->id . '.' . $extension;
+            $Question->save();
+
+        }else{
+
+            $Question = new Question;
+            $Question->text = $request->text;
+            $Question->user_id = Auth::user()->id;
+            $Question->kind = $request->kind;
+            $Question->limit_answer = date('Y-m-d H:i:s', strtotime('+4day'));
+            $Question->limit_vote = date('Y-m-d H:i:s', strtotime('+8day'));
+            $Question->save();
+
+        }
 
         return redirect('/question_list');
     }
