@@ -1,7 +1,9 @@
-ruleBtn = document.getElementById('rule-btn');
+ruleBtn = document.getElementsByClassName('rule-btn');
 ruleMsg = document.getElementById('rule-msg');
 
-ruleBtn.addEventListener('click' , () => {
+for(let i=0; i<ruleBtn.length; i++){
+    ruleBtn[i].addEventListener('click' , () => {
 
-    ruleMsg.classList.toggle('off');
-});
+        ruleMsg.classList.toggle('off');
+    });
+}
