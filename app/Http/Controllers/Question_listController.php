@@ -97,7 +97,7 @@ class Question_listController extends Controller
 
             $extension = $request->file('image')->getClientOriginalExtension();
             $date = date('YmdHis');
-            $request->file('image')->storeAs('public/questionImgs', $date . '.' . $Question->id . '.' . $extension);
+            $request->file('image')->storeAs('public/question', $date . '.' . $Question->id . '.' . $extension);
             $Question->image_name = $date . '.' . $Question->id . '.' . $extension;
             $Question->save();
 
