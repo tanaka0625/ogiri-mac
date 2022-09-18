@@ -49,17 +49,17 @@ class Answer extends Model
         return $this->hasMany(Answer_like::class);
     }
 
-    public function getLikeUserNames()
+    public function getLikeUsers()
     {
-        $likeUserName = array();
+        $likeUsers = array();
         for($i=0; $i<count($this->answer_likes); $i++)
         {
             if($this->answer_likes[$i]->kind === 0)
             {
-                $likeUserName[] = $this->answer_likes[$i]->getUserName();
+                $likeUsers[] = $this->answer_likes[$i]->user;
             }
         }
-        return $likeUserName;
+        return $likeUsers;
     }
 
 

@@ -48,7 +48,7 @@
 <x-page url="question_list?situation={{$situation}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 @foreach($items as $item)
-    <x-question :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :answerNumber='$item->answer_number' :imgName='$item->image_name' :questionId='$item->id' :userId='$item->user_id' :likeUserNames='$item->getLikeUserNames()'>
+    <x-question :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :answerNumber='$item->answer_number' :imgName='$item->image_name' :questionId='$item->id' :userId='$item->user_id' :likeUsers='$item->getLikeUsers()'>
         {{$item->created_at}}
     </x-question>
 @endforeach

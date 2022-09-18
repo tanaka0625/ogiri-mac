@@ -30,8 +30,8 @@
     
     
     <div class="like-user-names">
-        @foreach($likeUserNames as $likeUserName)
-        <a href=" {{ url('/user/' .$userId) }} " class="like-user-name">{{$likeUserName}}</a>
+        @foreach($likeUsers as $likeUser)
+        <a href=" {{ url('/user/' .$likeUser->id) }} " class="like-user-name">{{$likeUser->name}}</a>
         @endforeach
     </div>
 

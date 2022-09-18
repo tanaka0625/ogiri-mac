@@ -14,7 +14,7 @@ class Answer extends Component
     public $questionText;
     public $questionId;
     public $btnType;
-    public $likeUserNames;
+    public $likeUsers;
     public $userId;
     public $questionSituation;
     public $kind;
@@ -23,7 +23,7 @@ class Answer extends Component
      *
      * @return void
      */
-    public function __construct($text, $maker, $like, $vote, $questionText, $questionId, $btnType, $likeUserNames, $userId, $questionSituation, $kind)
+    public function __construct($text, $maker, $like, $vote, $questionText, $questionId, $btnType, $likeUsers, $userId, $questionSituation, $kind)
     {
         $this->text = $text;
         $this->maker = $maker;
@@ -32,7 +32,7 @@ class Answer extends Component
         $this->questionText = $questionText;
         $this->questionId = $questionId;
         $this->btnType = $btnType;
-        $this->likeUserNames = $likeUserNames;
+        $this->likeUsers = $likeUsers;
         $this->userId = $userId;
         $this->questionSituation = $questionSituation;
         $this->kind = $kind;

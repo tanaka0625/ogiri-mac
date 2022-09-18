@@ -74,17 +74,17 @@ class Question extends Model
         return $this->user->name;
     }
 
-    public function getLikeUserNames()
+    public function getLikeUsers()
     {
-        $likeUserName = array();
+        $likeUsers = array();
         for($i=0; $i<count($this->question_likes); $i++)
         {
             if($this->question_likes[$i]->kind === 0)
             {
-                $likeUserName[] = $this->question_likes[$i]->getUserName();
+                $likeUsers[] = $this->question_likes[$i]->user;
             }
         }
-        return $likeUserName;
+        return $likeUsers;
     }
 
 }

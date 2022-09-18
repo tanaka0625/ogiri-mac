@@ -26,7 +26,7 @@
 </h3>
 
 
-<x-question :text='$question->text' :maker='$question->getMaker()' :like='$question->like' :answerNumber='$question->answer_number' :imgName='$question->image_name' :questionId='$question->id' :userId='$question->user_id' :likeUserNames='$question->getLikeUserNames()'>
+<x-question :text='$question->text' :maker='$question->getMaker()' :like='$question->like' :answerNumber='$question->answer_number' :imgName='$question->image_name' :questionId='$question->id' :userId='$question->user_id' :likeUsers='$question->getLikeUsers()'>
     {{$question->created_at}}
 </x-question>
 
@@ -78,7 +78,7 @@
         @if($item->kind === 0 || $item instanceof App\Models\Question)
             @continue;
         @else
-            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :btnType='$btnType' :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
+            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' :btnType='$btnType' :likeUsers='$item->getLikeUsers()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
                 {{$item->created_at}}
             </x-answer>
         @endif
@@ -93,7 +93,7 @@
             @continue;
         @else
 
-            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType="like" :likeUserNames='$item->getLikeUserNames()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
+            <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText()' :questionId='$item->getQuestionId()' btnType="like" :likeUsers='$item->getLikeUsers()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
                 {{$item->created_at}}
             </x-answer>
         @endif

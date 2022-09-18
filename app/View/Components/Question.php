@@ -13,14 +13,14 @@ class Question extends Component
     public $imgName;
     public $questionId;
     public $userId;
-    public $likeUserNames;
+    public $likeUsers;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($text, $maker, $like, $answerNumber, $imgName, $questionId, $userId, $likeUserNames)
+    public function __construct($text, $maker, $like, $answerNumber, $imgName, $questionId, $userId, $likeUsers)
     {
         $this->text = $text;
         $this->maker = $maker;
@@ -29,7 +29,7 @@ class Question extends Component
         $this->imgName = $imgName;
         $this->questionId = $questionId;
         $this->userId = $userId;
-        $this->likeUserNames = $likeUserNames;
+        $this->likeUsers = $likeUsers;
     }
 
     /**
