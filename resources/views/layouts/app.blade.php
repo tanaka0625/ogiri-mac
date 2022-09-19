@@ -23,6 +23,7 @@
     <title>@yield('title')/大喜利マック</title>
 </head>
 <body>
+
     <div class="header">
         <div class="title">
             <h3>@yield('header-title')</h3>
@@ -49,33 +50,38 @@
 
     </div>
 
-    <div class="content">
-        @yield('content')
-    </div>
+    <div id="container">
 
-    <div class="footer">
-        <?php for($i=0; $i<2; $i++):?>
-            <img src="/images/icon/hamburger.png" alt="">
-            <img src="/images/icon/chicken_nugget.png" alt="">
-            <img src="/images/icon/frenchfry.png" alt="">
-            <img src="/images/icon/cola.png" alt="">
-            <img src="/images/avator/avator(75).png" alt="">
-        <?php endfor;?>
-
-        <div>
-            <a href="https://twitter.com/ogiri_battle" target="_blank" rel="noopener noreferrer">公式Twitter</a>
-            <a href="https://twitter.com/tnk06250625" target="_blank" rel="noopener noreferrer">管理人のTwitter</a>
+        <div class="content">
+            @yield('content')
         </div>
 
-        <?php for($i=0; $i<2; $i++):?>
-            <img src="/images/icon/hamburger.png" alt="">
-            <img src="/images/icon/chicken_nugget.png" alt="">
-            <img src="/images/icon/frenchfry.png" alt="">
-            <img src="/images/icon/cola.png" alt="">
-            <img src="/images/avator/avator(75).png" alt="">
-        <?php endfor;?>
+        <div class="footer">
+            <?php for($i=0; $i<2; $i++):?>
+                <img src="/images/icon/hamburger.png" alt="">
+                <img src="/images/icon/chicken_nugget.png" alt="">
+                <img src="/images/icon/frenchfry.png" alt="">
+                <img src="/images/icon/cola.png" alt="">
+                <img src="/images/avator/avator(75).png" alt="">
+            <?php endfor;?>
+
+            <div>
+                <a href="https://twitter.com/ogiri_battle" target="_blank" rel="noopener noreferrer">公式Twitter</a>
+                <a href="https://twitter.com/tnk06250625" target="_blank" rel="noopener noreferrer">管理人のTwitter</a>
+            </div>
+
+            <?php for($i=0; $i<2; $i++):?>
+                <img src="/images/icon/hamburger.png" alt="">
+                <img src="/images/icon/chicken_nugget.png" alt="">
+                <img src="/images/icon/frenchfry.png" alt="">
+                <img src="/images/icon/cola.png" alt="">
+                <img src="/images/avator/avator(75).png" alt="">
+            <?php endfor;?>
+
+        </div>
 
     </div>
+
 
     @section('script')
     <script src=" {{ asset('/js/menu.js') }} "></script>

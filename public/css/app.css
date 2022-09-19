@@ -5,8 +5,10 @@
 
 .header {
     position: fixed;
+    left: 50%;
     top: 0;
-    left: 0;
+    transform: translate(-50%);
+    margin: auto;
     background-color:yellow;
     z-index: 1;
     width: 100%;
@@ -51,31 +53,37 @@ button {
 
 /* デザインB（タブレット） */
 @media screen and (min-width: 600px) {
-    html {
+    body {
         position: relative;
     }
 
-    body {
+    #container {
         width: 375px;
         position: absolute;
         left: 50%;
         transform: translate(-50%);
+    }
 
+    .header {
+        width: 375px;
     }
 }
 
 
 /* デザインC(PC) */
 @media screen and (min-width: 1025px) {
-    html {
+    body {
         position: relative;
     }
 
-    body {
+    #container {
         width: 375px;
         position: absolute;
         left: 50%;
         transform: translate(-50%);
+    }
 
+    .header {
+        width: 375px;
     }
 }
