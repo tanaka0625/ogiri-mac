@@ -11,7 +11,7 @@
 
 @section('content')
 
-    <x-page url="/?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
+    <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
     <div class="items-title">
         <h3>{{$itemsTitle}}</h3>
@@ -20,23 +20,23 @@
     <div class="btns">
         @if($period === 'all')
 
-            <a href=" {{ url('/?order=' .$order. '&period=' .$nowPeriod) }} " class="period-btn"><button>月別</button></a>
+            <a href=" {{ url('/answer_list?order=' .$order. '&period=' .$nowPeriod) }} " class="period-btn"><button>月別</button></a>
             
         @else
             @if($period > '202110')
-                <a class="period-btn" href=" {{ url('/?order=' .$order. '&period=' .$previousPeriod) }} "><button>1月前</button></a>
+                <a class="period-btn" href=" {{ url('/answer_list?order=' .$order. '&period=' .$previousPeriod) }} "><button>1月前</button></a>
             @endif
-            <a class="period-btn" href=" {{ url('/?order=' .$order. '&period=' .$nowPeriod) }} "><button>今月</button></a>
+            <a class="period-btn" href=" {{ url('/answer_list?order=' .$order. '&period=' .$nowPeriod) }} "><button>今月</button></a>
             @if($nowPeriod != $period)
-                <a class="period-btn" href=" {{ url('/?order=' .$order. '&period=' .$nextPeriod) }} "><button>1月後</button></a>
+                <a class="period-btn" href=" {{ url('/answer_list?order=' .$order. '&period=' .$nextPeriod) }} "><button>1月後</button></a>
             @endif
-            <a class="period-btn" href=" {{ url('/?order=' .$order) }} "><button>全回答</button></a>
+            <a class="period-btn" href=" {{ url('/answer_list?order=' .$order) }} "><button>全回答</button></a>
         @endif
 
         @if($order === 'like')
-            <a class="order-btn" href=" {{ url('/?order=id&period=' .$period) }} "><button>新着順に並び替える</button></a>
+            <a class="order-btn" href=" {{ url('/answer_list?order=id&period=' .$period) }} "><button>新着順に並び替える</button></a>
         @else
-            <a class="order-btn" href=" {{ url('/?order=like&period=' .$period) }} "><button>ポテト順に並び替える</button></a>
+            <a class="order-btn" href=" {{ url('/answer_list?order=like&period=' .$period) }} "><button>ポテト順に並び替える</button></a>
         @endif
     </div>
 
@@ -48,7 +48,7 @@
         @endforeach
     </div>
 
-    <x-page url="?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
+    <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 
 @endsection

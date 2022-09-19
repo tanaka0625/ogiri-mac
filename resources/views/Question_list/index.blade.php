@@ -7,14 +7,32 @@
 @endsection
 @section('title', 'お題一覧')
 
-@section('header-title', 'お題一覧')
+
+@if($situation === "recruting")
+
+    @section('header-title', '回答募集中のお題一覧')
+
+@elseif($situation === "voting")
+
+    @section('header-title', 'ナゲット受付中のお題一覧')
+
+@elseif($situation === "finished")
+
+    @section('header-title', '過去お題一覧')
+
+@else
+
+    @section('header-title', 'ファストマックのお題一覧')
+
+@endif
+
 
 @section('content')
 
 <div class="situation-btns">
     <a href=" {{ url('/question_list?situation=recruting') }} " class="situation-btn"><button>募集中</button></a>
     <a href=" {{ url('/question_list?situation=voting') }} " class="situation-btn"><button>ナゲット</button></a>
-    <a href=" {{ url('/question_list?situation=finished') }} " class="situation-btn"><button>終マック</button></a>
+    <a href=" {{ url('/question_list?situation=finished') }} " class="situation-btn"><button>過去お題</button></a>
     <a href=" {{ url('/question_list?situation=fast') }} " class="situation-btn"><button>ファスト</button></a>
 </div>
 
@@ -45,6 +63,9 @@
 @else
 <p style="color: red;">お題・回答の投稿、ポテトにはログインが必要です。ログインにはメールアドレス等は必要ありません。</p>
 @endif
+
+
+
 
 <x-page url="question_list?situation={{$situation}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 

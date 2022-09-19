@@ -32,9 +32,12 @@
         <button class="menu-btn on">メニュー</button>
 
         <div class="menu">
-            <p class="link-btn"><a href=" {{ url('/') }} " >回答一覧</a></p>
+            <p class="link-btn"><a href=" {{ url('/') }} " >トップ</a></p>
+            <p class="link-btn"><a href=" {{ url('/answer_list') }} " >回答一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/question_list') }} " >お題一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/search') }} " >検索</a></p>
+            <p class="link-btn"><a href=" {{ url('question_list?situation=recruting') }} ">回答する</a></p>
+            <p class="link-btn"><a href=" {{ url('question_list?situation=voting') }} ">ナゲット</a></p>
             <p class="link-btn"><a href=" {{ url('/battle') }} ">ファスト</a></p>
             @if(Auth::check())
                 <p class="link-btn"><a href=" {{ url('/logout') }} ">ログアウト</a></p>
@@ -42,6 +45,7 @@
             @else
                 <p class="link-btn"><a href=" {{ url('/login') }} ">ログイン</a></p>
             @endif
+            <p class="link-btn"><a href=" {{ url('/rule') }} ">ルール</a></p>
             
             <p class="close">閉じる</p>
         </div>

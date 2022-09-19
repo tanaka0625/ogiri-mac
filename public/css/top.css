@@ -1,0 +1,22 @@
+.avator img {
+    width: 100%;
+}
+
+.imgs img {
+    width: 30px;
+}
+
+.avator {
+    position: relative;
+}
+
+.avator-comment {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+}
+
+.content {
+    margin-top: 40px;
+}

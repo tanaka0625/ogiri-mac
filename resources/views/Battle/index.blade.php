@@ -12,16 +12,19 @@
 
 @section('content')
 
-<button class="rule-btn">ルール</button>
-<p id="rule-msg" class="off">
-    回答時間2分→シェイク時間20秒で1位の回答を決めます。<br>
-    1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。<br>
-    回答は制限時間内なら何答でも出来ます。<br>
-    時間内に3答以上回答が集まらない場合、もう一度2分間の回答時間となります。<br>
-    シェイクが同数の場合、先に投稿された回答の勝利となります。
-    <span class="rule-btn" style="color: blue">閉じる</span>
+<div class="rule">
+    <button class="rule-btn">ルール</button>
+    <p class="rule-msg off">
+        回答時間2分→シェイク時間20秒で1位の回答を決めます。<br>
+        1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。<br>
+        回答は制限時間内なら何答でも出来ます。<br>
+        時間内に3答以上回答が集まらない場合、もう一度2分間の回答時間となります。<br>
+        シェイクが同数の場合、先に投稿された回答の勝利となります。
+        <span class="rule-btn" style="color: blue">閉じる</span>
 
-</p>
+    </p>
+</div>
+
 
 <p class="situation-msg"></p>
 

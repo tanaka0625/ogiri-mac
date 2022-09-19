@@ -1,9 +1,12 @@
-ruleBtn = document.getElementsByClassName('rule-btn');
-ruleMsg = document.getElementById('rule-msg');
+$(function(){
+    ruleBtn = $('.rule-btn');
 
-for(let i=0; i<ruleBtn.length; i++){
-    ruleBtn[i].addEventListener('click' , () => {
+    ruleBtn.on('click', function(event){
 
-        ruleMsg.classList.toggle('off');
+        ruleMsg = $(this).closest('.rule').find('.rule-msg');
+        ruleMsg.toggleClass('off');
+
     });
-}
+
+
+});

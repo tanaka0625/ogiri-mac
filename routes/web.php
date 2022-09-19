@@ -15,6 +15,8 @@ use App\Http\Controllers\ChoiceAvatorController;
 use App\Http\Controllers\BattleController;
 use App\Http\Controllers\BattleVoteController;
 use App\Http\Controllers\CountLoginedUserController;
+use App\Http\Controllers\TopController;
+use App\Http\Controllers\RuleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\PeriodMiddleware;
 use App\Http\Middleware\JudgeLikeMiddleware;
@@ -35,7 +37,9 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['lastLogin']], function () {
 
-    Route::get('/', [Answer_listController::class, 'index']);
+    Route::get('/', [TopController::class, 'index']);
+    Route::get('/rule', [RuleController::class, 'index']);
+    Route::get('/answer_list', [Answer_listController::class, 'index']);
     Route::get('/question_list', [Question_listController::class, 'index']);
     Route::get('/grouped_answer/{question_id}', [Grouped_answersController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'index']);
