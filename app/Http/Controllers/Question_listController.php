@@ -76,8 +76,11 @@ class Question_listController extends Controller
         return view('Question_list.index', $data);
     }
 
-    public function add(AddAnswerRequest $request)
+    public function add(Request $request)
     {
+        $request->validate([
+            'text' => 'required'
+        ]);
 
         if(!empty($request->file("image")))
         {
