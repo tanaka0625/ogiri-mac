@@ -86,6 +86,13 @@
 
     </div>
 
+    <div id="big-item-container" class="off">
+        <div>
+            <button class='close-btn'>×</button>
+        </div>
+
+        <div id="big-item"></div>
+    </div>
 
     @section('script')
     <script src=" {{ asset('/js/menu.js') }} "></script>

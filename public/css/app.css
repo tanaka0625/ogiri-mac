@@ -51,6 +51,50 @@ button {
     display: none;
 }
 
+#big-item {
+    width: 90%;
+    border: solid yellow 15px;
+    height: 600px;
+    position: relative;
+    background-image: url('/images/icon/frenchfry.png');
+    background-color:rgba(255,255,255,0.8);
+    background-blend-mode:lighten;
+}
+
+#big-item .close {
+    font-size: 20px;
+}
+
+#big-item .question-text {
+    margin-bottom: 100px;
+    display: inline-block;
+    font-size: 19px;
+}
+
+#big-item .text-container {
+    text-align: center;
+}
+
+#big-item .text {
+    font-size: 25px;
+
+
+}
+
+#big-item p {
+    margin: 0;
+}
+
+#big-item .answer-footer {
+    
+    position: absolute;
+    bottom: 0;
+}
+
+#big-item a {
+    color: black;
+}
+
 /* デザインB（タブレット） */
 @media screen and (min-width: 600px) {
     body {
@@ -74,6 +118,7 @@ button {
 @media screen and (min-width: 1025px) {
     body {
         position: relative;
+        width: 375px;
     }
 
     #container {

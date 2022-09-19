@@ -3,6 +3,7 @@
     margin-bottom: 4px;
     position: relative;
     word-break: break-all;
+    background-color: white;
 }
 
 .liked-answer {
@@ -10,6 +11,9 @@
     margin-bottom: 4px;
     position: relative;
 }
+
+
+
 
 .won-answer .text {
     color: gold;
@@ -71,6 +75,13 @@
     margin: 0;
 }
 
+
+.big{
+    height: 500px;
+    color: red;
+    top: 20;
+    z-index: 2;
+}
 
 
 .answer .on {

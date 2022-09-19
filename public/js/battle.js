@@ -20,6 +20,48 @@ $(function(){
 
         }).done(function(data){
 
+
+            function expansion(data){
+
+
+                text = $('.text');
+                text.on('click', function(event){
+            
+                    let index = $(this).closest('.answer').index('.answer');
+                    item = data["answers"][index];
+                    $item = $('.answer').eq(index);
+                    
+                    $('.header').addClass('off');
+                    $('#container').addClass('off');
+                    $('#big-item-container').removeClass('off');
+            
+                    html = 
+                    "<a class='question-text' href='/grouped_answer/" + item["question_id"] + "'>" +
+                        data["question"]["text"] +
+                    "</a>" +
+                    "<div class='text-container'>" +
+                        "<h3 class='text'>" +
+                            item["text"] +
+                        "</h3>" +
+                    "</div>" +
+                    "<div class='answer-footer'>" +
+                        "<p class='info'>" +
+                            $item.find('.info').html() +
+                        "</p>" +
+                    "</div>";
+            
+                    $('#big-item').html(html);
+                });
+            
+                closeBtn = $('.close-btn');
+                closeBtn.on('click', function(event){
+                    $('.header').removeClass('off');
+                    $('#container').removeClass('off');
+                    $('#big-item-container').addClass('off');
+                });
+
+            }
+
             var html = 
             "<div class='item question'>" +
                 "<h3 class='text'>" +
@@ -98,6 +140,8 @@ $(function(){
                     }
                 }
 
+                expansion(data);
+
 
             }else if(data["situation"] ==="recrutingQuestion" ){
 
@@ -142,6 +186,7 @@ $(function(){
                     }
                 }
 
+                expansion(data);
 
             }else if(data["situation"] === "voting"){
 
@@ -219,12 +264,13 @@ $(function(){
                     });
                 }
 
+
             }
 
         }).fail(function(XMLHttpRequest, status, e){
             alert(e);
         });
 
-    }, 900);
+    }, 950);
 
 });
