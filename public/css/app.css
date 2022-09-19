@@ -51,8 +51,14 @@ button {
     display: none;
 }
 
+#big-item-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
 #big-item {
-    width: 90%;
+    width: 340px;
     border: solid yellow 15px;
     height: 600px;
     position: relative;
@@ -118,7 +124,6 @@ button {
 @media screen and (min-width: 1025px) {
     body {
         position: relative;
-        width: 375px;
     }
 
     #container {
