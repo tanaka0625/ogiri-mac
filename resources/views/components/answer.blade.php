@@ -1,10 +1,12 @@
 <div class="item answer">
 
     <p class="vote-msg">※あなたがナゲットしました</p>
-    @if(!empty(App\Models\Question::find($questionId)->image_name))
-        <img src="/images/questions/{{App\Models\Question::find($questionId)->image_name}}" alt="" class="question-img">
-    @endif
     <a href=" {{ url('/grouped_answer/' .$questionId) }} " class="question-text">{{$questionText}}</a>
+    @if(!empty(App\Models\Question::find($questionId)->image_name))
+        <div class="img-container">
+            <img src="/storage/question/{{App\Models\Question::find($questionId)->image_name}}" alt="" class="question-img">
+        </div>
+    @endif
     <h3 class="text">{{$text}}</h3>
     <p class="info">
 
