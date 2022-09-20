@@ -60,25 +60,28 @@ button {
 #big-item {
     width: 340px;
     border: solid yellow 15px;
-    height: 600px;
-    position: relative;
+    height: 500px;
     background-image: url('/images/icon/frenchfry.png');
     background-color:rgba(255,255,255,0.8);
     background-blend-mode:lighten;
 }
 
-#big-item .close {
-    font-size: 20px;
+#big-item-container .close-btn {
+    font-size: 30px;
+    position: absolute;
+    right: 0;
 }
 
 #big-item .question-text {
-    margin-bottom: 100px;
+    margin-top: 30px;
     display: inline-block;
     font-size: 19px;
 }
 
 #big-item .text-container {
     text-align: center;
+    padding: 20px;
+
 }
 
 #big-item .text {
@@ -94,7 +97,7 @@ button {
 #big-item .answer-footer {
     
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
 }
 
 #big-item a {
