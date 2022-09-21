@@ -63,6 +63,19 @@ class Answer extends Model
     }
 
 
+    public function getVoteUsers()
+    {
+        $voteUsers = array();
+        for($i=0; $i<count($this->answer_likes); $i++)
+        {
+            if($this->answer_likes[$i]->kind != 0)
+            {
+                $voteUsers[] = $this->answer_likes[$i]->user;
+            }
+        }
+        return $voteUsers;
+    }
+
 
 
     public function getQuestionText()

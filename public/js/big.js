@@ -27,6 +27,9 @@ $(function(){
                 "<div class='like-user-names off'>" +
                     $item.find('.like-user-names').html() +
                 "</div>" +
+                "<div class='vote-user-names off'>" +
+                    $item.find('.vote-user-names').html() +
+                "</div>" +
             "</div>";
 
         }else{
@@ -47,6 +50,9 @@ $(function(){
                 "<div class='like-user-names off'>" +
                     $item.find('.like-user-names').html() +
                 "</div>" +
+                "<div class='vote-user-names off'>" +
+                    $item.find('.vote-user-names').html() +
+                "</div>" +
             "</div>";
         }
 
@@ -58,6 +64,11 @@ $(function(){
         like = $('#big-item').find('.like');
         like.on('click', function(event){
             $('#big-item').find('.like-user-names').toggleClass('off');
+        });
+
+        vote = $('#big-item').find('.vote');
+        vote.on('click', function(event){
+            $('#big-item').find('.vote-user-names').toggleClass('off');
         });
 
 

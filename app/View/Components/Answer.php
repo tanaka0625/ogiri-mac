@@ -7,35 +7,28 @@ use Illuminate\View\Component;
 class Answer extends Component
 {
 
-    public $text;
-    public $maker;
-    public $like;
-    public $vote;
+    public $item;
     public $questionText;
-    public $questionId;
     public $btnType;
     public $likeUsers;
-    public $userId;
+    public $voteUsers;
     public $questionSituation;
-    public $kind;
+    public $maker;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($text, $maker, $like, $vote, $questionText, $questionId, $btnType, $likeUsers, $userId, $questionSituation, $kind)
+    public function __construct($item ,$questionText, $btnType, $likeUsers, $voteUsers, $questionSituation, $maker)
     {
-        $this->text = $text;
-        $this->maker = $maker;
-        $this->like = $like;
-        $this->vote = $vote;
+
+        $this->item = $item;
         $this->questionText = $questionText;
-        $this->questionId = $questionId;
         $this->btnType = $btnType;
         $this->likeUsers = $likeUsers;
-        $this->userId = $userId;
+        $this->voteUsers = $voteUsers;
         $this->questionSituation = $questionSituation;
-        $this->kind = $kind;
+        $this->maker = $maker;
     }
 
     /**

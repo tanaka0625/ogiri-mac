@@ -99,7 +99,7 @@
 
 @foreach($items as $item)
     @if($item instanceof App\Models\Answer)
-    <x-answer :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :vote='$item->vote' :questionText='$item->getQuestionText() ' :questionId='$item->getQuestionId()' btnType='like' :likeUsers='$item->getLikeUsers()' :userId='$item->user_id' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()' :kind='$item->kind'>
+    <x-answer :item='$item' :maker='$item->getMaker()' :questionText='$item->getQuestionText()' btnType='like' :likeUsers='$item->getLikeUsers()' :voteUsers='$item->getVoteUsers()' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()'>
         {{$item->created_at}}
     </x-answer>
     @elseif($item instanceof App\Models\Question)

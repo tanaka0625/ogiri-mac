@@ -69,6 +69,15 @@
     display: none;
 }
 
+.answer .vote-user-names {
+    width: 80%;
+    display: none;
+}
+
+.answer .user-names-title {
+    margin: 0;
+}
+
 .answer .vote-msg {
     display: none;
     color: red;

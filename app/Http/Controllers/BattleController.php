@@ -86,13 +86,20 @@ class BattleController extends Controller
             }
             $answers = $answers->sortByDesc('battle_vote')->values();
 
+            $voteUsersArray = array();
+            for($i=0; $i<$answers->count(); $i++)
+            {
+                $voteUsersArray[] = $answers[$i]->getVoteUsers();
+            }
+
             $data = [
                 "answers" => $answers,
                 "question" => $question,
                 "questionMakerName" => $questionMakerName,
                 "situation" => $situation,
                 "now" => strtotime($now),
-                "limit_question" => strtotime($question->limit_vote) + 60
+                "limit_question" => strtotime($question->limit_vote) + 60,
+                "voteUsersArray" => $voteUsersArray
             ];
 
         }elseif($question->limit_vote <= $now && $answerCount > 2){
@@ -106,11 +113,18 @@ class BattleController extends Controller
             }
             $answers = $answers->sortByDesc('battle_vote')->values();
 
+            $voteUsersArray = array();
+            for($i=0; $i<$answers->count(); $i++)
+            {
+                $voteUsersArray[] = $answers[$i]->getVoteUsers();
+            }
+
             $data = [
                 "answers" => $answers,
                 "question" => $question,
                 "questionMakerName" => $questionMakerName,
-                "situation" => $situation
+                "situation" => $situation,
+                "voteUsersArray" => $voteUsersArray
             ];
 
 

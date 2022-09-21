@@ -48,6 +48,9 @@ $(function(){
                         "<p class='info'>" +
                             $item.find('.info').html() +
                         "</p>" +
+                        "<div class='vote-user-names off'>" +
+                            $item.find('.vote-user-names').html() +
+                        "</div>" +
                     "</div>";
             
                     $('#big-item').html(html);
@@ -58,6 +61,11 @@ $(function(){
                     $('.header').removeClass('off');
                     $('#container').removeClass('off');
                     $('#big-item-container').addClass('off');
+                });
+
+                vote = $('.vote');
+                vote.on('click', function(event){
+                    $(this).closest('#big-item').find('.vote-user-names').toggleClass('on');
                 });
 
             }
@@ -106,7 +114,17 @@ $(function(){
                 $("#answer-form").addClass("off");
                 $(".items-msg").text("前回の結果");
 
+
                 for(let i=0; i<data["answers"].length; i++){
+
+                    let voteUserNamesHtml = "<p style='margin: 0;'>シェイクしたユーザー</p>";
+
+                    for(let x=0; x<data["voteUsersArray"][i].length; x++){
+
+                        voteUserNamesHtml = voteUserNamesHtml + "<a class='vote-user-name' href='/user/" + data["voteUsersArray"][i][x]["id"] +  "'>" + data["voteUsersArray"][i][x]["name"] + "</a> ";
+
+                    }
+
                     answer = data["answers"][i];
                     html = html +
                     "<div class='item answer'>" +
@@ -123,10 +141,15 @@ $(function(){
                                 "シェイク" +
                             "</span>" +
                         "</p>" +
+                        "<div class='vote-user-names on'>" +
+                            voteUserNamesHtml +
+                        "</div>" +
+
                     "</div>";
                 }
 
                 $(".items").html(html);
+
 
 
                 // vote-msg
@@ -154,6 +177,15 @@ $(function(){
                 $(".items-msg").text("前回の結果");
 
                 for(let i=0; i<data["answers"].length; i++){
+
+                    let voteUserNamesHtml = "<p style='margin: 0;'>シェイクしたユーザー</p>";
+
+                    for(let x=0; x<data["voteUsersArray"][i].length; x++){
+
+                        voteUserNamesHtml = voteUserNamesHtml + "<a class='vote-user-name' href='/user/" + data["voteUsersArray"][i][x]["id"] +  "'>" + data["voteUsersArray"][i][x]["name"] + "</a> ";
+
+                    }
+
                     answer = data["answers"][i];
                     html = html +
                     "<div class='item answer'>" +
@@ -170,6 +202,9 @@ $(function(){
                                 "シェイク" +
                             "</span>" +
                         "</p>" +
+                        "<div class='vote-user-names on'>" +
+                            voteUserNamesHtml +
+                        "</div>" +
                     "</div>";
                 }
 
@@ -271,6 +306,6 @@ $(function(){
             alert(e);
         });
 
-    }, 950);
+    }, 1000);
 
 });

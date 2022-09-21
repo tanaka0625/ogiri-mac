@@ -17,6 +17,23 @@ for(let i=0; i<answer.length; i++) {
 
     }
 
+
+    let voteUserNames = answer[i].getElementsByClassName('vote-user-names');
+    let vote = answer[i].getElementsByClassName('vote');
+
+    
+    if(typeof vote[0] != "undefined") {
+
+        vote[0].addEventListener('click' , () => {
+            if(voteUserNames[0].classList.contains('on')) {
+                voteUserNames[0].classList.remove('on');
+            }else{
+                voteUserNames[0].classList.add('on');
+            }
+        });
+
+    }
+
 }
 
 
