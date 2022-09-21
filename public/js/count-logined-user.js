@@ -19,11 +19,13 @@ $(function(){
     
         }).done(function(data){
     
-            console.log(data["loginedUserCnt"]);
             $("#logined-user-cnt").text("10分以内にログインした人数 " + data["loginedUserCnt"] + "人");
     
         }).fail(function(XMLHttpRequest, status, e){
-            alert(e);
+            if (!alert("セッションがタイムアウトしました。再度ログインしてください。")) {
+                window.location.href = "/login";
+
+            }
         });
     };
 

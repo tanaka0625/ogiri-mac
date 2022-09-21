@@ -303,7 +303,11 @@ $(function(){
             }
 
         }).fail(function(XMLHttpRequest, status, e){
-            alert(e);
+
+            if (!alert("セッションがタイムアウトしました。再度ログインしてください。")) {
+                window.location.href = "/login";
+
+            }
         });
 
     }, 1000);
