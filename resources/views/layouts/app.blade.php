@@ -44,6 +44,7 @@
             @else
                 <p class="link-btn"><a href=" {{ url('/login') }} ">ログイン</a></p>
             @endif
+            <p class="link-btn"><a href=" {{ url('/ranking') }} ">ランキング</a></p>
             <p class="link-btn"><a href=" {{ url('/rule') }} ">ルール</a></p>
             
             <p class="close">閉じる</p>
