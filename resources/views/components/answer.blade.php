@@ -1,6 +1,12 @@
 <div class="item answer">
 
-    <p class="vote-msg">※あなたがナゲットしました</p>
+    @if($questionSituation === "finished" && $item->kind === 1)
+        <p class="vote-msg">※あなたがナゲットしました</p>
+    @elseif($questionSituation === "fast" && $item->kind === 2)
+        <p class="vote-msg">※あなたがシェイクしました</p>
+    @endif
+
+
     <a href=" {{ url('/grouped_answer/' .$item->question_id) }} " class="question-text">{{$questionText}}</a>
     @if(!empty(App\Models\Question::find($item->question_id)->image_name))
         <div class="img-container">
