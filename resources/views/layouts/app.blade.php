@@ -40,6 +40,7 @@
             <p class="link-btn"><a href=" {{ url('question_list?situation=voting') }} ">ナゲット</a></p>
             <p class="link-btn"><a href=" {{ url('/battle') }} ">ファスト</a></p>
             @if(Auth::check())
+                <p class="link-btn"><a href=" {{ url('/logout') }} ">ログアウト</a></p>
                 <p class="link-btn"><a href=" {{ url('/my_page') }} ">マイページ</a></p>
             @else
                 <p class="link-btn"><a href=" {{ url('/login') }} ">ログイン</a></p>
