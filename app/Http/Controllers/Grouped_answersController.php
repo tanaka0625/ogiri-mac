@@ -35,18 +35,13 @@ class Grouped_answersController extends Controller
         }
 
         $items = $items->prepend($question)->values();
+        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-        if(Auth::check()){
-            $items = Functions::judgeLiked($items, Auth::user()->id);
-            $items = Functions::judgeVoted($items, Auth::user()->id);
-            $items = Functions::judgeBattleVoted($items, Auth::user()->id);
-            $items = Functions::judgeWin($items);
-        }
+
+        $likeUsers = Functions::likeUsersList($items);
+        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
         $now = date("Y-m-d H:i:s");
-
-
-        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
         $data = [
             'items' => $items,
@@ -54,7 +49,9 @@ class Grouped_answersController extends Controller
             'question' => $question,
             'questionSituation' => $questionSituation,
             'btnType' => $btnType,
-            'questionId' => $question_id
+            'questionId' => $question_id,
+            'likeUsers' => $likeUsers,
+            'jsonLikeUsers' => $jsonLikeUsers
         ];
 
 

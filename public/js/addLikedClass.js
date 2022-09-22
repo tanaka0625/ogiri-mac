@@ -1,14 +1,18 @@
+console.log(likeUsers[0]["like"]);
+for(let i=0; i<likeUsers.length; i++){
 
-for(let i=0; i<items.length; i++){
-    if(items[i]['myLikeAnswer'] === 1)
+    for(let x=0; x<likeUsers[i]["like"].length; x++)
     {
-        item[i].classList.add('liked-answer');
+        if(likeUsers[i]["like"][x]["id"] == userId && typeof items[i]["question_id"] != "undefined")
+        {
+            item[i].classList.add("liked-answer");
+
+        }else if(likeUsers[i]["like"][x]["id"] == userId){
+
+            item[i].classList.add("liked-question");
+
+        }
     }
 }
 
-for(let i=0; i<items.length; i++){
-    if(items[i]['myLikeQuestion'] === 1)
-    {
-        item[i].classList.add('liked-question');
-    }
-}
+

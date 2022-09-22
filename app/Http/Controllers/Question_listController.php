@@ -53,11 +53,11 @@ class Question_listController extends Controller
 
         }
 
-        if(Auth::check()){
-            $items = Functions::judgeLiked($items, Auth::user()->id);
-        }
-
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
+        $likeUsers = Functions::likeUsersList($items);
+        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
 
 
 
@@ -70,7 +70,9 @@ class Question_listController extends Controller
             'situation' => $situation,
             'page' => $page,
             'pageLinks' => $pageLinks,
-            'maxPage' => $maxPage
+            'maxPage' => $maxPage,
+            'likeUsers' => $likeUsers,
+            'jsonLikeUsers' => $jsonLikeUsers
         ];
 
         return view('Question_list.index', $data);

@@ -97,17 +97,17 @@
 
 
 
-@foreach($items as $item)
-    @if($item instanceof App\Models\Answer)
-    <x-answer :item='$item' :maker='$item->getMaker()' :questionText='$item->getQuestionText()' btnType='like' :likeUsers='$item->getLikeUsers()' :voteUsers='$item->getVoteUsers()' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()'>
-        {{$item->created_at}}
+@for($i=0; $i<$items->count(); $i++)
+    @if($items[$i] instanceof App\Models\Answer)
+    <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
+        {{$items[$i]->created_at}}
     </x-answer>
-    @elseif($item instanceof App\Models\Question)
-    <x-question :text='$item->text' :maker='$item->getMaker()' :like='$item->like' :answerNumber='$item->answer_number' :imgName='$item->image_name' :questionId='$item->id' :userId='$item->user_id' :likeUsers='$item->getLikeUsers()'>
-        {{$item->created_at}}
+    @elseif($items[$i] instanceof App\Models\Question)
+    <x-question :text='$items[$i]->text' :maker='$items[$i]->getMaker()' :like='$items[$i]->like' :answerNumber='$items[$i]->answer_number' :imgName='$items[$i]->image_name' :questionId='$items[$i]->id' :userId='$items[$i]->user_id' :likeUsers='$likeUsers[$i]["like"]'>
+        {{$items[$i]->created_at}}
     </x-question>
     @endif
-@endforeach
+@endfor
 
 <x-page url="user/{{$id}}?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
@@ -115,6 +115,7 @@
     @parent
     <script>
         let items = <?php echo $jsonItems;?>;
+        let likeUsers = <?php echo $jsonLikeUsers;?>;
     </script>
     <script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
     <script src="{{ asset('/js/QuestionLikeUserNames.js') }}"></script>

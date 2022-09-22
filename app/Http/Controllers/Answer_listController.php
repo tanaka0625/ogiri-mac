@@ -35,15 +35,12 @@ class Answer_listController extends Controller
         }
 
         $items = Answer::withInPeriod($period)->orderBy($order, 'desc')->forpage($page, 30)->get();
-
-        if(Auth::check()){
-            $items = Functions::judgeLiked($items, Auth::user()->id);
-            $items = Functions::judgeVoted($items, Auth::user()->id);
-            $items = Functions::judgeWin($items);
-        }
-
-
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
+
+        $likeUsers = Functions::likeUsersList($items);
+        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
 
         $makePageLinks = Functions::makePageLinks(Answer::withInperiod($period)->count(), $page);
         $pageLinks = $makePageLinks['pageLinks'];
@@ -69,7 +66,9 @@ class Answer_listController extends Controller
             'itemsTitle' => $itemsTitle,
             'nowPeriod' => date('Ym'),
             'pageLinks' => $pageLinks,
-            'maxPage' => $maxPage
+            'maxPage' => $maxPage,
+            'likeUsers' => $likeUsers,
+            'jsonLikeUsers' => $jsonLikeUsers
         ];
 
 

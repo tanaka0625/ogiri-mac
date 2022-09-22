@@ -41,11 +41,11 @@
     </div>
 
     <div class="itmes">
-        @foreach($items as $item)
-            <x-answer :item='$item' :maker='$item->getMaker()' :questionText='$item->getQuestionText()' btnType='like' :likeUsers='$item->getLikeUsers()' :voteUsers='$item->getVoteUsers()' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()'>
-                {{$item->created_at}}
+        @for($i=0; $i<$items->count(); $i++)
+            <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
+                {{$items[$i]->created_at}}
             </x-answer>
-        @endforeach
+        @endfor
     </div>
 
     <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
@@ -57,9 +57,10 @@
     @parent
     <script>
         let items = <?php echo $jsonItems;?>;
+        let likeUsers = <?php echo $jsonLikeUsers;?>;
+
     </script>
     <script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
-    <script src=" {{ asset('/js/add-won-class.js') }} "></script>
     <script src=" {{ asset('/js/big.js') }} "></script>
     @if(Auth::check())
     <script>

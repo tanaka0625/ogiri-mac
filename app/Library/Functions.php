@@ -30,69 +30,27 @@ class Functions
         ];
     }
 
-    public static function judgeLiked($items, $userId)
+
+    public static function likeUsersList($items)
     {
-        
-        for($i=0; $i<count($items); $i++){
-
-
-            if($items[$i] instanceof Answer){
-                $judgeAleadyLike = Answer_like::where('answer_id', $items[$i]->id)->where('user_id', $userId)->where('kind', 0)->count();
-                if($judgeAleadyLike > 0){
-                    $items[$i]->myLikeAnswer = 1;
-                }else{
-                    $items[$i]->myLikeAnswer = 0;
-                }
-            }else
+        $likeUsers = array();
+        for($i=0; $i<$items->count(); $i++)
+        {
+            if($items[$i] instanceof Answer)
             {
-                $judgeAleadyLike = Question_like::where('question_id', $items[$i]->id)->where('user_id', $userId)->where('kind', 0)->count();
-                if($judgeAleadyLike > 0){
-                    $items[$i]->myLikeQuestion = 1;
-                }else{
-                    $items[$i]->myLikeQuestion = 0;
-                }
+                $likeUsers[$i]["like"] = $items[$i]->getLikeUsers();
+                $likeUsers[$i]["vote"] = $items[$i]->getVoteUsers();
+
+            }else{
+
+                $likeUsers[$i]["like"] = $items[$i]->getLikeUsers();
+
             }
         }
 
-        return $items;
+        return $likeUsers;
     }
 
-
-
-    public static function judgeVoted($items, $userId)
-    {
-        for($i=0; $i<count($items); $i++){
-
-            if($items[$i] instanceof Answer){
-                $judgeVoted = Answer_like::where('answer_id', $items[$i]->id)->where('user_id', $userId)->where('kind', 1)->count();
-                if($judgeVoted > 0){
-                    $items[$i]->myVoteAnswer = 1;
-                }else{
-                    $items[$i]->myVoteAnswer = 0;
-                }
-            }
-        }
-
-        return $items;
-    }
-
-
-    public static function judgeBattleVoted($items, $userId)
-    {
-        for($i=0; $i<count($items); $i++){
-
-            if($items[$i] instanceof Answer){
-                $judgeVoted = Answer_like::where('answer_id', $items[$i]->id)->where('user_id', $userId)->where('kind', 2)->count();
-                if($judgeVoted > 0){
-                    $items[$i]->myBattleVoteAnswer = 1;
-                }else{
-                    $items[$i]->myBattleVoteAnswer = 0;
-                }
-            }
-        }
-
-        return $items;
-    }
 
 
 
@@ -139,8 +97,7 @@ class Functions
         $answerLikePoint = 0;
         for($i=0; $i<$answers->count(); $i++)
         {
-            $answerLikePoint = $answerLikePoint + $answers[$i]->answer_likes->where("kind", 0)->count() * 0.5
-            ;
+            $answerLikePoint = $answerLikePoint + $answers[$i]->answer_likes->where("kind", 0)->count() * 0.5;
         }
 
         $votePoint = 0;

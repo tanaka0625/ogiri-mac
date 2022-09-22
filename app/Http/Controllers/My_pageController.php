@@ -83,13 +83,11 @@ class My_pageController extends Controller
 
 
         $items = $items->forPage($page, 30)->values();
-
-        $items = Functions::judgeLiked($items, Auth::user()->id);
-        $items = Functions::judgeVoted($items, Auth::user()->id);
-        $items = Functions::judgeWin($items);
-
-
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
+        $likeUsers = Functions::likeUsersList($items);
+        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
 
         $data = [
             'items' => $items,
@@ -102,7 +100,10 @@ class My_pageController extends Controller
             'id' => $id,
             'page' => $page,
             "point" => $point,
-            "avatorNumber" => $avatorNumber        ];
+            "avatorNumber" => $avatorNumber,
+            'likeUsers' => $likeUsers,
+            "jsonLikeUsers" => $jsonLikeUsers
+            ];
 
         return view('My_page.index', $data);
 

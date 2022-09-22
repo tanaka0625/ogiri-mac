@@ -29,22 +29,18 @@ class searchController extends Controller
             $users = User::where('name', 'like', '%' .$keyWord. '%')->get();
 
             $items = $answers->concat($questions);
-
-            if(Auth::check()){
-                $items = Functions::judgeLiked($items, Auth::user()->id);
-                $items = Functions::judgeVoted($items, Auth::user()->id);
-                $items = Functions::judgeWin($items);
-            }
-
             $items = $items->sortByDesc('created_at');
 
             $makePageLinks = Functions::makePageLinks(count($items), $page);
             $pageLinks = $makePageLinks['pageLinks'];
             $maxPage = $makePageLinks['maxPage'];
 
-            $items = $items->forPage($page, 30);
-
+            $items = $items->forPage($page, 30)->values();
             $jsonItems = json_encode(array_values($items->toArray()),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
+            $likeUsers = Functions::likeUsersList($items);
+            $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+    
 
             $data = [
                 'items' => $items,
@@ -53,7 +49,9 @@ class searchController extends Controller
                 'jsonItems' => $jsonItems,
                 'pageLinks' => $pageLinks,
                 'maxPage' => $maxPage,
-                'page' => $page
+                'page' => $page,
+                'likeUsers' => $likeUsers,
+                'jsonLikeUsers' => $jsonLikeUsers
 
             ];
         

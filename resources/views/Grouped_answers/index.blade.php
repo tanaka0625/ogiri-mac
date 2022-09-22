@@ -73,31 +73,31 @@
 
 <div class="entry-answers">
     <h3>エントリーマック</h3>
-    @foreach($items as $item)
+    @for($i=0; $i<$items->count(); $i++)
 
-        @if($item->kind === 0 || $item instanceof App\Models\Question)
+        @if($items[$i]->kind === 0 || $items[$i] instanceof App\Models\Question)
             @continue;
         @else
-            <x-answer :item='$item' :maker='$item->getMaker()' :questionText='$item->getQuestionText()' :btnType='$btnType' :likeUsers='$item->getLikeUsers()' :voteUsers='$item->getVoteUsers()' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()'>
-                {{$item->created_at}}
+            <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' :btnType='$btnType' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
+                {{$items[$i]->created_at}}
             </x-answer>
         @endif
-    @endforeach
+    @endfor
 </div>
 
 <div class="late-answers">
     <h3>遅マック</h3>
-    @foreach($items as $item)
+    @for($i=0; $i<$items->count(); $i++)
 
-        @if($item->kind != 0 || $item instanceof App\Models\Question)
+        @if($items[$i]->kind != 0 || $items[$i] instanceof App\Models\Question)
             @continue;
         @else
 
-            <x-answer :item='$item' :maker='$item->getMaker()' :questionText='$item->getQuestionText()' btnType="like" :likeUsers='$item->getLikeUsers()' :voteUsers='$item->getVoteUsers()' :questionSituation='App\Models\Question::find($item->question_id)->getSituation()'>
-                {{$item->created_at}}
+            <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType="like" :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
+                {{$items[$i]->created_at}}
             </x-answer>
         @endif
-    @endforeach
+    @endfor
 </div>
 
 <style>
@@ -117,6 +117,7 @@
     @parent
     <script>
         let items = <?php echo $jsonItems;?>;
+        let likeUsers = <?php echo $jsonLikeUsers;?>;
     </script>
     <script src=" {{ asset('/js/add-won-class.js') }} "></script>
     <script src=" {{ asset('/js/AnswerLikeUserNames.js') }} "></script>
