@@ -105,13 +105,11 @@
     @if($items[$i] instanceof App\Models\Answer && $category === "like")
 
         <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-            {{$items[$i]->created_at}}
         </x-answer>
 
     @elseif($items[$i] instanceof App\Models\Answer && $category === "post")
 
         <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='delete' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-            {{$items[$i]->created_at}}
         </x-answer>
 
     @else

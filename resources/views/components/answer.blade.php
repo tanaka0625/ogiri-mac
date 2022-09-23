@@ -66,7 +66,7 @@
 
 
     <div class="answer-footer">
-        <p>{{$slot}}</p>
+        <p>{{$item->created_at}}</p>
         @if($btnType === 'vote')
         <img class="vote-btn" src=" {{ asset('/images/icon/chicken_nugget.png') }} " alt="">
         @elseif($btnType === "like")

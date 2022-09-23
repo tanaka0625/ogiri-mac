@@ -27,7 +27,6 @@
 
 
 <x-question :item='$question' :maker='$question->getMaker()' :like='$question->like' :likeUsers='$question->getLikeUsers()'>
-    {{$question->created_at}}
 </x-question>
 
 @if(Auth::user())
@@ -79,7 +78,6 @@
             @continue;
         @else
             <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' :btnType='$btnType' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-                {{$items[$i]->created_at}}
             </x-answer>
         @endif
     @endfor
@@ -94,7 +92,6 @@
         @else
 
             <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType="like" :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-                {{$items[$i]->created_at}}
             </x-answer>
         @endif
     @endfor

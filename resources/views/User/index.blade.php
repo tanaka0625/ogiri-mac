@@ -100,7 +100,6 @@
 @for($i=0; $i<$items->count(); $i++)
     @if($items[$i] instanceof App\Models\Answer)
     <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-        {{$items[$i]->created_at}}
     </x-answer>
     @elseif($items[$i] instanceof App\Models\Question)
     <x-question :item='$items[$i]' :maker='$items[$i]->getMaker()' :likeUsers='$likeUsers[$i]["like"]'>
