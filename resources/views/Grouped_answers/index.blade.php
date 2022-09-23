@@ -26,7 +26,7 @@
 </h3>
 
 
-<x-question :item='$question' :maker='$question->getMaker()' :like='$question->like' :likeUsers='$question->getLikeUsers()'>
+<x-question :item='$question' :maker='$question->getMaker()' :like='$question->like' :likeUsers='$question->getLikeUsers()' :situation='$question->getSituation()'>
 </x-question>
 
 @if(Auth::user())

@@ -10,7 +10,15 @@
         @endforeach
     </div>
     <div class="question-footer">
-        <p>{{$item->created_at}}</p>
+
+        @if($situation === "recruting")
+            <p>回答期限:{{$item->limit_answer}}</p>
+        @elseif($situation === "voting")
+            <p>ナゲット期限:{{$item->limit_vote}}</p>
+        @else
+            <p>{{$item->created_at}}</p>
+        @endif
+        
         <img class="like-btn" src="/images/icon/cola.png" alt="">
     </div>
 </div>

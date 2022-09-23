@@ -114,7 +114,7 @@
 
     @else
 
-        <x-question :item='$items[$i]' :maker='$items[$i]->getMaker()' :likeUsers='$likeUsers[$i]["like"]'>
+        <x-question :item='$items[$i]' :maker='$items[$i]->getMaker()' :likeUsers='$likeUsers[$i]["like"]' :situation='$items[$i]->getSituation()'>
         </x-question>
     @endif
 @endfor
