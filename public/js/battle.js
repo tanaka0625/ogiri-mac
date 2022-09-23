@@ -150,18 +150,28 @@ $(function(){
 
                 $(".items").html(html);
 
-
-
-                // vote-msg
                 let answers = data["answers"];
                 let $answer = $('.answer');
-                for(let i=0; i<answers.length; i++){
-                    if(answers[i]['myBattleVoteAnswer'] == 1){
-                        $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
-                        $answer.eq(i).find('.vote-msg').addClass('on');
+                let likeUsers = data["likeUsers"];
 
+
+                if(userId != "undefined"){
+
+                    // vote-msg
+                    for(let i=0; i<answers.length; i++){
+
+                        for(let x=0; x<likeUsers[i]["vote"].length; x++){
+
+                            if(userId == likeUsers[i]["vote"][x]["id"]){
+
+                                $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
+                                $answer.eq(i).find('.vote-msg').addClass('on');
+
+                            }
+                        }
                     }
                 }
+
 
                 expansion(data);
 
@@ -210,14 +220,30 @@ $(function(){
 
                 $(".items").html(html);
 
-                // vote-msg
                 let answers = data["answers"];
                 let $answer = $('.answer');
-                for(let i=0; i<answers.length; i++){
-                    if(answers[i]['myBattleVoteAnswer'] == 1){
-                        $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
-                        $answer.eq(i).find('.vote-msg').addClass('on');
+                let likeUsers = data["likeUsers"];
 
+
+                if(userId != "undefined"){
+
+
+                    // vote-msg
+                    for(let i=0; i<answers.length; i++){
+
+
+                        for(let x=0; x<likeUsers[i]["vote"].length; x++){
+
+
+
+                            if(userId == likeUsers[i]["vote"][x]["id"]){
+                                console.log($answer.eq(i));
+
+                                $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
+                                $answer.eq(i).find('.vote-msg').addClass('on');
+
+                            }
+                        }
                     }
                 }
 
@@ -251,15 +277,25 @@ $(function(){
 
                 $(".items").html(html);
 
-
-                // vote-msg
-                let $answer = $('.answer');
                 let answers = data["answers"];
-                for(let i=0; i<answers.length; i++){
-                    if(answers[i]['myBattleVoteAnswer'] == 1){
-                        $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
-                        $answer.eq(i).find('.vote-msg').addClass('on');
+                let $answer = $('.answer');
+                let likeUsers = data["likeUsers"];
 
+
+                if(userId != "undefined"){
+
+                    // vote-msg
+                    for(let i=0; i<answers.length; i++){
+
+                        for(let x=0; x<likeUsers[i]["vote"].length; x++){
+
+                            if(userId == likeUsers[i]["vote"][x]["id"]){
+
+                                $answer.eq(i).find('.vote-msg').text("あなたがシェイクしました");
+                                $answer.eq(i).find('.vote-msg').addClass('on');
+
+                            }
+                        }
                     }
                 }
 
@@ -305,7 +341,7 @@ $(function(){
         }).fail(function(XMLHttpRequest, status, e){
 
             if (!alert("セッションがタイムアウトしました。再度ログインしてください。")) {
-                window.location.href = "/login";
+                // window.location.href = "/login";
 
             }
         });

@@ -80,11 +80,10 @@ class BattleController extends Controller
             $situation = "watingQuestion";
             $x =1;
 
-            if(Auth::check())
-            {
-                $answers = Functions::judgeBattleVoted($answers, Auth::user()->id);
-            }
+
             $answers = $answers->sortByDesc('battle_vote')->values();
+            $likeUsers = Functions::likeUsersList($answers);
+
 
             $voteUsersArray = array();
             for($i=0; $i<$answers->count(); $i++)
@@ -94,6 +93,8 @@ class BattleController extends Controller
 
             $data = [
                 "answers" => $answers,
+                "likeUsers" => $likeUsers,
+                
                 "question" => $question,
                 "questionMakerName" => $questionMakerName,
                 "situation" => $situation,
@@ -107,11 +108,9 @@ class BattleController extends Controller
             $situation = "recrutingQuestion";
             $x = 5;
 
-            if(Auth::check())
-            {
-                $answers = Functions::judgeBattleVoted($answers, Auth::user()->id);
-            }
             $answers = $answers->sortByDesc('battle_vote')->values();
+            $likeUsers = Functions::likeUsersList($answers);
+
 
             $voteUsersArray = array();
             for($i=0; $i<$answers->count(); $i++)
@@ -121,6 +120,7 @@ class BattleController extends Controller
 
             $data = [
                 "answers" => $answers,
+                "likeUsers" => $likeUsers,
                 "question" => $question,
                 "questionMakerName" => $questionMakerName,
                 "situation" => $situation,
@@ -146,13 +146,12 @@ class BattleController extends Controller
             $situation = "voting";
             $x = 3;
 
-            if(Auth::check())
-            {
-                $answers = Functions::judgeBattleVoted($answers, Auth::user()->id);
-            }
+            $likeUsers = Functions::likeUsersList($answers);
+
 
             $data = [
                 "answers" => $answers,
+                "likeUsers" => $likeUsers,
                 "question" => $question,
                 "questionMakerName" => $questionMakerName,
                 "situation" => $situation,
