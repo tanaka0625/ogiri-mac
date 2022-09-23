@@ -6,13 +6,8 @@ use Illuminate\View\Component;
 
 class Question extends Component
 {
-    public $text;
+    public $item;
     public $maker;
-    public $like;
-    public $answerNumber;
-    public $imgName;
-    public $questionId;
-    public $userId;
     public $likeUsers;
 
     /**
@@ -20,15 +15,10 @@ class Question extends Component
      *
      * @return void
      */
-    public function __construct($text, $maker, $like, $answerNumber, $imgName, $questionId, $userId, $likeUsers)
+    public function __construct($item, $maker, $likeUsers)
     {
-        $this->text = $text;
+        $this->item = $item;
         $this->maker = $maker;
-        $this->like = $like;
-        $this->answerNumber = $answerNumber;
-        $this->imgName = $imgName;
-        $this->questionId = $questionId;
-        $this->userId = $userId;
         $this->likeUsers = $likeUsers;
     }
 

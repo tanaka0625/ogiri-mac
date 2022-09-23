@@ -26,7 +26,7 @@
 </h3>
 
 
-<x-question :text='$question->text' :maker='$question->getMaker()' :like='$question->like' :answerNumber='$question->answer_number' :imgName='$question->image_name' :questionId='$question->id' :userId='$question->user_id' :likeUsers='$question->getLikeUsers()'>
+<x-question :item='$question' :maker='$question->getMaker()' :like='$question->like' :likeUsers='$question->getLikeUsers()'>
     {{$question->created_at}}
 </x-question>
 

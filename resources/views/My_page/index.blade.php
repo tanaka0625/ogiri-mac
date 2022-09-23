@@ -116,8 +116,7 @@
 
     @else
 
-        <x-question :text='$items[$i]->text' :maker='$items[$i]->getMaker()' :like='$items[$i]->like' :answerNumber='$items[$i]->answer_number' :imgName='$items[$i]->image_name' :questionId='$items[$i]->id' :userId='$items[$i]->user_id' :likeUsers='$likeUsers[$i]["like"]'>
-            {{$items[$i]->created_at}}
+        <x-question :item='$items[$i]' :maker='$items[$i]->getMaker()' :likeUsers='$likeUsers[$i]["like"]'>
         </x-question>
     @endif
 @endfor
