@@ -1,8 +1,10 @@
 <div class="item answer">
 
-    @if($questionSituation === "finished" && $item->kind === 1)
+    @if($questionSituation === "finished" && $item->kind == 1)
         <p class="vote-msg">※あなたがナゲットしました</p>
-    @elseif($questionSituation === "fast" && $item->kind === 2)
+    @elseif($questionSituation === "voting" && $item->kind == 1)
+        <p class="vote-msg">※あなたがナゲットしました</p>
+    @elseif($questionSituation === "fast" && $item->kind == 2)
         <p class="vote-msg">※あなたがシェイクしました</p>
     @endif
 
