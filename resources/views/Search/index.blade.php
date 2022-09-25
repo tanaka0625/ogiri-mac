@@ -68,7 +68,6 @@
     
     </script>
     <script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
-    <script src=" {{ asset('/js/add-won-class.js') }} "></script>
     <script src="{{ asset('/js/QuestionLikeUserNames.js') }}"></script>
     <script src=" {{ asset('/js/big.js') }} "></script>
 
