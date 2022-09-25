@@ -59,12 +59,20 @@ class NoticeController extends Controller
         {
             $answers = $answers->concat($myQuestions[$i]->answers);
         }
+
+        $answers = $answers->filter(function ($answer, $key) use ($id) {
+            return $answer->user_id != $id;
+        });
+
         $answers = $answers->sortByDesc('created_at')->take(30)->values();
+
 
 
         $items = $likedAnswers->concat($likedQuestions);
         $items = $items->concat($answers);
         $items = $items->sortByDesc('created_at')->take(30)->values();
+        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+
 
         $likeUsers = Functions::likeUsersList($items);
         $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
@@ -73,7 +81,9 @@ class NoticeController extends Controller
         $data = [
 
             "items" => $items,
-            "likeUsers" => $likeUsers
+            "jsonItems" => $jsonItems,
+            "likeUsers" => $likeUsers,
+            "jsonLikeUsers" => $jsonLikeUsers
 
         ];
 
