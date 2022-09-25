@@ -57,6 +57,25 @@
 @section('script')
 @parent
 
+
+<script>
+    let items = <?php echo $jsonItems;?>;
+    let likeUsers = <?php echo $jsonLikeUsers;?>;
+
+</script>
+<script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
+<script src=" {{ asset('/js/big.js') }} "></script>
+
+@if(Auth::check())
+    <script>
+        let userId = "<?php echo Auth::user()->id;?>";
+    </script>
+    <script src="{{ asset('/js/like.js') }}"></script>
+    <script src="{{ asset('/js/addLikedClass.js') }}"></script>
+    <script src="{{ asset('/js/addVoteMsg.js') }}"></script>
+@endif
+
+
 @endsection
 
 @endsection
