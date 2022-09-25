@@ -41,6 +41,7 @@
             <p class="link-btn"><a href=" {{ url('/battle') }} ">ファスト</a></p>
             @if(Auth::check())
                 <p class="link-btn"><a href=" {{ url('/my_page') }} ">マイページ</a></p>
+                <p class="link-btn"><a href=" {{ url('/notice') }} ">通知</a></p>
             @else
                 <p class="link-btn"><a href=" {{ url('/login') }} ">ログイン</a></p>
             @endif
