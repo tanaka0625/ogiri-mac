@@ -18,6 +18,7 @@ use App\Http\Controllers\CountLoginedUserController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\PeriodMiddleware;
 use App\Http\Middleware\JudgeLikeMiddleware;
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['lastLogin']], function () {
     Route::get('/grouped_answer/{question_id}', [Grouped_answersController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'index']);
     Route::get('/my_page', [My_pageController::class, 'index'])->middleware('checkLogin');
+    Route::get('/notice', [NoticeController::class, 'index'])->middleware('checkLogin');
     Route::get('/search', [SearchController::class, 'index']);
     Route::get('/ranking', [RankingController::class, 'index']);
     Route::post('/like', [LikeController::class, 'index']);

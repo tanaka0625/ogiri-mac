@@ -41,10 +41,12 @@ class Functions
                 $likeUsers[$i]["like"] = $items[$i]->getLikeUsers();
                 $likeUsers[$i]["vote"] = $items[$i]->getVoteUsers();
 
-            }else{
+            }elseif($items[$i] instanceof Question){
 
                 $likeUsers[$i]["like"] = $items[$i]->getLikeUsers();
 
+            }else{
+                $likeUsers[$i] = 0;
             }
         }
 
