@@ -31,8 +31,8 @@ $(function(){
 
     countLoginedUser();
 
-    setInterval(function(){
-        countLoginedUser();
-    }, 1000*10);
+    // setInterval(function(){
+    //     countLoginedUser();
+    // }, 1000*10);
 
 });
