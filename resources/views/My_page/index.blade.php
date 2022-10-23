@@ -101,23 +101,20 @@
 
 
 
-@for($i=0; $i<$items->count(); $i++)
-    @if($items[$i] instanceof App\Models\Answer && $category === "like")
+<div class="items">
+    <div class="item-conteiner" v-for="(item, index) in items" :key="item['key']">
 
-        <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-        </x-answer>
+        <items-answer :item="item" :like-users="likeUsersList[index]" btn-type="like" v-on:add-answer-like="addAnswerLike"
+        v-on:minus-answer-like="minusAnswerLike" v-if="'answer' in item && category === 'like'"></items-answer>
 
-    @elseif($items[$i] instanceof App\Models\Answer && $category === "post")
+        <items-answer :item="item" :like-users="likeUsersList[index]" btn-type="delete" v-if="'answer' in item && category === 'post'"
+        v-on:delete-answer="deleteAnswer"></items-answer>
 
-        <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='delete' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-        </x-answer>
+        <items-question :item="item" :like-users="likeUsersList[index]" v-if="'question' in item" v-on:add-question-like="addQuestionLike" 
+        v-on:minus-question-like="minusQuestionLike"></items-qeustion>
 
-    @else
-
-        <x-question :item='$items[$i]' :maker='$items[$i]->getMaker()' :likeUsers='$likeUsers[$i]["like"]' :situation='$items[$i]->getSituation()'>
-        </x-question>
-    @endif
-@endfor
+    </div>
+</div>
 
 <x-page url="my_page?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
@@ -125,25 +122,93 @@
     @parent
     <script>
         let items = <?php echo $jsonItems;?>;
-        let likeUsers = <?php echo $jsonLikeUsers;?>;
+        let likeUsersList = <?php echo $jsonLikeUsersList;?>;
+        let category = "<?php echo $category;?>";
     </script>
-    <script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
-    <script src=" {{ asset('/js/add-won-class.js') }} "></script>
-    <script src="{{ asset('/js/QuestionLikeUserNames.js') }}"></script>
     <script src=" {{ asset('/js/big.js') }} "></script>
+    <script src=" {{ asset('/js/question.js') }} "></script>
+    <script src="{{ asset('/js/answer.js') }}"></script>
 
     @if(Auth::check())
         <script>
-            let userId = "<?php echo Auth::user()->id;?>";
+            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
         </script>
-        @if($category === "post")
-        <script src=" {{ asset('/js/delete.js') }} "></script>
-        @else
-        <script src="{{ asset('/js/like.js') }}"></script>
-        <script src="{{ asset('/js/addLikedClass.js') }}"></script>
-        <script src="{{ asset('/js/addVoteMsg.js') }}"></script>
-        @endif
+    @else
+        <script>
+            let user = "undefined";
+        </script>
     @endif
+
+    <script>
+        let app = new Vue({
+
+            el: ".content",
+            data: {
+                items: items,
+                likeUsersList: likeUsersList,
+                category: category
+            },
+            methods: {
+
+                addAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].push(user);
+                        }
+                    }
+                },
+                minusAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
+                            
+                        }
+                    }
+                },
+                addQuestionLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].push(user);
+                        }
+                    }
+                },
+                minusQuestionLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
+                            
+                        }
+                    }
+                },
+                deleteAnswer: function(item, likeUsers) {
+                    console.log(this.likeUsersList);
+                    for(let i=0; i<this.items.length; i++){
+                        if(item === items[i]){
+                            let index = this.items.findIndex(element => element == item);
+                            this.items.splice(index,1);
+                            this.likeUsersList.splice(index,1);
+                            break;
+                        }
+                    }
+                    console.log(this.likeUsersList);
+
+                }
+            }
+        })
+    </script>
+
 @endsection
 
 @endsection

@@ -72,32 +72,23 @@
 
 <div class="entry-answers">
     <h3>エントリーマック</h3>
-    @for($i=0; $i<$items->count(); $i++)
+    <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="vote" 
+    v-if="item['answer'].kind == 1 && item['question_situation'] === 'voting'" v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
 
-        @if($items[$i]->kind === 0 || $items[$i] instanceof App\Models\Question)
-            @continue;
-        @else
-            <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' :btnType='$btnType' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-            </x-answer>
-        @endif
-    @endfor
+    <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="like" 
+    v-if="item['answer'].kind == 1 && item['question_situation'] != 'voting'" v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
 </div>
+
 
 <div class="late-answers">
     <h3>遅マック</h3>
-    @for($i=0; $i<$items->count(); $i++)
-
-        @if($items[$i]->kind != 0 || $items[$i] instanceof App\Models\Question)
-            @continue;
-        @else
-
-            <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType="like" :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-            </x-answer>
-        @endif
-    @endfor
+    <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="like" 
+    v-if="item['answer'].kind == 0" v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
 </div>
 
-<style>
+
+
+<!-- <style>
     .question {
         margin-bottom: 50px;
     }
@@ -105,7 +96,7 @@
     .question-text {
         display: none;
     }
-</style>
+</style> -->
 
 
 @endsection
@@ -114,21 +105,90 @@
     @parent
     <script>
         let items = <?php echo $jsonItems;?>;
-        let likeUsers = <?php echo $jsonLikeUsers;?>;
+        let likeUsersList = <?php echo $jsonLikeUsers;?>;
     </script>
-    <script src=" {{ asset('/js/add-won-class.js') }} "></script>
-    <script src=" {{ asset('/js/AnswerLikeUserNames.js') }} "></script>
-    <script src="{{ asset('/js/QuestionLikeUserNames.js') }}"></script>
     <script src=" {{ asset('/js/big.js') }} "></script>
 
     @if(Auth::check())
         <script>
-            let userId = "<?php echo Auth::user()->id;?>";
-            let questionId = <?php echo $questionId;?>;
+            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
         </script>
-        <script src=" {{ asset('/js/vote.js') }} "></script>
-        <script src=" {{ asset('/js/like.js') }} "></script>
-        <script src=" {{ asset('/js/addLikedClass.js') }} "></script>
-        <script src=" {{ asset('/js/addVoteMsg.js') }}"></script>
+    @else
+        <script>
+            let user = "undefined";
+        </script>
     @endif
+
+    <script src="{{ asset('/js/answer.js') }}"></script>
+
+    <script>
+
+        let app = new Vue({
+
+            el: ".content",
+            data: {
+                items: items,
+                likeUsersList: likeUsersList
+            },
+            methods: {
+
+                addAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].push(user);
+                        }
+                    }
+                },
+                minusAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
+                            
+                        }
+                    }
+                },
+                addVote: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+
+                        // 他に投票してたら削除
+                        for(let x=0; x<this.likeUsersList[i]['vote'].length; x++){
+
+                            if(this.likeUsersList[i]['vote'][x].id === user.id){
+
+                                this.likeUsersList[i]['vote'].splice(this.likeUsersList[i]['vote'].findIndex(element => element.id === user.id));
+
+                            }
+                        }
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['vote'].push(user);
+
+                        }
+                    }
+                },
+                minusVote: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['vote'].splice(likeUsers['vote'].findIndex(element => element.id == user.id),1);
+                            
+                        }
+                    }
+                }
+            }
+        })
+
+    </script>
+
 @endsection

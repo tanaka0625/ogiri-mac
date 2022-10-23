@@ -15,13 +15,13 @@ class VoteController extends Controller
     public function index(Request $request)
     {
         $answer_id = $request->id;
-        $questionId = $request->questionId;
+        $Answer = Answer::find($answer_id);
+        $questionId = $Answer->question_id;
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
 
         $judgeVoted = Answer_like::where('answer_id', $answer_id)->where('user_id', $user_id)->where('kind', 1)->count();
         $judgeLiked = Answer_like::where('answer_id', $answer_id)->where('user_id', $user_id)->where('kind', 0)->count();
-        $Answer = Answer::find($answer_id);
 
         $entryAnswers = Answer::where('question_id', $questionId)->where('kind', 1)->get();
 

@@ -61,28 +61,48 @@ class UserController extends Controller
             $questions = $user->getLikedQuestions();
         }
 
-        $items = $answers->merge($questions);
+        $answersPlusQuestions = $answers->merge($questions);
 
-        $makePageLinks = Functions::makePageLinks(count($items), $page);
+        $makePageLinks = Functions::makePageLinks(count($answersPlusQuestions), $page);
         $pageLinks = $makePageLinks['pageLinks'];
         $maxPage = $makePageLinks['maxPage'];
 
         if($order === 'created_at' && $category === 'post')
         {
-            $items = $items->sortByDesc('created_at');
+            $answersPlusQuestions = $answersPlusQuestions->sortByDesc('created_at');
         }elseif($order === 'created_at' && $category === 'like')
         {
-            $items = $items->sortByDesc('liked_at');
+            $answersPlusQuestions = $answersPlusQuestions->sortByDesc('liked_at');
         }elseif($order === 'like')
         {
-            $items = $items->sortByDesc('like');
+            $answersPlusQuestions = $answersPlusQuestions->sortByDesc('like');
         }
 
-        $items = $items->forPage($page, 30)->values();
+        $answersPlusQuestions = $answersPlusQuestions->forPage($page, 30)->values();
+
+        $items = array();
+        for($i=0; $i<$answersPlusQuestions->count(); $i++)
+        {
+            if($answersPlusQuestions[$i] instanceof Answer)
+            {
+                $items[$i]['answer'] = $answersPlusQuestions[$i];
+                $items[$i]['question_text'] = $answersPlusQuestions[$i]->getQuestionText();
+                $items[$i]['question_situation'] = Question::find($answersPlusQuestions[$i]->question_id)->getSituation();
+                $items[$i]['maker'] = $answersPlusQuestions[$i]->getMaker(); 
+            }elseif($answersPlusQuestions[$i] instanceof Question)
+            {
+                $items[$i]['question'] = $answersPlusQuestions[$i];
+                $items[$i]['maker'] = $answersPlusQuestions[$i]->getMaker();
+                $items[$i]['situation'] = $answersPlusQuestions[$i]->getSituation();
+            }
+        }
+
+
+
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-        $likeUsers = Functions::likeUsersList($items);
-        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+        $likeUsersList = Functions::likeUsersList($answersPlusQuestions);
+        $jsonLikeUsersList = json_encode($likeUsersList,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
         
         $data = [
@@ -97,8 +117,8 @@ class UserController extends Controller
             'page' => $page,
             "point" => $point,
             'avatorNumber' => $avatorNumber,
-            'likeUsers' => $likeUsers,
-            'jsonLikeUsers' => $jsonLikeUsers
+            'likeUsersList' => $likeUsersList,
+            'jsonLikeUsersList' => $jsonLikeUsersList
         ];
 
         return view('User.index', $data);

@@ -15,66 +15,86 @@
 
     <div class="items">
 
-        @for($i=0; $i<$items->count(); $i++)
+        <div class="item-container" v-for="(item, index) in items" :key="item['key']">
 
-            @if($items[$i] instanceof App\Models\Answer)
+            <items-answer :item="item" :like-users="likeUsersList[index]" btn-type="like" v-on:add-answer-like="addAnswerLike"
+            v-on:minus-answer-like="minusAnswerLike" v-if="'answer' in item"></items-answer>
 
-                <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-                </x-answer>
-
-            @elseif($items[$i] instanceof App\Models\Answer_like)
-
-                <div class="item notice answer-like-notice">
-                    <img src=" {{ asset('/images/icon/frenchfry.png') }} " alt="">
-
-                    <div class="text-container">
-                        <p><a href=" {{ url('/user/' .$items[$i]->user->id) }} ">{{$items[$i]->user->name}}</a> がポテトしました</p>
-                        <a href=" {{ url('/grouped_answer/' .$items[$i]->answer->question_id) }} " class="text">{{$items[$i]->answer->text}}</a>
-                    </div>
-
+            <div class="item notice answer-like-notice" v-if="'answer_like' in item">
+                <img src="/images/icon/frenchfry.png" alt="">
+                <div class="text-container">
+                    <p><a v-bind:href="'user/' + item['user'].id"><%item['user'].name%></a> がポテトしました</p>
+                    <a v-bind:href="'grouped_answer/' + item['answer_question_id']" class="text"><%item['answer_text']%></a>
                 </div>
-
-            @elseif($items[$i] instanceof App\Models\Question_like)
-
-                <div class="item notice question-like-notice">
-                    <img src=" {{ asset('/images/icon/cola.png') }} " alt="">
-
-                    <div class="text-container">
-                        <p><a href=" {{ url('/user/' .$items[$i]->user->id) }} ">{{$items[$i]->user->name}}</a> がコーラしました</p>
-                        <a href=" {{ url('/grouped_answer/' .$items[$i]->question->id) }} " class="text">{{$items[$i]->question->text}}</a>
-                    </div>
-
+            </div>
+            
+            <div class="item notice question-like-notice" v-if="'question_like' in item">
+                <img src="/images/icon/cola.png" alt="">
+                <div class="text-container">
+                    <p><a v-bind:href="'user/' + item['user'].id"><%item['user'].name%></a> がコーラしました</p>
+                    <a v-bind:href="'grouped_answer/' + item['question_like'].question_id" class="text"><%item['question_text']%></a>
                 </div>
+            </div>
 
-
-            @endif
-
-        @endfor
-
+        </div>
     </div>
 
 
-@section('script')
-@parent
-
-
-<script>
-    let items = <?php echo $jsonItems;?>;
-    let likeUsers = <?php echo $jsonLikeUsers;?>;
-
-</script>
-<script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
-<script src=" {{ asset('/js/big.js') }} "></script>
-
-@if(Auth::check())
+    @section('script')
+    @parent
     <script>
-        let userId = "<?php echo Auth::user()->id;?>";
+        let items = <?php echo $jsonItems;?>;
+        let likeUsersList = <?php echo $jsonLikeUsersList;?>;
     </script>
-    <script src="{{ asset('/js/like.js') }}"></script>
-    <script src="{{ asset('/js/addLikedClass.js') }}"></script>
-    <script src="{{ asset('/js/addVoteMsg.js') }}"></script>
-@endif
+    <script src=" {{ asset('/js/big.js') }} "></script>
+    <script src=" {{ asset('/js/question.js') }} "></script>
+    <script src="{{ asset('/js/answer.js') }}"></script>
 
+    @if(Auth::check())
+        <script>
+            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
+        </script>
+    @else
+        <script>
+            let user = "undefined";
+        </script>
+    @endif
+
+    <script>
+        let app = new Vue({
+
+            el: ".content",
+            data: {
+                items: items,
+                likeUsersList: likeUsersList
+            },
+            delimiters: ["<%","%>"],
+            methods: {
+
+                addAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].push(user);
+                        }
+                    }
+                },
+                minusAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
+                            
+                        }
+                    }
+                }
+            }
+        })
+    </script>
 
 @endsection
 

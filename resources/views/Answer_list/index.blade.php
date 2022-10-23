@@ -11,6 +11,7 @@
 
 @section('content')
 
+
     <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
     <div class="items-title">
@@ -41,10 +42,10 @@
     </div>
 
     <div class="itmes">
-        @for($i=0; $i<$items->count(); $i++)
-            <x-answer :item='$items[$i]' :maker='$items[$i]->getMaker()' :questionText='$items[$i]->getQuestionText()' btnType='like' :likeUsers='$likeUsers[$i]["like"]' :voteUsers='$likeUsers[$i]["vote"]' :questionSituation='App\Models\Question::find($items[$i]->question_id)->getSituation()'>
-            </x-answer>
-        @endfor
+
+        <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="like" 
+        v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
+
     </div>
 
     <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
@@ -56,20 +57,79 @@
     @parent
     <script>
         let items = <?php echo $jsonItems;?>;
-        let likeUsers = <?php echo $jsonLikeUsers;?>;
+        let likeUsersList = <?php echo $jsonLikeUsers;?>;
 
     </script>
-    <script src="{{ asset('/js/AnswerLikeUserNames.js') }}"></script>
     <script src=" {{ asset('/js/big.js') }} "></script>
     @if(Auth::check())
-    <script>
-        let userId = "<?php echo Auth::user()->id;?>";
-    </script>
-
-    <script src="{{ asset('/js/like.js') }}"></script>
-    <script src="{{ asset('/js/addLikedClass.js') }}"></script>
-    <script src="{{ asset('/js/addVoteMsg.js') }}"></script>
+        <script>
+            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
+        </script>
+    @else
+        <script>
+            let user = "undefined";
+        </script>
     @endif
+
+    <script src="{{ asset('/js/answer.js') }}"></script>
+
+    <script>
+
+        let app = new Vue({
+
+            el: ".content",
+            data: {
+                items: items,
+                likeUsersList: likeUsersList
+            },
+            methods: {
+
+                addAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].push(user);
+                        }
+                    }
+                },
+                minusAnswerLike: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id === user.id),1);
+                            break;
+                        }
+                    }
+                },
+                addVote: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+                        
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['vote'].push(user);
+                        }
+                    }
+                },
+                minusVote: function(likeUsers, user) {
+
+                    for(let i=0; i<this.likeUsersList.length; i++){
+
+                        if(likeUsers == this.likeUsersList[i]){
+                            
+                            this.likeUsersList[i]['vote'].splice(likeUsers['vote'].findIndex(element => element.id == user.id),1);
+                            
+                        }
+                    }
+                }
+            }
+        })
+
+    </script>
 @endsection
 
 

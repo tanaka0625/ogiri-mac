@@ -66,12 +66,10 @@
 
 .answer .like-user-names {
     width: 80%;
-    display: none;
 }
 
 .answer .vote-user-names {
     width: 80%;
-    display: none;
 }
 
 .answer .user-names-title {
@@ -79,7 +77,6 @@
 }
 
 .answer .vote-msg {
-    display: none;
     color: red;
     margin: 0;
 }

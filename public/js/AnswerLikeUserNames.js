@@ -31,9 +31,7 @@ for(let i=0; i<answer.length; i++) {
                 voteUserNames[0].classList.add('on');
             }
         });
-
     }
-
 }
 
 

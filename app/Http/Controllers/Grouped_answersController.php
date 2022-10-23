@@ -19,13 +19,24 @@ class Grouped_answersController extends Controller
 {
     public function index($question_id)
     {
+        $question = Question::find($question_id);
+        $questionSituation = $question->getSituation($question_id);
+
         $entryAnswers = Answer::questionIdEquall($question_id)->where('kind', '<>', 0)->get();
         $lateAnswers = Answer::questionIdEquall($question_id)->where('kind', 0)->get();
 
-        $items = $entryAnswers->concat($lateAnswers);
+        $answers = $entryAnswers->concat($lateAnswers);
 
-        $question = Question::find($question_id);
-        $questionSituation = $question->getSituation($question_id);
+        $items = array();
+        for($i=0; $i<count($answers); $i++)
+        {
+            $items[$i] = array();
+            $items[$i]['answer'] = $answers[$i];
+            $items[$i]['question_text'] = $question->text;
+            $items[$i]['question_situation'] = $questionSituation;
+            $items[$i]['maker'] = $answers[$i]->getMaker(); 
+        }
+
 
         if($questionSituation === "voting")
         {
@@ -34,11 +45,10 @@ class Grouped_answersController extends Controller
             $btnType = "like";
         }
 
-        $items = $items->prepend($question)->values();
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
 
-        $likeUsers = Functions::likeUsersList($items);
+        $likeUsers = Functions::likeUsersList($answers);
         $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
         $now = date("Y-m-d H:i:s");

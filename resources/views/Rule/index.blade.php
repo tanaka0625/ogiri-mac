@@ -15,29 +15,29 @@
 <p>長期戦と短期戦の2種類の大喜利を遊べます。</p>
 
 <div class="rule">
-    <button class="rule-btn">長期戦</button>
-    <p class="rule-msg off">
+    <button class="rule-btn" v-on:click="active(0)">長期戦</button>
+    <p class="rule-msg" v-if="toggleList[0]">
         長期戦では回答期間4日間、ナゲット期間4日間の計8日間で1位の回答を決めます。<br>
         お題は誰でも投稿できます。<br>
         1人何回答でもできます。メニューの「回答する」から回答できます。ただし、1回答につき100円かかります。お金はナゲットをすることで200円稼ぐことができます。ナゲットはメニューの「ナゲット」からできます。<br>
         1位になったユーザーにはハンバーガーが与えられます。<br>
         回答期間を過ぎたお題にも回答できますが、「遅マック」となり、ナゲットの対象にはなりません。<br>
-        <span class="rule-btn" style="color: blue">閉じる</span>
+        <span class="rule-btn" style="color: blue" v-on:click="active(0)">閉じる</span>
 
     </p>
 </div>
 
 
 <div class="rule">
-    <button class="rule-btn">短期戦</button>
-    <p class="rule-msg off">
+    <button class="rule-btn" v-on:click="active(1)">短期戦</button>
+    <p class="rule-msg" v-if="toggleList[1]">
         メニューの「ファスト」から飛べます。<br>
         回答時間2分→シェイク時間20秒で1位の回答を決めます。<br>
         1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。<br>
         回答は制限時間内なら何答でも出来ます。<br>
         時間内に3答以上回答が集まらない場合、もう一度2分間の回答時間となります。<br>
         シェイクが同数の場合、先に投稿された回答の勝利となります。<br>
-        <span class="rule-btn" style="color: blue">閉じる</span>
+        <span class="rule-btn" style="color: blue" v-on:click="active(1)">閉じる</span>
     </p>
 </div>
 

@@ -1,12 +1,11 @@
-$(function(){
-    ruleBtn = $('.rule-btn');
-
-    ruleBtn.on('click', function(event){
-
-        ruleMsg = $(this).closest('.rule').find('.rule-msg');
-        ruleMsg.toggleClass('off');
-
-    });
-
-
-});
+let rule = new Vue({
+    el: ".content",
+    data: {
+        toggleList:[false, false]
+    },  
+    methods: {
+        active: function (n) {
+            this.$set(this.toggleList, n, !this.toggleList[n]);
+        }  
+    }
+})

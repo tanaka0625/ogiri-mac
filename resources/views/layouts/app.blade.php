@@ -17,6 +17,8 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
     
@@ -29,9 +31,10 @@
             <h3>@yield('header-title')</h3>
         </div>
 
-        <button class="menu-btn on">メニュー</button>
+        <button class="menu-btn" v-on:click="active">メニュー</button>
 
-        <div class="menu">
+        <div class="menu" v-if="isActive">
+
             <p class="link-btn"><a href=" {{ url('/') }} " >トップ</a></p>
             <p class="link-btn"><a href=" {{ url('/answer_list') }} " >回答一覧</a></p>
             <p class="link-btn"><a href=" {{ url('/question_list') }} " >お題一覧</a></p>
@@ -48,7 +51,7 @@
             <p class="link-btn"><a href=" {{ url('/ranking') }} ">ランキング</a></p>
             <p class="link-btn"><a href=" {{ url('/rule') }} ">ルール</a></p>
             
-            <p class="close">閉じる</p>
+            <p class="close" v-on:click="active">閉じる</p>
         </div>
 
         <p id="logined-user-cnt"></p>
@@ -101,6 +104,5 @@
     <script src=" {{ asset('/js/count-logined-user.js') }} "></script>
 
     @show
-
 </body>
 </html>

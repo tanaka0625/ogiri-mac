@@ -32,31 +32,39 @@ class Question_listController extends Controller
 
         if($situation === 'recruting')
         {
-            $items = Question::recruting()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::recruting()->orderBy('id', 'desc')->forpage($page, 30)->get();
             $makePageLinks = Functions::makePageLinks(Question::recruting()->count(), $page);
 
 
         }elseif($situation === 'voting')
         {
-            $items = Question::voting()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::voting()->orderBy('id', 'desc')->forpage($page, 30)->get();
             $makePageLinks = Functions::makePageLinks(Question::voting()->count(), $page);
 
         }elseif($situation === 'finished')
         {
-            $items = Question::finished()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::finished()->orderBy('id', 'desc')->forpage($page, 30)->get();
             $makePageLinks = Functions::makePageLinks(Question::finished()->count(), $page);
 
         }elseif($situation === "fast")
         {
-            $items = Question::fast()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::fast()->orderBy('id', 'desc')->forpage($page, 30)->get();
             $makePageLinks = Functions::makePageLinks(Question::fast()->count(), $page);
 
         }
 
+        $items = array();
+        for($i=0; $i<$questions->count(); $i++)
+        {
+            $items[$i]['question'] = $questions[$i];
+            $items[$i]['maker'] = $questions[$i]->getMaker();
+            $items[$i]['situation'] = $questions[$i]->getSituation();
+        }
+
         $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-        $likeUsers = Functions::likeUsersList($items);
-        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+        $likeUsersList = Functions::likeUsersList($questions);
+        $jsonLikeUsersList = json_encode($likeUsersList,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
 
 
@@ -71,8 +79,8 @@ class Question_listController extends Controller
             'page' => $page,
             'pageLinks' => $pageLinks,
             'maxPage' => $maxPage,
-            'likeUsers' => $likeUsers,
-            'jsonLikeUsers' => $jsonLikeUsers
+            'likeUsersList' => $likeUsersList,
+            'jsonLikeUsersList' => $jsonLikeUsersList
         ];
 
         return view('Question_list.index', $data);

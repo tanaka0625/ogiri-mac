@@ -51,7 +51,6 @@ class LikeController extends Controller
             $Answer->save();
     
             $data = [
-                'like' => $Answer->like,
                 'item' => $Answer
             ];
     

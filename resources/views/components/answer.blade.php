@@ -1,11 +1,11 @@
-<div class="item answer">
+<div class="item answer" v-bind:class="{'liked-answer':isLiked({{$index}})}">
 
     @if($questionSituation === "finished" && $item->kind == 1)
-        <p class="vote-msg">※あなたがナゲットしました</p>
+        <p class="vote-msg" v-if="isVoted({{$index}})">※あなたがナゲットしました</p>
     @elseif($questionSituation === "voting" && $item->kind == 1)
-        <p class="vote-msg">※あなたがナゲットしました</p>
+        <p class="vote-msg" v-if="isVoted({{$index}})">※あなたがナゲットしました</p>
     @elseif($questionSituation === "fast" && $item->kind == 2)
-        <p class="vote-msg">※あなたがシェイクしました</p>
+        <p class="vote-msg" v-if="isVoted({{$index}})">※あなたがシェイクしました</p>
     @endif
 
 
@@ -21,25 +21,25 @@
         @if($questionSituation === "finished" && $item->kind === 1)
 
             <a class="maker" href=" {{ url('/user/' .$item->user_id) }} ">{{$maker}}</a> 
-             <span class="like">{{$item->like}}ポテト</span> 
-             <span class="vote">{{$item->vote}}ナゲット</span>
+             <span class="like" v-on:click="activeLikeUsers({{$index}})">{{$item->like}}ポテト</span> 
+             <span class="vote" v-on:click="activeVoteUsers({{$index}})">{{$item->vote}}ナゲット</span>
 
         @elseif($questionSituation === "fast" && $item->kind === 2)
 
             <a class="maker" href=" {{ url('/user/' .$item->user_id) }} ">{{$maker}}</a> 
-             <span class="like">{{$item->like}}ポテト</span> 
-             <span class="vote">{{$item->battle_vote}}シェイク</span>
+             <span class="like" v-on:click="activeLikeUsers({{$index}})">{{$item->like}}ポテト</span> 
+             <span class="vote" v-on:click="activeVoteUsers({{$index}})">{{$item->battle_vote}}シェイク</span>
 
         @elseif($item->kind === 0)
 
             <a class="maker" href=" {{ url('/user/' .$item->user_id) }} ">{{$maker}}</a> 
-             <span class="like">{{$item->like}}ポテト</span> 
+             <span class="like" v-on:click="activeLikeUsers({{$index}})">{{$item->like}}ポテト</span> 
 
         @endif
     </p>
     
     
-    <div class="like-user-names">
+    <div class="like-user-names" v-if="likeUserIndexes.includes({{$index}})">
         <p class="user-names-title">ポテトしたユーザー</p>
         @foreach($likeUsers as $likeUser)
         <a href=" {{ url('/user/' .$likeUser->id) }} " class="like-user-name">{{$likeUser->name}}</a>
@@ -48,7 +48,7 @@
 
     @if($questionSituation === "finished" && $item->kind === 1)
 
-        <div class="vote-user-names">
+        <div class="vote-user-names" v-if="voteUserIndexes.includes({{$index}})">
             <p class="user-names-title">ナゲットしたユーザー</p>
             @foreach($voteUsers as $voteUser)
             <a href=" {{ url('/user/' .$voteUser->id) }} " class="vote-user-name">{{$voteUser->name}}</a>
@@ -57,7 +57,7 @@
 
     @elseif($questionSituation === "fast" && $item->kind === 2)
 
-        <div class="vote-user-names">
+        <div class="vote-user-names" v-if="voteUserIndexes.includes({{$index}})">
             <p class="user-names-title">シェイクしたユーザー</p>
             @foreach($voteUsers as $voteUser)
             <a href=" {{ url('/user/' .$voteUser->id) }} " class="vote-user-name">{{$voteUser->name}}</a>
@@ -72,7 +72,7 @@
         @if($btnType === 'vote')
         <img class="vote-btn" src=" {{ asset('/images/icon/chicken_nugget.png') }} " alt="">
         @elseif($btnType === "like")
-        <img class="like-btn" src=" {{ asset('/images/icon/frenchfry.png') }} " alt="">
+        <img class="like-btn" src=" {{ asset('/images/icon/frenchfry.png') }} " alt="" v-on:click="like({{$index}})">
         @elseif($btnType === "delete")
         <button class="delete-btn">削除</button>
         @endif
