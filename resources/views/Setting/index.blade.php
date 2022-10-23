@@ -21,18 +21,11 @@
 
     <div class="avators">
         <p>アバター変更</p>
-        @foreach($avators as $avator)
-            <div class="avator">
-                @if($avator === $user->avator)
-                    <p class="msg">選択中です</p>
-                @else
-                    <p class="msg"></p>
-                @endif
-
-                <img src=" {{ asset('/images/' .$avator. '/' .$avator. '(75).png') }} " alt="">
-                <button class="choice-btn">選択</button>
-            </div>
-        @endforeach
+        <div class="avator" v-for="(avator, index) in avators" :key="avator">
+            <p class="msg" v-if="user.avator === avator">選択中です</p>
+            <img v-bind:src="'/images/' + avator + '/' + avator + '(75).png'" alt="">
+            <button class="choice-btn" v-on:click="select(avator)">選択</button>
+        </div>
     </div>
 
 @endsection
@@ -40,9 +33,36 @@
 @section('script')
 @parent
 <script>
-    avators = <?php echo json_encode($avators,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);?>;
-    id = <?php echo Auth::user()->id;?>;
+    let avators = <?php echo json_encode($avators,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);?>;
+    let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
 </script>
-<script src=" {{ asset('/js/avator.js') }} "></script>
+<script>
+    
+    let app = new Vue({
+
+        el: ".content",
+        data: {
+            avators: avators,
+            user: user
+        },
+        methods: {
+            select: function(avator){
+
+                axios.post("/avator",{
+                    id: this.user.id,
+                    avator: avator
+                })
+                .then(function (response) {
+
+                    this.user.avator = avator;
+
+                }.bind(this))
+                .catch(function (error){
+                })
+            }
+        }
+    });
+    
+</script>
 
 @endsection
