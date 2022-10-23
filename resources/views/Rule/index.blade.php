@@ -124,7 +124,20 @@
 @section('script')
 @parent
 
-    <script src=" {{ asset('/js/rule.js') }} "></script>
+<script>
+    let rule = new Vue({
+        el: ".content",
+        data: {
+            toggleList:[false, false]
+        },  
+        methods: {
+            active: function (n) {
+                this.$set(this.toggleList, n, !this.toggleList[n]);
+            }  
+        }
+    })
+</script>
+
 
 
 @endsection
