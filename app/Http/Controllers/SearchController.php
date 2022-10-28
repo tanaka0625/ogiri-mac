@@ -15,6 +15,14 @@ class searchController extends Controller
     {
         if(isset($_GET['keyWord']))
         {
+            if(Auth::check())
+            {
+                $Iam = Auth::user();
+            }else{
+                $Iam = "undefined";
+            }
+
+
             $keyWord = $_GET['keyWord'];
 
             if(empty($_GET['page']))
@@ -31,49 +39,50 @@ class searchController extends Controller
             $answersPlusQuestions = $answers->concat($questions);
             $answersPlusQuestions = $answersPlusQuestions->sortByDesc('created_at');
 
-            $makePageLinks = Functions::makePageLinks(count($answersPlusQuestions), $page);
-            $pageLinks = $makePageLinks['pageLinks'];
-            $maxPage = $makePageLinks['maxPage'];
+            $itemsIngredients = $answersPlusQuestions->forPage($page, 30)->values();
 
-            $answersPlusQuestions = $answersPlusQuestions->forPage($page, 30)->values();
+            $paginator = Functions::collectionToPaginator($itemsIngredients, $answersPlusQuestions->count(), 30, $page, "/search", ["keyWord" => $keyWord]);
+
 
             $items = array();
-            for($i=0; $i<$answersPlusQuestions->count(); $i++)
+            for($i=0; $i<$itemsIngredients->count(); $i++)
             {
-                if($answersPlusQuestions[$i] instanceof Answer)
+                if($itemsIngredients[$i] instanceof Answer)
                 {
-                    $items[$i]['answer'] = $answersPlusQuestions[$i];
-                    $items[$i]['question_text'] = $answersPlusQuestions[$i]->getQuestionText();
-                    $items[$i]['question_situation'] = Question::find($answersPlusQuestions[$i]->question_id)->getSituation();
-                    $items[$i]['maker'] = $answersPlusQuestions[$i]->getMaker();
-                    $items[$i]["key"] = $i;
-                }elseif($answersPlusQuestions[$i] instanceof Question)
+    
+                    $items[$i] = [
+                        'key' => $i,
+                        'item_type' => "answer",
+                        'content' => $itemsIngredients[$i],
+                        'question_text' => $itemsIngredients[$i]->getQuestionText(),
+                        'question_situation' => Question::find($itemsIngredients[$i]->question_id)->getSituation(),
+                        'maker' => $itemsIngredients[$i]->user->name
+                    ];
+    
+                }elseif($itemsIngredients[$i] instanceof Question)
                 {
-                    $items[$i]['question'] = $answersPlusQuestions[$i];
-                    $items[$i]['maker'] = $answersPlusQuestions[$i]->getMaker();
-                    $items[$i]['situation'] = $answersPlusQuestions[$i]->getSituation();
-                    $items[$i]["key"] = $i;
+                    $items[$i] = [
+                        'key' => $i,
+                        'item_type' => "question",
+                        'content' => $itemsIngredients[$i],
+                        'maker' => $itemsIngredients[$i]->getMaker(),
+                        'situation' => $itemsIngredients[$i]->getSituation()
+                    ];
                 }
             }
 
-            $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-            $likeUsersList = Functions::likeUsersList($answersPlusQuestions);
-            $jsonLikeUsersList = json_encode($likeUsersList,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+            $likeUsersList = Functions::likeUsersList($itemsIngredients);
     
 
             $data = [
                 'items' => $items,
-                'jsonItems' => $jsonItems,
                 'users' => $users,
                 'keyWord' => $keyWord,
-                'jsonItems' => $jsonItems,
-                'pageLinks' => $pageLinks,
-                'maxPage' => $maxPage,
                 'page' => $page,
                 'likeUsersList' => $likeUsersList,
-                'jsonLikeUsersList' => $jsonLikeUsersList
-
+                'Iam' => $Iam,
+                'paginator' => $paginator
             ];
         
         }else{

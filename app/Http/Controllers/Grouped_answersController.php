@@ -19,22 +19,53 @@ class Grouped_answersController extends Controller
 {
     public function index($question_id)
     {
+
+        if(Auth::check())
+        {
+            $Iam = Auth::user();
+        }else{
+            $Iam = "undefined";
+        }
+
         $question = Question::find($question_id);
         $questionSituation = $question->getSituation($question_id);
 
         $entryAnswers = Answer::questionIdEquall($question_id)->where('kind', '<>', 0)->get();
         $lateAnswers = Answer::questionIdEquall($question_id)->where('kind', 0)->get();
 
-        $answers = $entryAnswers->concat($lateAnswers);
+        $questionList = array();
+        $questionList[0] = [
+            'key' => 0,
+            'item_type' => "question",
+            'content' => $question,
+            'maker' => $question->getMaker(),
+            'situation' => $questionSituation
+        ];
 
-        $items = array();
-        for($i=0; $i<count($answers); $i++)
+        $items1 = array();
+        for($i=0; $i<count($entryAnswers); $i++)
         {
-            $items[$i] = array();
-            $items[$i]['answer'] = $answers[$i];
-            $items[$i]['question_text'] = $question->text;
-            $items[$i]['question_situation'] = $questionSituation;
-            $items[$i]['maker'] = $answers[$i]->getMaker(); 
+            $items1[$i] = [
+                'key' => $i,
+                'item_type' => "answer",
+                'content' => $entryAnswers[$i],
+                "question_text" => $question->text,
+                "question_situation" => $questionSituation,
+                "maker" => $entryAnswers[$i]->user->name
+            ];
+        }
+
+        $items2 = array();
+        for($i=0; $i<count($lateAnswers); $i++)
+        {
+            $items2[$i] = [
+                'key' => $i,
+                'item_type' => "answer",
+                'content' => $lateAnswers[$i],
+                "question_text" => $question->text,
+                "question_situation" => $questionSituation,
+                "maker" => $lateAnswers[$i]->user->name
+            ];
         }
 
 
@@ -45,23 +76,25 @@ class Grouped_answersController extends Controller
             $btnType = "like";
         }
 
-        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-
-        $likeUsers = Functions::likeUsersList($answers);
-        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+        $likeUsersList1 = Functions::likeUsersList($entryAnswers);
+        $likeUsersList2 = Functions::likeUsersList($lateAnswers);
+        $questionLikeUserList = Functions::likeUsersList(collect([$question]));
 
         $now = date("Y-m-d H:i:s");
 
         $data = [
-            'items' => $items,
-            'jsonItems' => $jsonItems,
+            'items1' => $items1,
+            'items2' => $items2,
+            'questionList' => $questionList,
             'question' => $question,
             'questionSituation' => $questionSituation,
             'btnType' => $btnType,
             'questionId' => $question_id,
-            'likeUsers' => $likeUsers,
-            'jsonLikeUsers' => $jsonLikeUsers
+            'likeUsersList1' => $likeUsersList1,
+            'likeUsersList2' => $likeUsersList2,
+            'questionLikeUsersList' => $questionLikeUserList,
+            'Iam' => $Iam
         ];
 
 

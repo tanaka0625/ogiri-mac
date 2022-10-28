@@ -9,8 +9,10 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\User;
 
+
 class My_pageController extends Controller
 {
+
     public function index(Request $request)
     {
         $id = $request->id;
@@ -37,6 +39,13 @@ class My_pageController extends Controller
             $page = $_GET['page'];
         }else{
             $page = 1;
+        }
+
+        if(Auth::check())
+        {
+            $Iam = Auth::user();
+        }else{
+            $Iam = "undefined";
         }
 
         $user = User::find($id);
@@ -66,10 +75,6 @@ class My_pageController extends Controller
         $answersPlusQuestions = $answers->merge($questions);
 
 
-        $makePageLinks = Functions::makePageLinks(count($answersPlusQuestions), $page);
-        $pageLinks = $makePageLinks['pageLinks'];
-        $maxPage = $makePageLinks['maxPage'];
-
         if($order === 'created_at' && $category === 'post')
         {
             $answersPlusQuestions = $answersPlusQuestions->sortByDesc('created_at');
@@ -82,48 +87,52 @@ class My_pageController extends Controller
         }
 
 
-        $answersPlusQuestions = $answersPlusQuestions->forPage($page, 30)->values();
+        $itemsIngredients = $answersPlusQuestions->forpage($page, 30)->values();
+
+        $paginator = Functions::collectionToPaginator($itemsIngredients, $answersPlusQuestions->count(), 30, $page, "/my_page", ["order" => $order, "category" => $category]);
 
         $items = array();
-        for($i=0; $i<$answersPlusQuestions->count(); $i++)
+        for($i=0; $i<$itemsIngredients->count(); $i++)
         {
-            if($answersPlusQuestions[$i] instanceof Answer)
+            if($itemsIngredients[$i] instanceof Answer)
             {
-                $items[$i]['answer'] = $answersPlusQuestions[$i];
-                $items[$i]['question_text'] = $answersPlusQuestions[$i]->getQuestionText();
-                $items[$i]['question_situation'] = Question::find($answersPlusQuestions[$i]->question_id)->getSituation();
-                $items[$i]['maker'] = $answersPlusQuestions[$i]->getMaker();
-                $items[$i]["key"] = $i;
-            }elseif($answersPlusQuestions[$i] instanceof Question)
+
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "answer",
+                    'content' => $itemsIngredients[$i],
+                    'question_text' => $itemsIngredients[$i]->getQuestionText(),
+                    'question_situation' => Question::find($itemsIngredients[$i]->question_id)->getSituation(),
+                    'maker' => $itemsIngredients[$i]->user->name
+                ];
+
+            }elseif($itemsIngredients[$i] instanceof Question)
             {
-                $items[$i]['question'] = $answersPlusQuestions[$i];
-                $items[$i]['maker'] = $answersPlusQuestions[$i]->getMaker();
-                $items[$i]['situation'] = $answersPlusQuestions[$i]->getSituation();
-                $items[$i]["key"] = $i;
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "question",
+                    'content' => $itemsIngredients[$i],
+                    'maker' => $itemsIngredients[$i]->getMaker(),
+                    'situation' => $itemsIngredients[$i]->getSituation()
+                ];
             }
         }
 
-
-        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
-        $likeUsersList = Functions::likeUsersList($answersPlusQuestions);
-        $jsonLikeUsersList = json_encode($likeUsersList,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
-
+        $likeUsersList = Functions::likeUsersList($itemsIngredients);
+        
         $data = [
             'items' => $items,
-            'jsonItems' => $jsonItems,
+            'itemsIngredients' => $itemsIngredients,
             'category' => $category,
             'order' => $order,
             'user' => $user,
-            'pageLinks' => $pageLinks,
-            'maxPage' => $maxPage,
             'id' => $id,
             'page' => $page,
             "point" => $point,
             "avatorNumber" => $avatorNumber,
             'likeUsersList' => $likeUsersList,
-            "jsonLikeUsersList" => $jsonLikeUsersList
+            'Iam' => $Iam,
+            'paginator' => $paginator
             ];
 
         return view('My_page.index', $data);

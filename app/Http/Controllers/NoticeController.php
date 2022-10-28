@@ -77,45 +77,46 @@ class NoticeController extends Controller
         {
             if($ingredients[$i] instanceof Answer)
             {
-                $items[$i]['answer'] = $ingredients[$i];
-                $items[$i]['question_text'] = $ingredients[$i]->getQuestionText();
-                $items[$i]['question_situation'] = Question::find($ingredients[$i]->question_id)->getSituation();
-                $items[$i]['maker'] = $ingredients[$i]->getMaker();
-                $items[$i]["key"] = $i;
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "answer",
+                    'content' => $ingredients[$i],
+                    'question_text' => $ingredients[$i]->getQuestionText(),
+                    'question_situation' => Question::find($ingredients[$i]->question_id)->getSituation(),
+                    'maker' => $ingredients[$i]->getMaker(),
+                ];
+
             }elseif($ingredients[$i] instanceof Answer_like){
 
-                $items[$i]['answer_like'] = $ingredients[$i];
-                $items[$i]['answer_text'] = $ingredients[$i]->answer->text;
-                $items[$i]['answer_question_id'] = $ingredients[$i]->answer->question_id;
-                $items[$i]['user'] = $ingredients[$i]->user;
-                $items[$i]["key"] = $i;
-
-
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "answer_like",
+                    'content' => $ingredients[$i],
+                    'answer_text' => $ingredients[$i]->answer->text,
+                    'question_id' => $ingredients[$i]->answer->question_id,
+                    'user' => $ingredients[$i]->user,
+                ];
+ 
             }elseif($ingredients[$i] instanceof Question_like){
 
-                $items[$i]['question_like'] = $ingredients[$i];
-                $items[$i]['question_text'] = $ingredients[$i]->question->text;
-                $items[$i]['user'] = $ingredients[$i]->user;
-                $items[$i]["key"] = $i;
-
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "question_like",
+                    'content' => $ingredients[$i],
+                    'question_text' => $ingredients[$i]->question->text,
+                    'user' => $ingredients[$i]->user,
+                ];
             }
         }
 
-
-
-        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
-
         $likeUsersList = Functions::likeUsersList($ingredients);
-        $jsonLikeUsersList = json_encode($likeUsersList,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
 
         $data = [
 
             "items" => $items,
-            "jsonItems" => $jsonItems,
             "likeUsersList" => $likeUsersList,
-            "jsonLikeUsersList" => $jsonLikeUsersList
+            "user" => $user
 
         ];
 

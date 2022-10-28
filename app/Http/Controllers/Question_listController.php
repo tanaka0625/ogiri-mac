@@ -16,6 +16,13 @@ class Question_listController extends Controller
     public function index(Request $request)
     {
 
+        if(Auth::check())
+        {
+            $Iam = Auth::user();
+        }else{
+            $Iam = "undefined";
+        }
+
         if(!empty($_GET['situation']))
         {
             $situation = $_GET['situation'];
@@ -32,55 +39,52 @@ class Question_listController extends Controller
 
         if($situation === 'recruting')
         {
-            $questions = Question::recruting()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::recruting()->orderBy('id', 'desc')->paginate(30);
             $makePageLinks = Functions::makePageLinks(Question::recruting()->count(), $page);
 
 
         }elseif($situation === 'voting')
         {
-            $questions = Question::voting()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::voting()->orderBy('id', 'desc')->paginate(30);
             $makePageLinks = Functions::makePageLinks(Question::voting()->count(), $page);
 
         }elseif($situation === 'finished')
         {
-            $questions = Question::finished()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::finished()->orderBy('id', 'desc')->paginate(30);
             $makePageLinks = Functions::makePageLinks(Question::finished()->count(), $page);
 
         }elseif($situation === "fast")
         {
-            $questions = Question::fast()->orderBy('id', 'desc')->forpage($page, 30)->get();
+            $questions = Question::fast()->orderBy('id', 'desc')->paginate(30);
             $makePageLinks = Functions::makePageLinks(Question::fast()->count(), $page);
 
         }
 
+        $questions->appends(['situation' => $situation]);
+
+
         $items = array();
         for($i=0; $i<$questions->count(); $i++)
         {
-            $items[$i]['question'] = $questions[$i];
-            $items[$i]['maker'] = $questions[$i]->getMaker();
-            $items[$i]['situation'] = $questions[$i]->getSituation();
+            $items[$i] = [
+                'key' => $i,
+                'item_type' => "question",
+                'content' => $questions[$i],
+                'maker' => $questions[$i]->getMaker(),
+                'situation' => $questions[$i]->getSituation()
+            ];
         }
 
-        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
         $likeUsersList = Functions::likeUsersList($questions);
-        $jsonLikeUsersList = json_encode($likeUsersList,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
-
-
-
-        $pageLinks = $makePageLinks['pageLinks'];
-        $maxPage = $makePageLinks['maxPage'];
 
         $data = [
             'items' => $items,
-            'jsonItems' => $jsonItems,
+            'questions' => $questions,
             'situation' => $situation,
             'page' => $page,
-            'pageLinks' => $pageLinks,
-            'maxPage' => $maxPage,
             'likeUsersList' => $likeUsersList,
-            'jsonLikeUsersList' => $jsonLikeUsersList
+            'Iam' => $Iam
+
         ];
 
         return view('Question_list.index', $data);

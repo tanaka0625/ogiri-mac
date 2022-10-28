@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Question_like;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Functions
 {
@@ -141,6 +142,20 @@ class Functions
         ];
 
         return $point;
+    }
+
+    public static function collectionToPaginator($items, $itemsCnt, $perPage, $nowPage, $path, $params)
+    {
+        $paginator = new LengthAwarePaginator(
+            $items,
+            $itemsCnt,
+            $perPage,
+            $nowPage
+        );
+        $paginator->withPath($path);
+        $paginator->appends($params);
+
+        return $paginator;
     }
 };
 

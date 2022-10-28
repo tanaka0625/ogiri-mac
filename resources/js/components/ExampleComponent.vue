@@ -5,6 +5,8 @@
                 <div class="card">
                     <div class="card-header">Example Component</div>
 
+                    <div>{{test.name}}</div>
+
                     <div class="card-body">
                         I'm an example component.
                     </div>
@@ -17,7 +19,13 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log(this.test)
+        },
+        props: {
+            test: {
+                type: Object,
+                required: true
+            }
         }
     }
 </script>

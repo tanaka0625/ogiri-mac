@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('fileLink')
-    <link rel="stylesheet" href="  {{ asset('/css/answer.css') }}  ">
-    <link rel="stylesheet" href="  {{ asset('/css/question.css') }}  ">
-    <link rel="stylesheet" href="  {{ asset('/css/my-page.css') }}  ">
-    <link rel="stylesheet" href="  {{ asset('/css/page-links.css') }}  ">
 @endsection
 
 @section('title', 'マイページ')
@@ -13,60 +9,11 @@
 
 @section('content')
 
-@if($page == 1)
-<div class="user-info">
+<a class="setting-btn" href=" {{ url('/setting') }} "><button>設定</button></a>
+<user-info v-if="{{Js::from($page)}} == 1" :user="{{Js::from($Iam)}}" :point="{{Js::from($point)}}" :avator-number="{{$avatorNumber}}"></user-info>
 
-    <a class="setting-btn" href=" {{ url('/setting') }} "><button>設定</button></a>
+{{$paginator->links()}}
 
-    <div class="avators">
-        @for($i=0; $i < floor($point["total"]/300); $i++)
-            <img class="avator" src=" {{ asset('/images/' .$user->avator. '/' .$user->avator. '(150).png') }} " alt="">
-        @endfor
-
-        <img src=" {{ asset('/images/' .$user->avator. '/' .$user->avator. '(' .$avatorNumber. ').png') }} " alt="" class="avator">
-    </div>
-
-    <p>体重: {{$point["total"]}}kg</p>
-    <table>
-        <tr>
-            <td><img src=" {{ asset('/images/icon/frenchfry.png') }} " alt=""></td>
-            <td>{{$point["answerLike"]}}kg</td>
-        </tr>
-
-        <tr>
-            <td><img src=" {{ asset('/images/icon/chicken_nugget.png') }} " alt=""></td>
-            <td>{{$point["vote"]}}kg</td>
-        </tr>
-
-        <tr>
-            <td><img src=" {{ asset('/images/icon/shake.png') }} " alt=""></td>
-            <td>{{$point["battleVote"]}}kg</td>
-        </tr>
-
-        <tr>
-            <td><img src=" {{ asset('/images/icon/cola.png') }} " alt=""></td>
-            <td>{{$point["questionLike"]}}kg</td>
-        </tr>
-
-        <tr>
-            <td><img src=" {{ asset('/images/icon/hamburger.png') }} " alt=""></td>
-            <td>{{$point["won"]}}kg</td>
-        </tr>
-
-        <tr>
-            <td>所持金</td>
-            <td>{{$user->energy}}円</td>
-        </tr>
-    </table>
-
-
-    <div class="comment">
-        <p>{{$user->comment}}</p>
-    </div>
-</div>
-@endif
-
-<x-page url="my_page?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 <div class="items-title">
     @if($category === 'post' && $order === 'created_at')
@@ -80,7 +27,6 @@
     @endif
 </div>
 
-<p>test</p>
 
 <div class="btns">
 
@@ -98,117 +44,15 @@
 
 </div>
 
+<items-list v-if="{{Js::from($category)}} === 'post'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}" answer-btn-type="delete"></items-list>
+<items-list v-if="{{Js::from($category)}} === 'like'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
 
+{{$paginator->links()}}
 
-
-<div class="items">
-    <div class="item-conteiner" v-for="(item, index) in items" :key="item['key']">
-
-        <items-answer :item="item" :like-users="likeUsersList[index]" btn-type="like" v-on:add-answer-like="addAnswerLike"
-        v-on:minus-answer-like="minusAnswerLike" v-if="'answer' in item && category === 'like'"></items-answer>
-
-        <items-answer :item="item" :like-users="likeUsersList[index]" btn-type="delete" v-if="'answer' in item && category === 'post'"
-        v-on:delete-answer="deleteAnswer"></items-answer>
-
-        <items-question :item="item" :like-users="likeUsersList[index]" v-if="'question' in item" v-on:add-question-like="addQuestionLike" 
-        v-on:minus-question-like="minusQuestionLike"></items-qeustion>
-
-    </div>
-</div>
-
-<x-page url="my_page?category={{$category}}&order={{$order}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 @section('script')
     @parent
-    <script>
-        let items = <?php echo $jsonItems;?>;
-        let likeUsersList = <?php echo $jsonLikeUsersList;?>;
-        let category = "<?php echo $category;?>";
-    </script>
     <script src=" {{ asset('/js/big.js') }} "></script>
-    <script src=" {{ asset('/js/question.js') }} "></script>
-    <script src="{{ asset('/js/answer.js') }}"></script>
-
-    @if(Auth::check())
-        <script>
-            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
-        </script>
-    @else
-        <script>
-            let user = "undefined";
-        </script>
-    @endif
-
-    <script>
-        let app = new Vue({
-
-            el: ".content",
-            data: {
-                items: items,
-                likeUsersList: likeUsersList,
-                category: category
-            },
-            methods: {
-
-                addAnswerLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].push(user);
-                        }
-                    }
-                },
-                minusAnswerLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
-                            
-                        }
-                    }
-                },
-                addQuestionLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].push(user);
-                        }
-                    }
-                },
-                minusQuestionLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
-                            
-                        }
-                    }
-                },
-                deleteAnswer: function(item, likeUsers) {
-                    console.log(this.likeUsersList);
-                    for(let i=0; i<this.items.length; i++){
-                        if(item === items[i]){
-                            let index = this.items.findIndex(element => element == item);
-                            this.items.splice(index,1);
-                            this.likeUsersList.splice(index,1);
-                            break;
-                        }
-                    }
-                    console.log(this.likeUsersList);
-
-                }
-            }
-        })
-    </script>
-
 @endsection
 
 @endsection

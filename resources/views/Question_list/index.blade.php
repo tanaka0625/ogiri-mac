@@ -1,9 +1,6 @@
 @extends('layouts.app')
 
 @section('fileLink')
-<link rel="stylesheet" href=" {{ asset('/css/question.css') }} ">
-<link rel="stylesheet" href="  {{ asset('/css/page-links.css') }}  ">
-
 @endsection
 @section('title', 'お題一覧')
 
@@ -64,70 +61,15 @@
 <p style="color: red;">お題・回答の投稿、ポテトにはログインが必要です。ログインにはメールアドレス等は必要ありません。</p>
 @endif
 
+{{$questions->links()}}
 
+<items-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}"></items-list>
 
+{{$questions->links()}}
 
-<x-page url="question_list?situation={{$situation}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
-
-    <items-question v-for="(item, index) in items" :key="item['question'].id" :item="item" :like-users="likeUsersList[index]"
-    v-on:add-question-like="addQuestionLike" v-on:minus-question-like="minusQuestionLike"></items-qeustion>
-
-<x-page url="question_list?situation={{$situation}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
 
 @endsection
 
 @section('script')
     @parent
-    <script>
-        let items = <?php echo $jsonItems;?>;
-        let likeUsersList = <?php echo $jsonLikeUsersList;?>;
-    </script>
-    @if(Auth::check())
-        <script>
-            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
-
-        </script>
-    @else
-        <script>
-            let user = "undefined";
-        </script>
-    @endif
-    <script src=" {{ asset('/js/question.js') }} "></script>
-
-    <script>
-
-        let app = new Vue({
-
-            el: ".content",
-            data: {
-                items: items,
-                likeUsersList: likeUsersList
-            },
-            methods: {
-
-                addQuestionLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].push(user);
-                        }
-                    }
-                },
-                minusQuestionLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
-                            
-                        }
-                    }
-                }
-            }
-        })
-
-    </script>
 @endsection

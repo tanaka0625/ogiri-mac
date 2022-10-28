@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('fileLink')
-<link rel="stylesheet" href=" {{ asset('/css/answer.css') }} ">
-<link rel="stylesheet" href=" {{ asset('/css/question.css') }} ">
 @endsection
 
 @section('title', '回答')
@@ -25,9 +23,8 @@
     @endif
 </h3>
 
+<items-list :items="{{Js::from($questionList)}}" :like-users-list="{{Js::from($questionLikeUsersList)}}" :user="{{Js::from($Iam)}}"></items-list>
 
-<x-question :item='$question' :maker='$question->getMaker()' :like='$question->like' :likeUsers='$question->getLikeUsers()' :situation='$question->getSituation()'>
-</x-question>
 
 @if(Auth::user())
 <div class="answer_form">
@@ -70,125 +67,17 @@
 <p style="color: red;">お題・回答の投稿、ポテトにはログインが必要です。ログインにはメールアドレス等は必要ありません。</p>
 @endif
 
-<div class="entry-answers">
-    <h3>エントリーマック</h3>
-    <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="vote" 
-    v-if="item['answer'].kind == 1 && item['question_situation'] === 'voting'" v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
+<p>エントリーマック</p>
+<items-list :items="{{Js::from($items1)}}" :like-users-list="{{Js::from($likeUsersList1)}}" :user="{{Js::from($Iam)}}" :answer-btn-type="{{Js::from($btnType)}}"></items-list>
 
-    <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="like" 
-    v-if="item['answer'].kind == 1 && item['question_situation'] != 'voting'" v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
-</div>
+<p>遅マック</p>
+<items-list :items="{{Js::from($items2)}}" :like-users-list="{{Js::from($likeUsersList2)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
 
-
-<div class="late-answers">
-    <h3>遅マック</h3>
-    <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="like" 
-    v-if="item['answer'].kind == 0" v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
-</div>
-
-
-
-<!-- <style>
-    .question {
-        margin-bottom: 50px;
-    }
-
-    .question-text {
-        display: none;
-    }
-</style> -->
 
 
 @endsection
 
 @section('script')
     @parent
-    <script>
-        let items = <?php echo $jsonItems;?>;
-        let likeUsersList = <?php echo $jsonLikeUsers;?>;
-    </script>
     <script src=" {{ asset('/js/big.js') }} "></script>
-
-    @if(Auth::check())
-        <script>
-            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
-        </script>
-    @else
-        <script>
-            let user = "undefined";
-        </script>
-    @endif
-
-    <script src="{{ asset('/js/answer.js') }}"></script>
-
-    <script>
-
-        let app = new Vue({
-
-            el: ".content",
-            data: {
-                items: items,
-                likeUsersList: likeUsersList
-            },
-            methods: {
-
-                addAnswerLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].push(user);
-                        }
-                    }
-                },
-                minusAnswerLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id == user.id),1);
-                            
-                        }
-                    }
-                },
-                addVote: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-
-                        // 他に投票してたら削除
-                        for(let x=0; x<this.likeUsersList[i]['vote'].length; x++){
-
-                            if(this.likeUsersList[i]['vote'][x].id === user.id){
-
-                                this.likeUsersList[i]['vote'].splice(this.likeUsersList[i]['vote'].findIndex(element => element.id === user.id));
-
-                            }
-                        }
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['vote'].push(user);
-
-                        }
-                    }
-                },
-                minusVote: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['vote'].splice(likeUsers['vote'].findIndex(element => element.id == user.id),1);
-                            
-                        }
-                    }
-                }
-            }
-        })
-
-    </script>
-
 @endsection

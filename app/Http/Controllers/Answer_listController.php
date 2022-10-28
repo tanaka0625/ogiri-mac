@@ -13,6 +13,13 @@ class Answer_listController extends Controller
 {
     public function index(Request $request) {
 
+        if(Auth::check())
+        {
+            $Iam = Auth::user();
+        }else{
+            $Iam = "undefined";
+        }
+
         if(!empty($_GET['order']))
         {
             $order = $_GET['order'];
@@ -34,29 +41,22 @@ class Answer_listController extends Controller
             $page = 1;
         }
 
-        $answers = Answer::withInPeriod($period)->orderBy($order, 'desc')->forpage($page, 30)->get();
+        $answers = Answer::withInPeriod($period)->orderBy($order, 'desc')->paginate(30);
+        $answers->appends(['order' => $order, 'period' => $period]);
 
         $items = array();
         for($i=0; $i<count($answers); $i++)
         {
-            $items[$i] = array();
-            $items[$i]['answer'] = $answers[$i];
+            $items[$i]['key'] = $i;
+            $items[$i]['item_type'] = "answer";
+            $items[$i]['content'] = $answers[$i];
             $items[$i]['question_text'] = $answers[$i]->getQuestionText();
             $items[$i]['question_situation'] = Question::find($answers[$i]->question_id)->getSituation();
             $items[$i]['maker'] = $answers[$i]->getMaker(); 
         }
 
-
-        $jsonItems = json_encode($items,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-
-
         $likeUsers = Functions::likeUsersList($answers);
-        $jsonLikeUsers = json_encode($likeUsers,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
 
-
-        $makePageLinks = Functions::makePageLinks(Answer::withInperiod($period)->count(), $page);
-        $pageLinks = $makePageLinks['pageLinks'];
-        $maxPage = $makePageLinks['maxPage'];
 
         if($order === 'like' && $period === 'all'){
             $itemsTitle = 'ポテト順回答一覧';
@@ -69,18 +69,17 @@ class Answer_listController extends Controller
         }
 
 
+
         $data = [
             'items' => $items,
-            'jsonItems' => $jsonItems,
+            'answers'=> $answers,
             'order' => $order, 
             'period' => $period, 
             'page' => $page,
             'itemsTitle' => $itemsTitle,
             'nowPeriod' => date('Ym'),
-            'pageLinks' => $pageLinks,
-            'maxPage' => $maxPage,
             'likeUsers' => $likeUsers,
-            'jsonLikeUsers' => $jsonLikeUsers
+            'Iam' => $Iam,
         ];
 
 

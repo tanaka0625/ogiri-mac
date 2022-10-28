@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('fileLink')
-<link rel="stylesheet" href=" {{ asset('/css/answer.css') }} ">
-<link rel="stylesheet" href=" {{ asset('/css/page-links.css') }} ">
 @endsection
 
 @section('title', '回答一覧')
@@ -11,8 +9,7 @@
 
 @section('content')
 
-
-    <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
+    {{$answers->links()}}
 
     <div class="items-title">
         <h3>{{$itemsTitle}}</h3>
@@ -41,95 +38,15 @@
         @endif
     </div>
 
-    <div class="itmes">
+    <items-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsers)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
 
-        <items-answer v-for="(item, index) in items" :key="item['answer'].id" :item="item" :like-users="likeUsersList[index]" btn-type="like" 
-        v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote"></items-answer>
-
-    </div>
-
-    <x-page url="/answer_list?order={{$order}}&period={{$period}}" :pageLinks='$pageLinks' :maxPage='$maxPage' :page='$page'></x-page>
-
+    {{$answers->links()}}
 
 @endsection
 
 @section('script')
     @parent
-    <script>
-        let items = <?php echo $jsonItems;?>;
-        let likeUsersList = <?php echo $jsonLikeUsers;?>;
-
-    </script>
     <script src=" {{ asset('/js/big.js') }} "></script>
-    @if(Auth::check())
-        <script>
-            let user = <?php echo json_encode(Auth::user(),JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT)?>;
-        </script>
-    @else
-        <script>
-            let user = "undefined";
-        </script>
-    @endif
-
-    <script src="{{ asset('/js/answer.js') }}"></script>
-
-    <script>
-
-        let app = new Vue({
-
-            el: ".content",
-            data: {
-                items: items,
-                likeUsersList: likeUsersList
-            },
-            methods: {
-
-                addAnswerLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].push(user);
-                        }
-                    }
-                },
-                minusAnswerLike: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(element => element.id === user.id),1);
-                            break;
-                        }
-                    }
-                },
-                addVote: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-                        
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['vote'].push(user);
-                        }
-                    }
-                },
-                minusVote: function(likeUsers, user) {
-
-                    for(let i=0; i<this.likeUsersList.length; i++){
-
-                        if(likeUsers == this.likeUsersList[i]){
-                            
-                            this.likeUsersList[i]['vote'].splice(likeUsers['vote'].findIndex(element => element.id == user.id),1);
-                            
-                        }
-                    }
-                }
-            }
-        })
-
-    </script>
 @endsection
 
 
