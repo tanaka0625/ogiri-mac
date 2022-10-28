@@ -5681,11 +5681,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     items: {
-      type: Object,
+      type: Array,
       required: true
     },
     likeUsersList: {
-      type: Object,
+      type: Array,
       required: true
     },
     user: {

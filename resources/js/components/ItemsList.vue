@@ -21,11 +21,11 @@
         components: {Answer, Question},
         props: {
             items: {
-                type: Object,
+                type: Array,
                 required: true
             },
             likeUsersList: {
-                type: Object,
+                type: Array,
                 required: true
             },
             user: {

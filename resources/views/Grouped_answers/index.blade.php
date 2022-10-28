@@ -68,7 +68,7 @@
 @endif
 
 <p>エントリーマック</p>
-<items-list :items="{{Js::from($items1)}}" :like-users-list="{{Js::from($likeUsersList1)}}" :user="{{Js::from($Iam)}}" :answer-btn-type="{{Js::from($btnType)}}"></items-list>
+<items-list :items="{{Js::from($items1)}}" :like-users-list="{{Js::from($likeUsersList1)}}" :user="{{Js::from($Iam)}}" answer-btn-type="{{$btnType}}"></items-list>
 
 <p>遅マック</p>
 <items-list :items="{{Js::from($items2)}}" :like-users-list="{{Js::from($likeUsersList2)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
