@@ -23,7 +23,7 @@
     @endif
 </h3>
 
-<items-list :items="{{Js::from($questionList)}}" :like-users-list="{{Js::from($questionLikeUsersList)}}" :user="{{Js::from($Iam)}}"></items-list>
+<items-list :items="{{Js::from($questionList)}}" :like-users-list="{{Js::from($questionLikeUsersList)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="like"></items-list>
 
 
 @if(Auth::user())
@@ -68,10 +68,10 @@
 @endif
 
 <p>エントリーマック</p>
-<items-list :items="{{Js::from($items1)}}" :like-users-list="{{Js::from($likeUsersList1)}}" :user="{{Js::from($Iam)}}" answer-btn-type="{{$btnType}}"></items-list>
+<items-list :items="{{Js::from($items1)}}" :like-users-list="{{Js::from($likeUsersList1)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="{{$btnType}}"></items-list>
 
 <p>遅マック</p>
-<items-list :items="{{Js::from($items2)}}" :like-users-list="{{Js::from($likeUsersList2)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
+<items-list :items="{{Js::from($items2)}}" :like-users-list="{{Js::from($likeUsersList2)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="like"></items-list>
 
 
 

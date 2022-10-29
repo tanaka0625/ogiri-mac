@@ -54,7 +54,7 @@ export default {
             required: true
         },
         point: {
-            type: Array,
+            type: Object,
             required: true
         },
         avatorNumber: {
@@ -73,11 +73,8 @@ export default {
             let array = [];
             for(let i=0; i<this.avatorCnt; i++){
                 array.push(i);
-                console.log(1);
             }
 
-            console.log(array);
-            console.log(this.point["total"]);
             return array;
         }
     }

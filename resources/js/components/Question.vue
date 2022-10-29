@@ -12,8 +12,8 @@
             <p v-if="item['situation'] === 'recruting'">回答期限:{{item['content'].limit_answer}}</p>
             <p v-if="item['situation'] === 'voting'">ナゲット期限:{{item['content'].limit_vote}}</p>
             <p v-if="item['situation'] === 'finished' || item['situation'] === 'fast'">{{item['content'].created_at}}</p>
-            <img class="like-btn" src="/images/icon/cola.png" alt="" v-on:click='like()' v-if="user != 'undefined'">
-            <img class="like-btn" src="/images/icon/cola.png" alt="" v-if="user === 'undefined'">
+            <img class="like-btn" src="/images/icon/cola.png" alt="" v-on:click='like()' v-if="myUser != null">
+            <img class="like-btn" src="/images/icon/cola.png" alt="" v-if="myUser === null">
         </div>
     </div>
 </template>
@@ -28,9 +28,8 @@
             likeUsers: {
                 required: true
             },
-            user: {
-                type: Object,
-                required: false
+            myUser: {
+                required: true
             }
         },
         data: function() {
@@ -41,10 +40,15 @@
         methods: {
 
             isLiked: function(){
+
+                if(this.myUser === null){
+                    return;
+                }
+
                 for(let x=0; x<this.likeUsers['like'].length; x++)
                 {
 
-                    if(this.likeUsers['like'][x]["id"] == this.user.id)
+                    if(this.likeUsers['like'][x]["id"] == this.myUser.id)
                     {
                         return true;
             
@@ -56,11 +60,10 @@
             },
             like: function(){
 
-                if(this.item['content'].user_id == this.user.id){
+                if(this.item['content'].user_id == this.myUser.id){
                     return;
                 }
 
-                console.log(this.item['content']);
 
                 axios.post("/like",{
                     id: this.item['content'].id,
@@ -68,10 +71,10 @@
                 })
                 .then(function (response) {
 
-                    if(!this.likeUsers['like'].some(user => user.id == this.user.id)){
-                        this.$emit('add-question-like', this.likeUsers, this.user);
+                    if(!this.likeUsers['like'].some(user => user.id == this.myUser.id)){
+                        this.$emit('add-question-like', this.likeUsers, this.myUser);
                     }else{
-                        this.$emit('minus-question-like', this.likeUsers, this.user);
+                        this.$emit('minus-question-like', this.likeUsers, this.myUser);
                     }
 
                 }.bind(this))

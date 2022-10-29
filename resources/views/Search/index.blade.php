@@ -24,7 +24,7 @@
 
         {{$paginator->links()}}
 
-        <items-list v-if="{{!empty($keyWord)}}" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
+        <items-list v-if="{{!empty($keyWord)}}" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="like"></items-list>
 
         @foreach($users as $user)
             <p class="user-link"><a href=" {{ url('/user/' . $user->id) }} ">{{$user->name}}</a></p>

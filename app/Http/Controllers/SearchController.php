@@ -15,14 +15,6 @@ class searchController extends Controller
     {
         if(isset($_GET['keyWord']))
         {
-            if(Auth::check())
-            {
-                $Iam = Auth::user();
-            }else{
-                $Iam = "undefined";
-            }
-
-
             $keyWord = $_GET['keyWord'];
 
             if(empty($_GET['page']))
@@ -81,7 +73,6 @@ class searchController extends Controller
                 'keyWord' => $keyWord,
                 'page' => $page,
                 'likeUsersList' => $likeUsersList,
-                'Iam' => $Iam,
                 'paginator' => $paginator
             ];
         

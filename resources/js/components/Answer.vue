@@ -31,10 +31,10 @@
 
         <div class="answer-footer">
             <p>{{item['content'].created_at}}</p>
-            <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && user != 'undefined'">
-            <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && user != 'undefined'">
-            <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && user === 'undefined'">
-            <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-if="btnType === 'vote' && user === 'undefined'">
+            <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && myUser != null">
+            <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && myUser != null">
+            <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
+            <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-if="btnType === 'vote' && myUser === null">
             <button class="delete-btn" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
         </div>
     </div>
@@ -54,9 +54,8 @@
                 type: String,
                 required: true
             },
-            user: {
-                type: Object,
-                required: false
+            myUser: {
+                required: true
             }
         },
         data: function() {
@@ -69,10 +68,14 @@
         methods: {
             isLiked: function () {
 
+                if(this.myUser === null){
+                    return;
+                }
+
                 for(let x=0; x<this.likeUsers['like'].length; x++)
                 {
 
-                    if(this.likeUsers['like'][x]["id"] == this.user.id)
+                    if(this.likeUsers['like'][x]["id"] == this.myUser.id)
                     {
                         return true;
             
@@ -84,10 +87,14 @@
             },
             isVoted: function () {
 
+                if(this.myUser === null){
+                    return;
+                }
+
                 for(let x=0; x<this.likeUsers['vote'].length; x++)
                 {
 
-                    if(this.likeUsers['vote'][x]["id"] == this.user.id)
+                    if(this.likeUsers['vote'][x]["id"] == this.myUser.id)
                     {
                         return true;
             
@@ -129,7 +136,7 @@
             },
             like: function () {
 
-                if(this.item["content"].user_id == this.user.id){
+                if(this.item["content"].user_id == this.myUser.id){
                     return;
                 }
 
@@ -139,10 +146,10 @@
                 })
                 .then(function (response) {
 
-                    if(!this.likeUsers['like'].some(user => user.id == this.user.id)){
-                        this.$emit('add-answer-like', this.likeUsers, this.user);
+                    if(!this.likeUsers['like'].some(user => user.id == this.myUser.id)){
+                        this.$emit('add-answer-like', this.likeUsers, this.myUser);
                     }else{
-                        this.$emit('minus-answer-like', this.likeUsers, this.user);
+                        this.$emit('minus-answer-like', this.likeUsers, this.myUser);
                     }
 
                 }.bind(this))
@@ -151,7 +158,7 @@
             },
             vote: function () {
 
-                if(this.item["content"].user_id == this.user.id){
+                if(this.item["content"].user_id == this.myUser.id){
                     return;
                 }
 
@@ -162,15 +169,15 @@
                 .then(function (response) {
 
                     // 投票
-                    if(!this.likeUsers['vote'].some(user => user.id == this.user.id)){
-                        this.$emit('add-vote', this.likeUsers, this.user);
+                    if(!this.likeUsers['vote'].some(user => user.id == this.myUser.id)){
+                        this.$emit('add-vote', this.likeUsers, this.myUser);
                     }else{
-                        this.$emit('minus-vote', this.likeUsers, this.user);
+                        this.$emit('minus-vote', this.likeUsers, this.myUser);
                     }
 
                     // いいね
-                    if(!this.likeUsers['like'].some(user => user.id == this.user.id)){
-                        this.$emit('add-like', this.likeUsers, this.user);
+                    if(!this.likeUsers['like'].some(user => user.id == this.myUser.id)){
+                        this.$emit('add-like', this.likeUsers, this.myUser);
                     }
 
                 }.bind(this))
@@ -180,8 +187,6 @@
             deleteAnswer: function(){
                 if(window.confirm("本当に削除しますか？")){
 
-                    console.log(this.user);
-        
                     axios.post("/delete",{
                         id: this.item["content"].id,
                         itemType: "answer"

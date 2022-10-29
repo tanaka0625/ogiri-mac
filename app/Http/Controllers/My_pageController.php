@@ -41,14 +41,7 @@ class My_pageController extends Controller
             $page = 1;
         }
 
-        if(Auth::check())
-        {
-            $Iam = Auth::user();
-        }else{
-            $Iam = "undefined";
-        }
 
-        $user = User::find($id);
         $point = Functions::calculatePoint($id);
         if($user->user_point != $point["total"])
         {
@@ -131,7 +124,6 @@ class My_pageController extends Controller
             "point" => $point,
             "avatorNumber" => $avatorNumber,
             'likeUsersList' => $likeUsersList,
-            'Iam' => $Iam,
             'paginator' => $paginator
             ];
 

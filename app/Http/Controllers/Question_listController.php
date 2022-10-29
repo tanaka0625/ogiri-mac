@@ -16,13 +16,6 @@ class Question_listController extends Controller
     public function index(Request $request)
     {
 
-        if(Auth::check())
-        {
-            $Iam = Auth::user();
-        }else{
-            $Iam = "undefined";
-        }
-
         if(!empty($_GET['situation']))
         {
             $situation = $_GET['situation'];
@@ -83,7 +76,6 @@ class Question_listController extends Controller
             'situation' => $situation,
             'page' => $page,
             'likeUsersList' => $likeUsersList,
-            'Iam' => $Iam
 
         ];
 

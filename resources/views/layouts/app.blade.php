@@ -17,18 +17,13 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-
-
-    
     <title>@yield('title')/大喜利マック</title>
 </head>
 <body>
 
     <div id="app">
-        <header-component title="@yield('header-title')" :user="{{ Js::from(Auth::user()) }}"></header-component>
+        <header-component title="@yield('header-title')" :my-user="{{ Js::from(Auth::user()) }}"></header-component>
 
         <div id="container">
             <div id="content">

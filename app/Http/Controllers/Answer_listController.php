@@ -13,13 +13,6 @@ class Answer_listController extends Controller
 {
     public function index(Request $request) {
 
-        if(Auth::check())
-        {
-            $Iam = Auth::user();
-        }else{
-            $Iam = "undefined";
-        }
-
         if(!empty($_GET['order']))
         {
             $order = $_GET['order'];
@@ -79,7 +72,6 @@ class Answer_listController extends Controller
             'itemsTitle' => $itemsTitle,
             'nowPeriod' => date('Ym'),
             'likeUsers' => $likeUsers,
-            'Iam' => $Iam,
         ];
 
 

@@ -14,8 +14,6 @@ class settingController extends Controller
 
         $id = $request->id;
 
-        $Iam = User::find($id);
-
         $avators = [
             "avator",
             "burger-T-red",
@@ -31,7 +29,6 @@ class settingController extends Controller
 
         $data = [
             "id" => $id,
-            "Iam" => $Iam,
             "avators" => $avators
         ];
 

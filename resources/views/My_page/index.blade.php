@@ -10,7 +10,7 @@
 @section('content')
 
 <a class="setting-btn" href=" {{ url('/setting') }} "><button>設定</button></a>
-<user-info v-if="{{Js::from($page)}} == 1" :user="{{Js::from($Iam)}}" :point="{{Js::from($point)}}" :avator-number="{{$avatorNumber}}"></user-info>
+<user-info v-if="{{Js::from($page)}} == 1" :user="{{Js::from(Auth::user())}}" :point="{{Js::from($point)}}" :avator-number="{{$avatorNumber}}"></user-info>
 
 {{$paginator->links()}}
 
@@ -44,8 +44,8 @@
 
 </div>
 
-<items-list v-if="{{Js::from($category)}} === 'post'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}" answer-btn-type="delete"></items-list>
-<items-list v-if="{{Js::from($category)}} === 'like'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
+<items-list v-if="{{Js::from($category)}} === 'post'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="delete"></items-list>
+<items-list v-if="{{Js::from($category)}} === 'like'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="like"></items-list>
 
 {{$paginator->links()}}
 

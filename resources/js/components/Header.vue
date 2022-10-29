@@ -5,6 +5,7 @@
             <h3>{{title}}</h3>
         </div>
 
+
         <button class="menu-btn" v-if="isActive" v-on:click="active()">メニュー</button>
 
         <div class="menu" v-if="!isActive">
@@ -15,9 +16,9 @@
             <p class="link-btn"><a href="/question_list?situation=recruting">回答する</a></p>
             <p class="link-btn"><a href="/question_list?situation=voting">ナゲット</a></p>
             <p class="link-btn"><a href="/battle">ファスト</a></p>
-            <p class="link-btn" v-if="user != 'undefined'"><a href="/my_page">マイページ</a></p>
-            <p class="link-btn" v-if="user != 'undefined'"><a href="/notice">通知</a></p>
-            <p class="link-btn" v-if="user === 'undefined'"><a href="/login">ログイン</a></p>
+            <p class="link-btn" v-if="myUser != null"><a href="/my_page">マイページ</a></p>
+            <p class="link-btn" v-if="myUser != null"><a href="/notice">通知</a></p>
+            <p class="link-btn" v-if="myUser === null"><a href="/login">ログイン</a></p>
             <p class="link-btn"><a href="/ranking">ランキング</a></p>
             <p class="link-btn"><a href="/rule">ルール</a></p>
             
@@ -37,8 +38,8 @@ export default {
             type: String,
             required: true
         },
-        user: {
-            required: false,
+        myUser: {
+            required: true
         }
 
     },

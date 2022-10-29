@@ -42,7 +42,7 @@
 </div>
 
 
-<items-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
+<items-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="like"></items-list>
 
 
 {{$paginator->links()}}

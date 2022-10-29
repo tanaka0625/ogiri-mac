@@ -9,7 +9,7 @@
 
 @section('content')
 
-    <setting-page :avators="{{Js::from($avators)}}" :user="{{Js::from($Iam)}}"></setting-page>
+    <setting-page :avators="{{Js::from($avators)}}" :my-user="{{Js::from(Auth::user())}}"></setting-page>
 
 @endsection
 

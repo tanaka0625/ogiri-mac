@@ -5321,9 +5321,8 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true
     },
-    user: {
-      type: Object,
-      required: false
+    myUser: {
+      required: true
     }
   },
   data: function data() {
@@ -5335,8 +5334,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     isLiked: function isLiked() {
+      if (this.myUser === null) {
+        return;
+      }
+
       for (var x = 0; x < this.likeUsers['like'].length; x++) {
-        if (this.likeUsers['like'][x]["id"] == this.user.id) {
+        if (this.likeUsers['like'][x]["id"] == this.myUser.id) {
           return true;
         } else if (x == this.likeUsers['like'].length - 1) {
           return false;
@@ -5344,8 +5347,12 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     isVoted: function isVoted() {
+      if (this.myUser === null) {
+        return;
+      }
+
       for (var x = 0; x < this.likeUsers['vote'].length; x++) {
-        if (this.likeUsers['vote'][x]["id"] == this.user.id) {
+        if (this.likeUsers['vote'][x]["id"] == this.myUser.id) {
           return true;
         } else if (x == this.likeUsers['vote'].length - 1) {
           return false;
@@ -5374,7 +5381,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     like: function like() {
-      if (this.item["content"].user_id == this.user.id) {
+      if (this.item["content"].user_id == this.myUser.id) {
         return;
       }
 
@@ -5385,16 +5392,16 @@ __webpack_require__.r(__webpack_exports__);
         var _this = this;
 
         if (!this.likeUsers['like'].some(function (user) {
-          return user.id == _this.user.id;
+          return user.id == _this.myUser.id;
         })) {
-          this.$emit('add-answer-like', this.likeUsers, this.user);
+          this.$emit('add-answer-like', this.likeUsers, this.myUser);
         } else {
-          this.$emit('minus-answer-like', this.likeUsers, this.user);
+          this.$emit('minus-answer-like', this.likeUsers, this.myUser);
         }
       }.bind(this))["catch"](function (error) {});
     },
     vote: function vote() {
-      if (this.item["content"].user_id == this.user.id) {
+      if (this.item["content"].user_id == this.myUser.id) {
         return;
       }
 
@@ -5406,24 +5413,23 @@ __webpack_require__.r(__webpack_exports__);
 
         // 投票
         if (!this.likeUsers['vote'].some(function (user) {
-          return user.id == _this2.user.id;
+          return user.id == _this2.myUser.id;
         })) {
-          this.$emit('add-vote', this.likeUsers, this.user);
+          this.$emit('add-vote', this.likeUsers, this.myUser);
         } else {
-          this.$emit('minus-vote', this.likeUsers, this.user);
+          this.$emit('minus-vote', this.likeUsers, this.myUser);
         } // いいね
 
 
         if (!this.likeUsers['like'].some(function (user) {
-          return user.id == _this2.user.id;
+          return user.id == _this2.myUser.id;
         })) {
-          this.$emit('add-like', this.likeUsers, this.user);
+          this.$emit('add-like', this.likeUsers, this.myUser);
         }
       }.bind(this))["catch"](function (error) {});
     },
     deleteAnswer: function deleteAnswer() {
       if (window.confirm("本当に削除しますか？")) {
-        console.log(this.user);
         axios.post("/delete", {
           id: this.item["content"].id,
           itemType: "answer"
@@ -5620,14 +5626,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     title: {
       type: String,
       required: true
     },
-    user: {
-      required: false
+    myUser: {
+      required: true
     }
   },
   data: function data() {
@@ -5688,9 +5695,8 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     },
-    user: {
-      type: Object,
-      required: false
+    myUser: {
+      required: true
     },
     answerBtnType: {
       type: String,
@@ -5704,56 +5710,54 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addAnswerLike: function addAnswerLike(likeUsers, user) {
+    addAnswerLike: function addAnswerLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
-          this.likeUsersList[i]['like'].push(user);
-          console.log(this.likeUsersList[i]['like']);
+          this.likeUsersList[i]['like'].push(myUser);
           break;
         }
 
         console.log(2);
       }
     },
-    minusAnswerLike: function minusAnswerLike(likeUsers, user) {
+    minusAnswerLike: function minusAnswerLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
           this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(function (element) {
-            return element.id === user.id;
+            return element.id === myUser.id;
           }), 1);
-          console.log(this.likeUsersList[i]['like']);
           break;
         }
       }
     },
-    addVote: function addVote(likeUsers, user) {
+    addVote: function addVote(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
-          this.likeUsersList[i]['vote'].push(user);
+          this.likeUsersList[i]['vote'].push(myUser);
         }
       }
     },
-    minusVote: function minusVote(likeUsers, user) {
+    minusVote: function minusVote(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
           this.likeUsersList[i]['vote'].splice(likeUsers['vote'].findIndex(function (element) {
-            return element.id == user.id;
+            return element.id == myUser.id;
           }), 1);
         }
       }
     },
-    addQuestionLike: function addQuestionLike(likeUsers, user) {
+    addQuestionLike: function addQuestionLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
-          this.likeUsersList[i]['like'].push(user);
+          this.likeUsersList[i]['like'].push(myUser);
         }
       }
     },
-    minusQuestionLike: function minusQuestionLike(likeUsers, user) {
+    minusQuestionLike: function minusQuestionLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
           this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(function (element) {
-            return element.id == user.id;
+            return element.id == myUser.id;
           }));
         }
       }
@@ -5821,8 +5825,7 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     },
-    user: {
-      type: Object,
+    myUser: {
       required: true
     }
   },
@@ -5833,24 +5836,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addAnswerLike: function addAnswerLike(likeUsers, user) {
+    addAnswerLike: function addAnswerLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
-          this.likeUsersList[i]['like'].push(user);
-          console.log(this.likeUsersList[i]['like']);
+          this.likeUsersList[i]['like'].push(myUser);
           break;
         }
-
-        console.log(2);
       }
     },
-    minusAnswerLike: function minusAnswerLike(likeUsers, user) {
+    minusAnswerLike: function minusAnswerLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {
         if (likeUsers == this.likeUsersList[i]) {
           this.likeUsersList[i]['like'].splice(likeUsers['like'].findIndex(function (element) {
-            return element.id === user.id;
+            return element.id === myUser.id;
           }), 1);
-          console.log(this.likeUsersList[i]['like']);
           break;
         }
       }
@@ -5900,9 +5899,8 @@ __webpack_require__.r(__webpack_exports__);
     likeUsers: {
       required: true
     },
-    user: {
-      type: Object,
-      required: false
+    myUser: {
+      required: true
     }
   },
   data: function data() {
@@ -5912,8 +5910,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     isLiked: function isLiked() {
+      if (this.myUser === null) {
+        return;
+      }
+
       for (var x = 0; x < this.likeUsers['like'].length; x++) {
-        if (this.likeUsers['like'][x]["id"] == this.user.id) {
+        if (this.likeUsers['like'][x]["id"] == this.myUser.id) {
           return true;
         } else if (x == this.likeUsers['like'].length - 1) {
           return false;
@@ -5921,11 +5923,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     like: function like() {
-      if (this.item['content'].user_id == this.user.id) {
+      if (this.item['content'].user_id == this.myUser.id) {
         return;
       }
 
-      console.log(this.item['content']);
       axios.post("/like", {
         id: this.item['content'].id,
         itemType: "question"
@@ -5933,11 +5934,11 @@ __webpack_require__.r(__webpack_exports__);
         var _this = this;
 
         if (!this.likeUsers['like'].some(function (user) {
-          return user.id == _this.user.id;
+          return user.id == _this.myUser.id;
         })) {
-          this.$emit('add-question-like', this.likeUsers, this.user);
+          this.$emit('add-question-like', this.likeUsers, this.myUser);
         } else {
-          this.$emit('minus-question-like', this.likeUsers, this.user);
+          this.$emit('minus-question-like', this.likeUsers, this.myUser);
         }
       }.bind(this))["catch"](function (error) {});
     },
@@ -6169,24 +6170,23 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     },
-    user: {
-      type: Object,
+    myUser: {
       required: true
     }
   },
   data: function data() {
     return {
-      variableUser: this.user,
+      variableUser: this.myUser,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
     };
   },
   methods: {
     select: function select(avator) {
       axios.post("/avator", {
-        id: this.user.id,
+        id: this.myUser.id,
         avator: avator
       }).then(function (response) {
-        this.user.avator = avator;
+        this.myUser.avator = avator;
       }.bind(this))["catch"](function (error) {});
     }
   }
@@ -6309,7 +6309,7 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     point: {
-      type: Array,
+      type: Object,
       required: true
     },
     avatorNumber: {
@@ -6327,11 +6327,8 @@ __webpack_require__.r(__webpack_exports__);
 
       for (var i = 0; i < this.avatorCnt; i++) {
         array.push(i);
-        console.log(1);
       }
 
-      console.log(array);
-      console.log(this.point["total"]);
       return array;
     }
   }
@@ -31223,7 +31220,7 @@ var render = function () {
       _c("div", { staticClass: "answer-footer" }, [
         _c("p", [_vm._v(_vm._s(_vm.item["content"].created_at))]),
         _vm._v(" "),
-        _vm.btnType === "like" && _vm.user != "undefined"
+        _vm.btnType === "like" && _vm.myUser != null
           ? _c("img", {
               staticClass: "like-btn",
               attrs: { src: "/images/icon/frenchfry.png", alt: "" },
@@ -31235,7 +31232,7 @@ var render = function () {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.btnType === "vote" && _vm.user != "undefined"
+        _vm.btnType === "vote" && _vm.myUser != null
           ? _c("img", {
               staticClass: "vote-btn",
               attrs: { src: "/images/icon/chicken_nugget.png", alt: "" },
@@ -31247,14 +31244,14 @@ var render = function () {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.btnType === "like" && _vm.user === "undefined"
+        _vm.btnType === "like" && _vm.myUser === null
           ? _c("img", {
               staticClass: "like-btn",
               attrs: { src: "/images/icon/frenchfry.png", alt: "" },
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.btnType === "vote" && _vm.user === "undefined"
+        _vm.btnType === "vote" && _vm.myUser === null
           ? _c("img", {
               staticClass: "vote-btn",
               attrs: { src: "/images/icon/chicken_nugget.png", alt: "" },
@@ -31542,7 +31539,7 @@ var render = function () {
           _vm._v(" "),
           _vm._m(6),
           _vm._v(" "),
-          _vm.user != "undefined"
+          _vm.myUser != null
             ? _c("p", { staticClass: "link-btn" }, [
                 _c("a", { attrs: { href: "/my_page" } }, [
                   _vm._v("マイページ"),
@@ -31550,13 +31547,13 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.user != "undefined"
+          _vm.myUser != null
             ? _c("p", { staticClass: "link-btn" }, [
                 _c("a", { attrs: { href: "/notice" } }, [_vm._v("通知")]),
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.user === "undefined"
+          _vm.myUser === null
             ? _c("p", { staticClass: "link-btn" }, [
                 _c("a", { attrs: { href: "/login" } }, [_vm._v("ログイン")]),
               ])
@@ -31697,7 +31694,7 @@ var render = function () {
                 attrs: {
                   item: item,
                   "like-users": _vm.variableLikeUsersList[index],
-                  user: _vm.user,
+                  myUser: _vm.myUser,
                   "btn-type": _vm.answerBtnType,
                 },
                 on: {
@@ -31715,7 +31712,7 @@ var render = function () {
                 attrs: {
                   item: item,
                   "like-users": _vm.variableLikeUsersList[index],
-                  user: _vm.user,
+                  myUser: _vm.myUser,
                 },
                 on: {
                   "add-question-like": _vm.addQuestionLike,
@@ -31765,7 +31762,7 @@ var render = function () {
                 attrs: {
                   item: item,
                   "like-users": _vm.variableLikeUsersList[index],
-                  user: _vm.user,
+                  myUser: _vm.myUser,
                   "btn-type": "like",
                 },
                 on: {
@@ -31888,7 +31885,7 @@ var render = function () {
           ? _c("p", [_vm._v(_vm._s(_vm.item["content"].created_at))])
           : _vm._e(),
         _vm._v(" "),
-        _vm.user != "undefined"
+        _vm.myUser != null
           ? _c("img", {
               staticClass: "like-btn",
               attrs: { src: "/images/icon/cola.png", alt: "" },
@@ -31900,7 +31897,7 @@ var render = function () {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.user === "undefined"
+        _vm.myUser === null
           ? _c("img", {
               staticClass: "like-btn",
               attrs: { src: "/images/icon/cola.png", alt: "" },
@@ -32246,7 +32243,7 @@ var render = function () {
         _vm._v(" "),
         _vm._l(_vm.avators, function (avator) {
           return _c("div", { key: avator, staticClass: "avator" }, [
-            _vm.user.avator === avator
+            _vm.myUser.avator === avator
               ? _c("p", { staticClass: "msg" }, [_vm._v("選択中です")])
               : _vm._e(),
             _vm._v(" "),

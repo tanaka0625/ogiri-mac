@@ -12,7 +12,7 @@
         <div class="avators">
             <p>アバター変更</p>
             <div class="avator" v-for="avator in avators" :key="avator">
-                <p class="msg" v-if="user.avator === avator">選択中です</p>
+                <p class="msg" v-if="myUser.avator === avator">選択中です</p>
                 <img v-bind:src="'/images/' + avator + '/' + avator + '(75).png'" alt="">
                 <button class="choice-btn" v-on:click="select(avator)">選択</button>
             </div>
@@ -27,14 +27,13 @@ export default {
             type: Array,
             required: true
         },
-        user: {
-            type: Object,
+        myUser: {
             required: true
         }
     },
     data: function () {
         return {
-            variableUser: this.user,
+            variableUser: this.myUser,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         }
     },
@@ -42,12 +41,12 @@ export default {
         select: function(avator){
 
             axios.post("/avator",{
-                id: this.user.id,
+                id: this.myUser.id,
                 avator: avator
             })
             .then(function (response) {
 
-                this.user.avator = avator;
+                this.myUser.avator = avator;
 
             }.bind(this))
             .catch(function (error){

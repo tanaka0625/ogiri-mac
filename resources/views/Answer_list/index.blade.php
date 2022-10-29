@@ -38,7 +38,7 @@
         @endif
     </div>
 
-    <items-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsers)}}" :user="{{Js::from($Iam)}}" answer-btn-type="like"></items-list>
+    <items-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsers)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="like"></items-list>
 
     {{$answers->links()}}
 

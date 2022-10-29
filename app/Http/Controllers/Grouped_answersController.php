@@ -20,13 +20,6 @@ class Grouped_answersController extends Controller
     public function index($question_id)
     {
 
-        if(Auth::check())
-        {
-            $Iam = Auth::user();
-        }else{
-            $Iam = "undefined";
-        }
-
         $question = Question::find($question_id);
         $questionSituation = $question->getSituation($question_id);
 
@@ -94,7 +87,6 @@ class Grouped_answersController extends Controller
             'likeUsersList1' => $likeUsersList1,
             'likeUsersList2' => $likeUsersList2,
             'questionLikeUsersList' => $questionLikeUserList,
-            'Iam' => $Iam
         ];
 
 
