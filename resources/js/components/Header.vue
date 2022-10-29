@@ -25,7 +25,7 @@
             <p class="close" v-on:click="active()">閉じる</p>
         </div>
 
-        <p id="logined-user-cnt"></p>
+        <p id="logged-in-user-cnt">10分以内にログインしたユーザー:{{loggedInUserCnt}}人</p>
 
     </div>
 
@@ -45,14 +45,27 @@ export default {
     },
     data: function() {
         return {
-            isActive: true
+            isActive: true,
+            loggedInUserCnt: '',
         }
+    },
+    mounted: function() {
+
+        axios.post("/countLoginedUser",{
+
+        })
+        .then(function (response) {
+            this.loggedInUserCnt = response.data.loginedUserCnt;
+
+        }.bind(this))
+        .catch(function (error){
+        })
     },
     methods: {
         active: function () {
 
             this.isActive = !this.isActive;
-        }
+        },
     }
 }
 </script>

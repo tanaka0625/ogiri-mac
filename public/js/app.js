@@ -5639,8 +5639,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      isActive: true
+      isActive: true,
+      loggedInUserCnt: ''
     };
+  },
+  mounted: function mounted() {
+    axios.post("/countLoginedUser", {}).then(function (response) {
+      this.loggedInUserCnt = response.data.loginedUserCnt;
+    }.bind(this))["catch"](function (error) {});
   },
   methods: {
     active: function active() {
@@ -31578,7 +31584,11 @@ var render = function () {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _c("p", { attrs: { id: "logined-user-cnt" } }),
+    _c("p", { attrs: { id: "logged-in-user-cnt" } }, [
+      _vm._v(
+        "10分以内にログインしたユーザー:" + _vm._s(_vm.loggedInUserCnt) + "人"
+      ),
+    ]),
   ])
 }
 var staticRenderFns = [
