@@ -46,7 +46,6 @@
 
 @section('script')
     @parent
-    <script src=" {{ asset('/js/big.js') }} "></script>
 @endsection
 
 

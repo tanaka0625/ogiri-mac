@@ -1,47 +1,53 @@
 <template>
-    <div class="item answer" v-bind:class="{'liked-answer':isLiked()}">
+    <div class="enlarged-answer-container">
+        <div class="item answer enlarged-answer" v-bind:class="{'liked-answer':isLiked()}">
+            <button class="back-btn" v-on:click="back">×</button>
 
-        <p class="vote-msg" v-if="isVoted() && item['content'].kind === 1">※あなたがナゲットしました</p>
+            <p class="vote-msg" v-if="isVoted() && item['content'].kind === 1">※あなたがナゲットしました</p>
 
-        <a v-bind:href="'/grouped_answer/' + item['content'].question_id" class="question-text">{{item['question_text']}}</a>
+            <a v-bind:href="'/grouped_answer/' + item['content'].question_id" class="question-text"><h3>{{item['question_text']}}</h3></a>
 
-        <h3 class="text" v-on:click="enlargeAnswer()">{{item['content'].text}}</h3>
+                <h1 class="text">{{item['content'].text}}</h1>
 
-        <p class="info">
-            <a class="maker" v-bind:href="'/user/' + item['content'].user_id">{{item['maker']}}</a> 
-            <span class="like" v-on:click="activeLikeUsers()">{{likeUsers['like'].length}}ポテト</span> 
-            <span class="vote" v-on:click="activeVoteUsers()" v-if="item['question_situation'] == 'finished'">{{likeUsers['vote'].length}}ナゲット</span>
-            <span class="battle-vote" v-on:click="activeBattleVoteUsers()" v-if="item['question_situation'] == 'fast'">{{likeUsers['vote'].length}}シェイク</span>
-        </p>
+            <p class="info">
+                <a class="maker" v-bind:href="'/user/' + item['content'].user_id">{{item['maker']}}</a> 
+                <span class="like" v-on:click="activeLikeUsers()">{{likeUsers['like'].length}}ポテト</span> 
+                <span class="vote" v-on:click="activeVoteUsers()" v-if="item['question_situation'] == 'finished'">{{likeUsers['vote'].length}}ナゲット</span>
+                <span class="battle-vote" v-on:click="activeBattleVoteUsers()" v-if="item['question_situation'] == 'fast'">{{likeUsers['vote'].length}}シェイク</span>
+            </p>
 
-        <div class="like-users" v-if="isActiveLikeUsers">
-            <p class="users-title">ポテトしたユーザー</p>
-            <a class="like-user-name" v-for="likeUser in likeUsers['like']" :key="likeUser.id" v-bind:href="'/user/' + likeUser.id">{{likeUser.name}} </a>
-        </div>
+            <div class="like-users" v-if="isActiveLikeUsers">
+                <p class="users-title">ポテトしたユーザー</p>
+                <a class="like-user-name" v-for="likeUser in likeUsers['like']" :key="likeUser.id" v-bind:href="'/user/' + likeUser.id">{{likeUser.name}} </a>
+            </div>
 
-        <div class="vote-users" v-if="isActiveVoteUsers">
-            <p class="users-title">ナゲットしたユーザー</p>
-            <a class="vote-user-name" v-for="voteUser in likeUsers['vote']" :key="voteUser.id" v-bind:href="'/user/' + voteUser.id">{{voteUser.name}} </a>
-        </div>
+            <div class="vote-users" v-if="isActiveVoteUsers">
+                <p class="users-title">ナゲットしたユーザー</p>
+                <a class="vote-user-name" v-for="voteUser in likeUsers['vote']" :key="voteUser.id" v-bind:href="'/user/' + voteUser.id">{{voteUser.name}} </a>
+            </div>
 
-        <div class="battle-vote-users" v-if="isActiveBattleVoteUsers">
-            <p class="users-title">シェイクしたユーザー</p>
-            <a class="vote-user-name" v-for="voteUser in likeUsers['vote']" :key="voteUser.id" v-bind:href="'/user/' + voteUser.id">{{voteUser.name}} </a>
-        </div>
+            <div class="battle-vote-users" v-if="isActiveBattleVoteUsers">
+                <p class="users-title">シェイクしたユーザー</p>
+                <a class="vote-user-name" v-for="voteUser in likeUsers['vote']" :key="voteUser.id" v-bind:href="'/user/' + voteUser.id">{{voteUser.name}} </a>
+            </div>
 
-        <div class="answer-footer">
-            <p>{{item['content'].created_at}}</p>
-            <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && myUser != null">
-            <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && myUser != null">
-            <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
-            <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-if="btnType === 'vote' && myUser === null">
-            <button class="delete-btn" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
+            <div class="answer-footer">
+                <p>{{item['content'].created_at}}</p>
+                <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && myUser != null">
+                <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && myUser != null">
+                <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
+                <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-if="btnType === 'vote' && myUser === null">
+                <button class="delete-btn" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
+            </div>
         </div>
     </div>
+
 </template>
 
 <script>
+    import ClickOutside from 'vue-click-outside';
     export default {
+
         props: {
             item: {
                 type: Object,
@@ -57,6 +63,12 @@
             myUser: {
                 required: true
             }
+        },
+        mounted() {
+            window.addEventListener('mouseup', this.close);
+        },
+        beforeDestroy() {
+            window.removeEventListener('mouseup', this.close);
         },
         data: function() {
             return {
@@ -198,20 +210,65 @@
                     })
                 }
             },
-            enlargeAnswer: function() {
-                this.$emit('enlarge-answer', this.item, this.likeUsers);
+            back: function(){
+                console.log(1);
+                this.$emit('back');
             }
-        }
+        },
+        directives: {
+            ClickOutside
+        },
     }
+
+    // console.log(2);
+    // document.addEventListener('click', (e) => {
+    //     if(!e.target.closest('.enlarged-answer')) {
+    //         console.log(1);
+    //     } else {
+    //         //ここに内側をクリックしたときの処理
+    //     }
+    // })
 </script>
 
 <style scoped>
+
+    .enlarged-answer-container {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 375px;
+        height: 100%;
+        z-index: 5;
+        background-color: aliceblue;
+        background-color: rgba(255, 255, 255,0.9 )
+
+    }
+
     .answer {
         border: solid yellow 10px;
         margin-bottom: 4px;
         position: relative;
         word-break: break-all;
         background-color: white;
+        margin-top: 100px;
+        animation-name: fadein;
+        animation-duration: 1s;
+        animation-delay: 0s;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fadein {
+        from {
+            opacity: 0;
+            transform: translateY(-500px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .liked-answer {
@@ -224,9 +281,11 @@
         width: 100%;
     }
 
+
     .text {
         margin-bottom: 20px;
-        margin-top: 10px;
+        font-weight: 600;
+        text-align: center;
     }
 
     .like-btn {
@@ -261,7 +320,8 @@
     }
 
     .question-text {
-        margin: 0;
+        display: inline-block;
+        margin: 20px 0 40px 0;
         color: black;
     }
 
@@ -292,10 +352,21 @@
     .vote-msg {
         color: red;
         margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
     .maker {
         text-decoration: none;
+    }
+
+    .back-btn {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        color: aliceblue;
+        background-color: black;
     }
 
 </style>

@@ -1,13 +1,17 @@
 <template>
 
     <div class="items-list">
+
         <div v-for="(item, index) in variableItems" :key="item['key']">
             <Answer v-if="item['item_type'] === 'answer'" :item="item" :like-users="variableLikeUsersList[index]" :myUser="myUser" :btn-type="answerBtnType" v-on:add-answer-like="addAnswerLike"
-            v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote" v-on:delete-answer="deleteAnswer"></Answer>
+            v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote" v-on:delete-answer="deleteAnswer" v-on:enlarge-answer="enlargeAnswer"></Answer>
 
             <Question v-if="item['item_type'] === 'question'" :item="item" :like-users="variableLikeUsersList[index]" :myUser="myUser" v-on:add-question-like="addQuestionLike" 
             v-on:minus-question-like="minusQuestionLike"></Question>
         </div>
+
+        <enlarged-answer v-if="isActiveEnlargedAnswer" :item="enlargedAnswer" :like-users="likeUsersOfEnlargedAnswer" :btn-type="answerBtnType" :my-user="myUser" v-on:back="back()"
+        v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote" v-on:delete-answer="deleteAnswer" v-on:enlarge-answer="enlargeAnswer"></enlarged-answer>
     </div>
 
 
@@ -16,9 +20,10 @@
 <script>
     import Answer from "./Answer.vue";
     import Question from "./Question.vue";
+    import EnlargedAnswer from "./EnlargedAnswer.vue";
 
     export default {
-        components: {Answer, Question},
+        components: {Answer, Question, EnlargedAnswer},
         props: {
             items: {
                 type: Array,
@@ -39,7 +44,11 @@
         data: function() {
             return {
                 variableItems: this.items,
-                variableLikeUsersList: this.likeUsersList
+                variableLikeUsersList: this.likeUsersList,
+                isActiveEnlargedAnswer: false,
+                enlargedAnswer: 0,
+                likeUsersOfEnlargedAnswer: 0,
+
             }
         },
         methods: {
@@ -71,12 +80,20 @@
             addVote: function(likeUsers, myUser) {
 
                 for(let i=0; i<this.likeUsersList.length; i++){
-                    
+
+                    // 他に投票してたら削除
+                    for(let x=0; x<this.likeUsersList[i]['vote'].length; x++){
+                        if(this.likeUsersList[i]['vote'][x].id === this.myUser.id){
+                            this.likeUsersList[i]['vote'].splice(this.likeUsersList[i]['vote'].findIndex(element => element.id === this.myUser.id));
+                        }
+                    }
+
                     if(likeUsers == this.likeUsersList[i]){
                         
                         this.likeUsersList[i]['vote'].push(myUser);
                     }
                 }
+
             },
             minusVote: function(likeUsers, myUser) {
 
@@ -88,6 +105,8 @@
                         
                     }
                 }
+                console.log(this.likeUsersOfEnlargedAnswer);
+
             },
             addQuestionLike: function(likeUsers, myUser) {
 
@@ -118,7 +137,20 @@
                         break;
                     }
                 }
+            },
+            enlargeAnswer: function(item, likeusers){
+                this.enlargedAnswer = item;
+                this.likeUsersOfEnlargedAnswer = likeusers;
+                this.isActiveEnlargedAnswer = true;
+            },
+            back: function(e){
+                this.isActiveEnlargedAnswer = false;
+                return;
             }
         }
     }
 </script>
+
+<style scoped>
+    
+</style>

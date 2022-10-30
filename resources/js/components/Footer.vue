@@ -55,6 +55,10 @@ export default {
 </script>
 
 <style scoped>
+
+#footer {
+    width: 375px;
+}
     
 
 #footer img { 

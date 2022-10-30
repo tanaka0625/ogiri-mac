@@ -25,12 +25,11 @@
     <div id="app">
         <header-component title="@yield('header-title')" :my-user="{{ Js::from(Auth::user()) }}"></header-component>
 
-        <div id="container">
-            <div id="content">
-                @yield('content')
-            </div>
+        <div id="content">
+            @yield('content')
             <footer-component></footer-component>
         </div>
+
     </div>
 
 
