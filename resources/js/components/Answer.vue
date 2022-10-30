@@ -7,7 +7,7 @@
 
         <h3 class="text" v-on:click="enlargeAnswer()">{{item['content'].text}}</h3>
 
-        <p class="info">
+        <p class="info" v-if="item['question_situation'] != 'recruting' && item['question_situation'] != 'voting'">
             <a class="maker" v-bind:href="'/user/' + item['content'].user_id">{{item['maker']}}</a> 
             <span class="like" v-on:click="activeLikeUsers()">{{likeUsers['like'].length}}ポテト</span> 
             <span class="vote" v-on:click="activeVoteUsers()" v-if="item['question_situation'] == 'finished'">{{likeUsers['vote'].length}}ナゲット</span>
