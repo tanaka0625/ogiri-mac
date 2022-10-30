@@ -32,15 +32,6 @@
 
     </div>
 
-
-    <div id="big-item-container" class="off">
-        <div>
-            <button class='close-btn'>×</button>
-        </div>
-
-        <div id="big-item"></div>
-    </div>
-
     @section('script')
     <script src=" {{ asset('/js/count-logined-user.js') }} "></script>
     <script src=" {{ mix('/js/app.js') }} "></script>

@@ -11978,7 +11978,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#footer[data-v-61a7c374] {\r\n    width: 375px;\n}\n#footer img[data-v-61a7c374] { \r\n    width:30px;\n}\n.imgs[data-v-61a7c374] {\r\n    margin: 0 auto;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#footer[data-v-61a7c374] {\r\n    width: 100%;\n}\n#footer img[data-v-61a7c374] { \r\n    width:30px;\n}\n.imgs[data-v-61a7c374] {\r\n    margin: 0 auto;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12002,7 +12002,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.menu[data-v-1f42fb90] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    z-index: 2;\n    color: white;\n    background-color: black;\n}\n.menu a[data-v-1f42fb90] {\n    color: white;\n}\n.menu-btn[data-v-1f42fb90] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    z-index: 2;\n    background-color: black;\n    color: white;\n    height: 40px;\n    padding: 0;\n    margin: 0;\n}\n.header[data-v-1f42fb90] {\n    position: fixed;\n    left: 50%;\n    top: 0;\n    transform: translate(-50%);\n    margin: auto;\n    background-color:yellow;\n    z-index: 4;\n    width: 375px;\n}\n#title[data-v-1f42fb90] {\n    width: 84%;\n    z-index: 1;\n    margin: 0;\n}\n#title h3[data-v-1f42fb90] {\n    margin: 0;\n    word-break: break-all;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.menu[data-v-1f42fb90] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    z-index: 2;\n    color: white;\n    background-color: black;\n}\n.menu a[data-v-1f42fb90] {\n    color: white;\n}\n.menu-btn[data-v-1f42fb90] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    z-index: 2;\n    background-color: black;\n    color: white;\n    height: 40px;\n    padding: 0;\n    margin: 0;\n}\n.header[data-v-1f42fb90] {\n    position: fixed;\n    left: 50%;\n    top: 0;\n    transform: translate(-50%);\n    margin: auto;\n    background-color:yellow;\n    z-index: 4;\n    width: 100%;\n}\n#title[data-v-1f42fb90] {\n    width: 84%;\n    z-index: 1;\n    margin: 0;\n}\n#title h3[data-v-1f42fb90] {\n    margin: 0;\n    word-break: break-all;\n}\n\n/* デザインB（タブレット） */\n@media screen and (min-width: 600px) {\n.header[data-v-1f42fb90] {\n        width: 375px;\n        margin: 0 auto;\n}\n}\n\n\n/* デザインC(PC) */\n@media screen and (min-width: 1025px) {\n.header[data-v-1f42fb90] {\n        width: 375px;\n        margin: 0 auto;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

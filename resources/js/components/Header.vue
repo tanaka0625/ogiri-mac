@@ -103,7 +103,7 @@ export default {
         margin: auto;
         background-color:yellow;
         z-index: 4;
-        width: 375px;
+        width: 100%;
     }
 
     #title {
@@ -115,5 +115,24 @@ export default {
     #title h3 {
         margin: 0;
         word-break: break-all;
+    }
+
+    /* デザインB（タブレット） */
+    @media screen and (min-width: 600px) {
+
+        .header {
+            width: 375px;
+            margin: 0 auto;
+        }
+    }
+
+
+    /* デザインC(PC) */
+    @media screen and (min-width: 1025px) {
+
+        .header {
+            width: 375px;
+            margin: 0 auto;
+        }
     }
 </style>
