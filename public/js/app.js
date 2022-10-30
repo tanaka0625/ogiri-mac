@@ -5830,7 +5830,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     title: {
@@ -32179,8 +32178,6 @@ var render = function () {
           _vm._v(" "),
           _vm._m(5),
           _vm._v(" "),
-          _vm._m(6),
-          _vm._v(" "),
           _vm.myUser != null
             ? _c("p", { staticClass: "link-btn" }, [
                 _c("a", { attrs: { href: "/my_page" } }, [
@@ -32201,9 +32198,9 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(7),
+          _vm._m(6),
           _vm._v(" "),
-          _vm._m(8),
+          _vm._m(7),
           _vm._v(" "),
           _c(
             "p",
@@ -32278,14 +32275,6 @@ var staticRenderFns = [
       _c("a", { attrs: { href: "/question_list?situation=voting" } }, [
         _vm._v("ナゲット"),
       ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "link-btn" }, [
-      _c("a", { attrs: { href: "/battle" } }, [_vm._v("ファスト")]),
     ])
   },
   function () {
