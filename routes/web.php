@@ -33,9 +33,6 @@ use App\Http\Middleware\JudgeLikeMiddleware;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::group(['middleware' => ['lastLogin']], function () {
 
