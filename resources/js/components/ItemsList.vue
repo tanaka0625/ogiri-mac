@@ -143,9 +143,8 @@
                 this.likeUsersOfEnlargedAnswer = likeusers;
                 this.isActiveEnlargedAnswer = true;
             },
-            back: function(e){
+            back: function(){
                 this.isActiveEnlargedAnswer = false;
-                return;
             }
         }
     }

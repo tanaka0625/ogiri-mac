@@ -45,7 +45,6 @@
 </template>
 
 <script>
-    import ClickOutside from 'vue-click-outside';
     export default {
 
         props: {
@@ -211,23 +210,11 @@
                 }
             },
             back: function(){
-                console.log(1);
                 this.$emit('back');
             }
-        },
-        directives: {
-            ClickOutside
-        },
+        }
     }
 
-    // console.log(2);
-    // document.addEventListener('click', (e) => {
-    //     if(!e.target.closest('.enlarged-answer')) {
-    //         console.log(1);
-    //     } else {
-    //         //ここに内側をクリックしたときの処理
-    //     }
-    // })
 </script>
 
 <style scoped>
