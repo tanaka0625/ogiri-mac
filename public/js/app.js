@@ -5493,8 +5493,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
-/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5541,7 +5539,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     item: {
@@ -5679,21 +5676,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     back: function back() {
-      console.log(1);
       this.$emit('back');
     }
-  },
-  directives: {
-    ClickOutside: (vue_click_outside__WEBPACK_IMPORTED_MODULE_0___default())
   }
-}); // console.log(2);
-// document.addEventListener('click', (e) => {
-//     if(!e.target.closest('.enlarged-answer')) {
-//         console.log(1);
-//     } else {
-//         //ここに内側をクリックしたときの処理
-//     }
-// })
+});
 
 /***/ }),
 
@@ -6027,9 +6013,8 @@ __webpack_require__.r(__webpack_exports__);
       this.likeUsersOfEnlargedAnswer = likeusers;
       this.isActiveEnlargedAnswer = true;
     },
-    back: function back(e) {
+    back: function back() {
       this.isActiveEnlargedAnswer = false;
-      return;
     }
   }
 });
@@ -30273,86 +30258,6 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-click-outside/index.js":
-/*!*************************************************!*\
-  !*** ./node_modules/vue-click-outside/index.js ***!
-  \*************************************************/
-/***/ ((module, exports) => {
-
-function validate(binding) {
-  if (typeof binding.value !== 'function') {
-    console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
-    return false
-  }
-
-  return true
-}
-
-function isPopup(popupItem, elements) {
-  if (!popupItem || !elements)
-    return false
-
-  for (var i = 0, len = elements.length; i < len; i++) {
-    try {
-      if (popupItem.contains(elements[i])) {
-        return true
-      }
-      if (elements[i].contains(popupItem)) {
-        return false
-      }
-    } catch(e) {
-      return false
-    }
-  }
-
-  return false
-}
-
-function isServer(vNode) {
-  return typeof vNode.componentInstance !== 'undefined' && vNode.componentInstance.$isServer
-}
-
-exports = module.exports = {
-  bind: function (el, binding, vNode) {
-    if (!validate(binding)) return
-
-    // Define Handler and cache it on the element
-    function handler(e) {
-      if (!vNode.context) return
-
-      // some components may have related popup item, on which we shall prevent the click outside event handler.
-      var elements = e.path || (e.composedPath && e.composedPath())
-      elements && elements.length > 0 && elements.unshift(e.target)
-
-      if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
-
-      el.__vueClickOutside__.callback(e)
-    }
-
-    // add Event Listeners
-    el.__vueClickOutside__ = {
-      handler: handler,
-      callback: binding.value
-    }
-    const clickHandler = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
-    !isServer(vNode) && document.addEventListener(clickHandler, handler)
-  },
-
-  update: function (el, binding) {
-    if (validate(binding)) el.__vueClickOutside__.callback = binding.value
-  },
-
-  unbind: function (el, binding, vNode) {
-    // Remove Event Listeners
-    const clickHandler = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
-    !isServer(vNode) && el.__vueClickOutside__ && document.removeEventListener(clickHandler, el.__vueClickOutside__.handler)
-    delete el.__vueClickOutside__
-  }
-}
-
-
-/***/ }),
-
 /***/ "./resources/js/components/Answer.vue":
 /*!********************************************!*\
   !*** ./resources/js/components/Answer.vue ***!
@@ -31574,59 +31479,62 @@ var render = function () {
         [_vm._v(_vm._s(_vm.item["content"].text))]
       ),
       _vm._v(" "),
-      _c("p", { staticClass: "info" }, [
-        _c(
-          "a",
-          {
-            staticClass: "maker",
-            attrs: { href: "/user/" + _vm.item["content"].user_id },
-          },
-          [_vm._v(_vm._s(_vm.item["maker"]))]
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            staticClass: "like",
-            on: {
-              click: function ($event) {
-                return _vm.activeLikeUsers()
+      _vm.item["question_situation"] != "recruting" &&
+      _vm.item["question_situation"] != "voting"
+        ? _c("p", { staticClass: "info" }, [
+            _c(
+              "a",
+              {
+                staticClass: "maker",
+                attrs: { href: "/user/" + _vm.item["content"].user_id },
               },
-            },
-          },
-          [_vm._v(_vm._s(_vm.likeUsers["like"].length) + "ポテト")]
-        ),
-        _vm._v(" "),
-        _vm.item["question_situation"] == "finished"
-          ? _c(
+              [_vm._v(_vm._s(_vm.item["maker"]))]
+            ),
+            _vm._v(" "),
+            _c(
               "span",
               {
-                staticClass: "vote",
+                staticClass: "like",
                 on: {
                   click: function ($event) {
-                    return _vm.activeVoteUsers()
+                    return _vm.activeLikeUsers()
                   },
                 },
               },
-              [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "ナゲット")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.item["question_situation"] == "fast"
-          ? _c(
-              "span",
-              {
-                staticClass: "battle-vote",
-                on: {
-                  click: function ($event) {
-                    return _vm.activeBattleVoteUsers()
+              [_vm._v(_vm._s(_vm.likeUsers["like"].length) + "ポテト")]
+            ),
+            _vm._v(" "),
+            _vm.item["question_situation"] == "finished"
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "vote",
+                    on: {
+                      click: function ($event) {
+                        return _vm.activeVoteUsers()
+                      },
+                    },
                   },
-                },
-              },
-              [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "シェイク")]
-            )
-          : _vm._e(),
-      ]),
+                  [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "ナゲット")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.item["question_situation"] == "fast"
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "battle-vote",
+                    on: {
+                      click: function ($event) {
+                        return _vm.activeBattleVoteUsers()
+                      },
+                    },
+                  },
+                  [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "シェイク")]
+                )
+              : _vm._e(),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm.isActiveLikeUsers
         ? _c(
@@ -31865,59 +31773,62 @@ var render = function () {
           _vm._v(_vm._s(_vm.item["content"].text)),
         ]),
         _vm._v(" "),
-        _c("p", { staticClass: "info" }, [
-          _c(
-            "a",
-            {
-              staticClass: "maker",
-              attrs: { href: "/user/" + _vm.item["content"].user_id },
-            },
-            [_vm._v(_vm._s(_vm.item["maker"]))]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "like",
-              on: {
-                click: function ($event) {
-                  return _vm.activeLikeUsers()
+        _vm.item["question_situation"] != "recruting" &&
+        _vm.item["question_situation"] != "voting"
+          ? _c("p", { staticClass: "info" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "maker",
+                  attrs: { href: "/user/" + _vm.item["content"].user_id },
                 },
-              },
-            },
-            [_vm._v(_vm._s(_vm.likeUsers["like"].length) + "ポテト")]
-          ),
-          _vm._v(" "),
-          _vm.item["question_situation"] == "finished"
-            ? _c(
+                [_vm._v(_vm._s(_vm.item["maker"]))]
+              ),
+              _vm._v(" "),
+              _c(
                 "span",
                 {
-                  staticClass: "vote",
+                  staticClass: "like",
                   on: {
                     click: function ($event) {
-                      return _vm.activeVoteUsers()
+                      return _vm.activeLikeUsers()
                     },
                   },
                 },
-                [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "ナゲット")]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.item["question_situation"] == "fast"
-            ? _c(
-                "span",
-                {
-                  staticClass: "battle-vote",
-                  on: {
-                    click: function ($event) {
-                      return _vm.activeBattleVoteUsers()
+                [_vm._v(_vm._s(_vm.likeUsers["like"].length) + "ポテト")]
+              ),
+              _vm._v(" "),
+              _vm.item["question_situation"] == "finished"
+                ? _c(
+                    "span",
+                    {
+                      staticClass: "vote",
+                      on: {
+                        click: function ($event) {
+                          return _vm.activeVoteUsers()
+                        },
+                      },
                     },
-                  },
-                },
-                [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "シェイク")]
-              )
-            : _vm._e(),
-        ]),
+                    [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "ナゲット")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.item["question_situation"] == "fast"
+                ? _c(
+                    "span",
+                    {
+                      staticClass: "battle-vote",
+                      on: {
+                        click: function ($event) {
+                          return _vm.activeBattleVoteUsers()
+                        },
+                      },
+                    },
+                    [_vm._v(_vm._s(_vm.likeUsers["vote"].length) + "シェイク")]
+                  )
+                : _vm._e(),
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm.isActiveLikeUsers
           ? _c(

@@ -19,70 +19,14 @@
     display: none;
 }
 
-
-#big-item-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-#big-item {
-    width: 340px;
-    border: solid yellow 15px;
-    /* height: 500px; */
-    background-image: url('/images/icon/frenchfry.png');
-    background-color:rgba(255,255,255,0.8);
-    background-blend-mode:lighten;
-}
-
-#big-item-container .close-btn {
-    font-size: 30px;
-    position: absolute;
-    right: 0;
-}
-
-#big-item .question-text {
-    margin-top: 30px;
-    display: inline-block;
-    font-size: 19px;
-}
-
-#big-item .text-container {
-    padding: 20px;
-    text-align: center;
-
-}
-
-#big-item .img-container {
-    width: 80%;
-    margin: 0 auto;
 
 
-}
-
-#big-item .question-img {
-    width: 100%;
-    display: inline-block;
-}
-
-#big-item .text {
-    font-size: 25px;
-
-
-}
-
-#big-item p {
-    margin: 0;
-}
-
-#big-item .answer-footer {
-    margin-top: 10px;
-}
-
-#big-item a {
-    color: black;
-}
 
 /* デザインB（タブレット） */
 @media screen and (min-width: 600px) {
