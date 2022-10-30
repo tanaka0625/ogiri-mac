@@ -9,7 +9,7 @@
         <button class="menu-btn" v-if="isActive" v-on:click="active()">メニュー</button>
 
         <div class="menu" v-if="!isActive">
-            <p class="link-btn"><a href="" >トップ</a></p>
+            <p class="link-btn"><a href="http://ogiri-mac.com" >トップ</a></p>
             <p class="link-btn"><a href="/answer_list" >回答一覧</a></p>
             <p class="link-btn"><a href="/question_list" >お題一覧</a></p>
             <p class="link-btn"><a href="/search" >検索</a></p>
