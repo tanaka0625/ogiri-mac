@@ -8,7 +8,6 @@ class TopController extends Controller
 {
     public function index()
     {
-        dd(1);
         $data = [
 
         ];
