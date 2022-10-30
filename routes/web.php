@@ -32,11 +32,11 @@ use App\Http\Middleware\JudgeLikeMiddleware;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [TopController::class, 'index']);
 
 
 Route::group(['middleware' => ['lastLogin']], function () {
 
-    Route::get('http://ogiri-mac.com', [TopController::class, 'index']);
     Route::get('/rule', [RuleController::class, 'index']);
     Route::get('/answer_list', [Answer_listController::class, 'index']);
     Route::get('/question_list', [Question_listController::class, 'index']);
