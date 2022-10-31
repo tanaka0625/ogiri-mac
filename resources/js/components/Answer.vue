@@ -30,7 +30,7 @@
         </div>
 
         <div class="answer-footer">
-            <p>{{item['content'].created_at}}</p>
+            <p>{{created_at}}</p>
             <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && myUser != null">
             <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && myUser != null">
             <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
@@ -62,8 +62,23 @@
             return {
                 isActiveLikeUsers: false,
                 isActiveVoteUsers: false,
-                isActiveBattleVoteUsers: false
+                isActiveBattleVoteUsers: false,
+                created_at: '',
             }
+        },
+        mounted () {
+
+            let date = new Date(this.item["content"].created_at);
+
+            const year = date.getFullYear().toString().padStart(4, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+
+            const dateText = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            this.created_at = dateText;
         },
         methods: {
             isLiked: function () {
@@ -199,7 +214,7 @@
                 }
             },
             enlargeAnswer: function() {
-                this.$emit('enlarge-answer', this.item, this.likeUsers);
+                this.$emit('enlarge-answer', this.item, this.likeUsers, this.created_at);
             }
         }
     }

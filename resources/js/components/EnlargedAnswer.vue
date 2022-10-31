@@ -32,7 +32,7 @@
             </div>
 
             <div class="answer-footer">
-                <p>{{item['content'].created_at}}</p>
+                <p>{{created_at}}</p>
                 <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && myUser != null">
                 <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && myUser != null">
                 <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
@@ -60,6 +60,10 @@
                 required: true
             },
             myUser: {
+                required: true
+            },
+            created_at: {
+                type: String,
                 required: true
             }
         },

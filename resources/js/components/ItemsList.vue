@@ -10,7 +10,7 @@
             v-on:minus-question-like="minusQuestionLike"></Question>
         </div>
 
-        <enlarged-answer v-if="isActiveEnlargedAnswer" :item="enlargedAnswer" :like-users="likeUsersOfEnlargedAnswer" :btn-type="answerBtnType" :my-user="myUser" v-on:back="back()"
+        <enlarged-answer v-if="isActiveEnlargedAnswer" :item="enlargedAnswer" :like-users="likeUsersOfEnlargedAnswer" :btn-type="answerBtnType" :my-user="myUser" :created_at="created_atOfEnlargedAnswer" v-on:back="back()"
         v-on:add-answer-like="addAnswerLike" v-on:minus-answer-like="minusAnswerLike" v-on:add-vote="addVote" v-on:minus-vote="minusVote" v-on:delete-answer="deleteAnswer" v-on:enlarge-answer="enlargeAnswer"></enlarged-answer>
     </div>
 
@@ -48,6 +48,7 @@
                 isActiveEnlargedAnswer: false,
                 enlargedAnswer: 0,
                 likeUsersOfEnlargedAnswer: 0,
+                created_atOfEnlargedAnswer: 0
 
             }
         },
@@ -138,10 +139,11 @@
                     }
                 }
             },
-            enlargeAnswer: function(item, likeusers){
+            enlargeAnswer: function(item, likeusers, created_at){
                 this.enlargedAnswer = item;
                 this.likeUsersOfEnlargedAnswer = likeusers;
                 this.isActiveEnlargedAnswer = true;
+                this.created_atOfEnlargedAnswer = created_at;
             },
             back: function(){
                 this.isActiveEnlargedAnswer = false;

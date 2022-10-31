@@ -11,7 +11,7 @@
         <div class='question-footer'>
             <p v-if="item['situation'] === 'recruting'">回答期限:{{item['content'].limit_answer}}</p>
             <p v-if="item['situation'] === 'voting'">ナゲット期限:{{item['content'].limit_vote}}</p>
-            <p v-if="item['situation'] === 'finished' || item['situation'] === 'fast'">{{item['content'].created_at}}</p>
+            <p v-if="item['situation'] === 'finished' || item['situation'] === 'fast'">{{created_at}}</p>
             <img class="like-btn" src="/images/icon/cola.png" alt="" v-on:click='like()' v-if="myUser != null">
             <img class="like-btn" src="/images/icon/cola.png" alt="" v-if="myUser === null">
         </div>
@@ -34,8 +34,23 @@
         },
         data: function() {
             return {
-                isActiveLikeUsers: false
+                isActiveLikeUsers: false,
+                created_at: ''
             }
+        },
+        mounted () {
+
+            let date = new Date(this.item["content"].created_at);
+
+            const year = date.getFullYear().toString().padStart(4, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+
+            const dateText = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            this.created_at = dateText;
         },
         methods: {
 

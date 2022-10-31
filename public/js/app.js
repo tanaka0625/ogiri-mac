@@ -5329,8 +5329,20 @@ __webpack_require__.r(__webpack_exports__);
     return {
       isActiveLikeUsers: false,
       isActiveVoteUsers: false,
-      isActiveBattleVoteUsers: false
+      isActiveBattleVoteUsers: false,
+      created_at: ''
     };
+  },
+  mounted: function mounted() {
+    var date = new Date(this.item["content"].created_at);
+    var year = date.getFullYear().toString().padStart(4, '0');
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
+    var seconds = date.getSeconds().toString().padStart(2, '0');
+    var dateText = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    this.created_at = dateText;
   },
   methods: {
     isLiked: function isLiked() {
@@ -5439,7 +5451,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     enlargeAnswer: function enlargeAnswer() {
-      this.$emit('enlarge-answer', this.item, this.likeUsers);
+      this.$emit('enlarge-answer', this.item, this.likeUsers, this.created_at);
     }
   }
 });
@@ -5553,6 +5565,10 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     myUser: {
+      required: true
+    },
+    created_at: {
+      type: String,
       required: true
     }
   },
@@ -5925,7 +5941,8 @@ __webpack_require__.r(__webpack_exports__);
       variableLikeUsersList: this.likeUsersList,
       isActiveEnlargedAnswer: false,
       enlargedAnswer: 0,
-      likeUsersOfEnlargedAnswer: 0
+      likeUsersOfEnlargedAnswer: 0,
+      created_atOfEnlargedAnswer: 0
     };
   },
   methods: {
@@ -6007,10 +6024,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     },
-    enlargeAnswer: function enlargeAnswer(item, likeusers) {
+    enlargeAnswer: function enlargeAnswer(item, likeusers, created_at) {
       this.enlargedAnswer = item;
       this.likeUsersOfEnlargedAnswer = likeusers;
       this.isActiveEnlargedAnswer = true;
+      this.created_atOfEnlargedAnswer = created_at;
     },
     back: function back() {
       this.isActiveEnlargedAnswer = false;
@@ -6145,8 +6163,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      isActiveLikeUsers: false
+      isActiveLikeUsers: false,
+      created_at: ''
     };
+  },
+  mounted: function mounted() {
+    var date = new Date(this.item["content"].created_at);
+    var year = date.getFullYear().toString().padStart(4, '0');
+    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+    var day = date.getDate().toString().padStart(2, '0');
+    var hours = date.getHours().toString().padStart(2, '0');
+    var minutes = date.getMinutes().toString().padStart(2, '0');
+    var seconds = date.getSeconds().toString().padStart(2, '0');
+    var dateText = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    this.created_at = dateText;
   },
   methods: {
     isLiked: function isLiked() {
@@ -31611,7 +31641,7 @@ var render = function () {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "answer-footer" }, [
-        _c("p", [_vm._v(_vm._s(_vm.item["content"].created_at))]),
+        _c("p", [_vm._v(_vm._s(_vm.created_at))]),
         _vm._v(" "),
         _vm.btnType === "like" && _vm.myUser != null
           ? _c("img", {
@@ -31905,7 +31935,7 @@ var render = function () {
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "answer-footer" }, [
-          _c("p", [_vm._v(_vm._s(_vm.item["content"].created_at))]),
+          _c("p", [_vm._v(_vm._s(_vm.created_at))]),
           _vm._v(" "),
           _vm.btnType === "like" && _vm.myUser != null
             ? _c("img", {
@@ -32369,6 +32399,7 @@ var render = function () {
               "like-users": _vm.likeUsersOfEnlargedAnswer,
               "btn-type": _vm.answerBtnType,
               "my-user": _vm.myUser,
+              created_at: _vm.created_atOfEnlargedAnswer,
             },
             on: {
               back: function ($event) {
@@ -32542,7 +32573,7 @@ var render = function () {
           : _vm._e(),
         _vm._v(" "),
         _vm.item["situation"] === "finished" || _vm.item["situation"] === "fast"
-          ? _c("p", [_vm._v(_vm._s(_vm.item["content"].created_at))])
+          ? _c("p", [_vm._v(_vm._s(_vm.created_at))])
           : _vm._e(),
         _vm._v(" "),
         _vm.myUser != null
