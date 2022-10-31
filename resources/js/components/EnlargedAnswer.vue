@@ -1,7 +1,6 @@
 <template>
     <div class="enlarged-answer-container">
-        <div class="item answer enlarged-answer" v-bind:class="{'liked-answer':isLiked()}">
-            <button class="back-btn" v-on:click="back">×</button>
+        <div class="item answer enlarged-answer" v-bind:class="{'liked-answer':isLiked()}" v-click-outside="back">
 
             <p class="vote-msg" v-if="isVoted() && item['content'].kind === 1">※あなたがナゲットしました</p>
 
@@ -45,6 +44,8 @@
 </template>
 
 <script>
+    import ClickOutside from 'vue-click-outside'
+
     export default {
 
         props: {
@@ -213,9 +214,13 @@
                     })
                 }
             },
-            back: function(){
+            back: function(event){
                 this.$emit('back');
+
             }
+        },
+        directives: {
+            ClickOutside
         }
     }
 

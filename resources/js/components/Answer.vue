@@ -5,7 +5,7 @@
 
         <a v-bind:href="'/grouped_answer/' + item['content'].question_id" class="question-text">{{item['question_text']}}</a>
 
-        <h3 class="text" v-on:click="enlargeAnswer()">{{item['content'].text}}</h3>
+        <h3 class="text" v-on:click.stop="enlargeAnswer()">{{item['content'].text}}</h3>
 
         <p class="info" v-if="item['question_situation'] != 'recruting' && item['question_situation'] != 'voting'">
             <a class="maker" v-bind:href="'/user/' + item['content'].user_id">{{item['maker']}}</a> 
