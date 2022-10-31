@@ -5957,8 +5957,6 @@ __webpack_require__.r(__webpack_exports__);
           this.likeUsersList[i]['like'].push(myUser);
           break;
         }
-
-        console.log(2);
       }
     },
     minusAnswerLike: function minusAnswerLike(likeUsers, myUser) {
@@ -5997,8 +5995,6 @@ __webpack_require__.r(__webpack_exports__);
           }), 1);
         }
       }
-
-      console.log(this.likeUsersOfEnlargedAnswer);
     },
     addQuestionLike: function addQuestionLike(likeUsers, myUser) {
       for (var i = 0; i < this.likeUsersList.length; i++) {

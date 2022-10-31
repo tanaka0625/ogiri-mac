@@ -63,7 +63,6 @@
                         this.likeUsersList[i]['like'].push(myUser);
                         break;
                     }
-                    console.log(2);
                 }
             },
             minusAnswerLike: function(likeUsers, myUser) {
@@ -106,7 +105,6 @@
                         
                     }
                 }
-                console.log(this.likeUsersOfEnlargedAnswer);
 
             },
             addQuestionLike: function(likeUsers, myUser) {
