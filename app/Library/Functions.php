@@ -157,5 +157,37 @@ class Functions
 
         return $paginator;
     }
+
+    public static function makeItems($itemsIngredients)
+    {
+        $items = array();
+        for($i=0; $i<$itemsIngredients->count(); $i++)
+        {
+            if($itemsIngredients[$i] instanceof Answer)
+            {
+
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "answer",
+                    'content' => $itemsIngredients[$i],
+                    'question_text' => $itemsIngredients[$i]->getQuestionText(),
+                    'question_situation' => Question::find($itemsIngredients[$i]->question_id)->getSituation(),
+                    'maker' => $itemsIngredients[$i]->user->name
+                ];
+
+            }elseif($itemsIngredients[$i] instanceof Question)
+            {
+                $items[$i] = [
+                    'key' => $i,
+                    'item_type' => "question",
+                    'content' => $itemsIngredients[$i],
+                    'maker' => $itemsIngredients[$i]->getMaker(),
+                    'situation' => $itemsIngredients[$i]->getSituation()
+                ];
+            }
+        }
+
+        return $items;
+    }
 };
 

@@ -37,16 +37,7 @@ class Answer_listController extends Controller
         $answers = Answer::withInPeriod($period)->orderBy($order, 'desc')->paginate(30);
         $answers->appends(['order' => $order, 'period' => $period]);
 
-        $items = array();
-        for($i=0; $i<count($answers); $i++)
-        {
-            $items[$i]['key'] = $i;
-            $items[$i]['item_type'] = "answer";
-            $items[$i]['content'] = $answers[$i];
-            $items[$i]['question_text'] = $answers[$i]->getQuestionText();
-            $items[$i]['question_situation'] = Question::find($answers[$i]->question_id)->getSituation();
-            $items[$i]['maker'] = $answers[$i]->getMaker(); 
-        }
+        $items = Functions::makeItems($answers);
 
         $likeUsers = Functions::likeUsersList($answers);
 

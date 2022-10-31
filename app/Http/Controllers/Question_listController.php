@@ -55,18 +55,7 @@ class Question_listController extends Controller
 
         $questions->appends(['situation' => $situation]);
 
-
-        $items = array();
-        for($i=0; $i<$questions->count(); $i++)
-        {
-            $items[$i] = [
-                'key' => $i,
-                'item_type' => "question",
-                'content' => $questions[$i],
-                'maker' => $questions[$i]->getMaker(),
-                'situation' => $questions[$i]->getSituation()
-            ];
-        }
+        $items = Functions::makeItems($questions);
 
         $likeUsersList = Functions::likeUsersList($questions);
 

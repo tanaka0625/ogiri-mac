@@ -35,31 +35,9 @@ class Grouped_answersController extends Controller
             'situation' => $questionSituation
         ];
 
-        $items1 = array();
-        for($i=0; $i<count($entryAnswers); $i++)
-        {
-            $items1[$i] = [
-                'key' => $i,
-                'item_type' => "answer",
-                'content' => $entryAnswers[$i],
-                "question_text" => $question->text,
-                "question_situation" => $questionSituation,
-                "maker" => $entryAnswers[$i]->user->name
-            ];
-        }
-
-        $items2 = array();
-        for($i=0; $i<count($lateAnswers); $i++)
-        {
-            $items2[$i] = [
-                'key' => $i,
-                'item_type' => "answer",
-                'content' => $lateAnswers[$i],
-                "question_text" => $question->text,
-                "question_situation" => $questionSituation,
-                "maker" => $lateAnswers[$i]->user->name
-            ];
-        }
+        $questionList = Functions::makeItems(collect([$question]));
+        $items1 = Functions::makeItems($entryAnswers);
+        $items2 = Functions::makeItems($lateAnswers);
 
 
         if($questionSituation === "voting")
