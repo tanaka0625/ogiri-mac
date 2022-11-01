@@ -122,7 +122,6 @@ export default {
                     this.title = "回答受付中";
                     this.answerBtnType = "like";
 
-                    console.log(this.previousQuestion);
 
                 }else if(response.data.situation === "voting") {
 
@@ -164,7 +163,6 @@ export default {
 
                 }
 
-                // console.log(response.data);
 
 
             }.bind(this))

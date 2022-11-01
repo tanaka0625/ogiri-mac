@@ -5894,7 +5894,6 @@ __webpack_require__.r(__webpack_exports__);
           this.$set(this.previousQuestionLikeUsers, 0, response.data.previousQuestionLikeUsers[0]);
           this.title = "回答受付中";
           this.answerBtnType = "like";
-          console.log(this.previousQuestion);
         } else if (response.data.situation === "voting") {
           this.situation = response.data.situation;
 
@@ -5922,8 +5921,7 @@ __webpack_require__.r(__webpack_exports__);
           this.title = "お題待機時間";
           this.answerBtnType = "like";
           this.winnerId = response.data.winner.id;
-        } // console.log(response.data);
-
+        }
       }.bind(this))["catch"](function (error) {});
     }.bind(this), 1000);
   },
