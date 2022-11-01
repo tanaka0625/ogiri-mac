@@ -28,6 +28,7 @@ Vue.component('footer-component', require('./components/Footer.vue').default);
 Vue.component('user-info', require('./components/UserInfo.vue').default);
 Vue.component('setting-page', require('./components/Setting.vue').default);
 Vue.component('top-page', require('./components/TopPage.vue').default);
+Vue.component('fast-page', require('./components/FastPage.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

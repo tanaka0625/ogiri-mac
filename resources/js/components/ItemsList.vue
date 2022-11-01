@@ -41,6 +41,9 @@
                 required: true
             }
         },
+        mounted (){
+            // console.log(this.items[0]["content"]);
+        },
         data: function() {
             return {
                 variableItems: this.items,

@@ -54,7 +54,7 @@ class BattleController extends Controller
             $question->user_id = Auth::user()->id;
             $question->kind = 1;
             $question->limit_answer = date('Y-m-d H:i:s', strtotime('+120second'));
-            $question->limit_vote = date('Y-m-d H:i:s', strtotime('+140second'));
+            $question->limit_vote = date('Y-m-d H:i:s', strtotime('+150second'));
             $question->save();
         }
 
@@ -70,43 +70,30 @@ class BattleController extends Controller
         $answers = Answer::where("question_id", $question->id)->where("kind", 2)->oldest()->get();
         $answerCount = $answers->count();
 
-        for($i=0; $i<$answers->count(); $i++)
-        {
-            $answers[$i]->makerName = $answers[$i]->getMaker();
-        }
 
-        if($question->limit_vote <= $now && strtotime($now) < strtotime($question->limit_vote) + 60  && $answerCount > 2)
+        if($question->limit_vote < $now && strtotime($now) <= strtotime($question->limit_vote) + 60  && $answerCount > 2)
         {
             $situation = "watingQuestion";
-            $x =1;
-
 
             $answers = $answers->sortByDesc('battle_vote')->values();
-            $likeUsers = Functions::likeUsersList($answers);
 
-
-            $voteUsersArray = array();
-            for($i=0; $i<$answers->count(); $i++)
-            {
-                $voteUsersArray[] = $answers[$i]->getVoteUsers();
-            }
+            $winner = $answers[0]->user;
+            $likeUsersList = Functions::likeUsersList($answers);
 
             $data = [
-                "answers" => $answers,
-                "likeUsers" => $likeUsers,
-                
-                "question" => $question,
-                "questionMakerName" => $questionMakerName,
+                "items" => Functions::makeItems($answers),
+                "likeUsersList" => $likeUsersList,
+                "question" => Functions::makeItems(collect([$question])),
+                "questionLikeUsers" => Functions::likeUsersList(collect([$question])),
                 "situation" => $situation,
                 "now" => strtotime($now),
                 "limit_question" => strtotime($question->limit_vote) + 60,
-                "voteUsersArray" => $voteUsersArray
+                "winner" => $winner
             ];
 
-        }elseif($question->limit_vote <= $now && $answerCount > 2){
+        }elseif($question->limit_vote < $now && $answerCount > 2){
 
             $situation = "recrutingQuestion";
-            $x = 5;
 
             $answers = $answers->sortByDesc('battle_vote')->values();
             $likeUsers = Functions::likeUsersList($answers);
@@ -119,10 +106,10 @@ class BattleController extends Controller
             }
 
             $data = [
-                "answers" => $answers,
-                "likeUsers" => $likeUsers,
-                "question" => $question,
-                "questionMakerName" => $questionMakerName,
+                "items" => Functions::makeItems($answers),
+                "likeUsersList" => $likeUsers,
+                "question" => Functions::makeItems(collect([$question])),
+                "questionLikeUsers" => Functions::likeUsersList(collect([$question])),
                 "situation" => $situation,
                 "voteUsersArray" => $voteUsersArray
             ];
@@ -131,29 +118,35 @@ class BattleController extends Controller
         }elseif($now < $question->limit_answer)
         {
             $situation = "recrutingAnswer";
-            $x = 2;
+
+            $previousQuestion = Question::where("id", "<", $question->id)->where("kind", 1)->orderBy("id", "desc")->first();
+            $previousQuestionLikeUsers = Functions::likeUsersList(collect([$previousQuestion]));
+            $previousItemsIngredients = Answer::where("question_id", $previousQuestion->id)->where("kind", 2)->orderBy("battle_vote", "desc")->get();
+            $previousItems = Functions::makeItems($previousItemsIngredients);
+            $previousLikeUsersList = Functions::likeUsersList($previousQuestion->answers->sortByDesc('battle_vote')->values());
 
             $data = [
-                "question" => $question,
-                "questionMakerName" => $questionMakerName,
-                "situation" => $situation,
+                "question" => Functions::makeItems(collect([$question])),
+                "questionLikeUsers" => Functions::likeUsersList(collect([$question])),
                 "now" => strtotime($now),
-                "limit_answer" => strtotime($question->limit_answer)
+                "limit_answer" => strtotime($question->limit_answer),
+                "previousQuestion" => Functions::makeItems(collect([$previousQuestion])),
+                "previousQuestionLikeUsers" => $previousQuestionLikeUsers,
+                "previousItems" => $previousItems,
+                "previousLikeUsersList" => $previousLikeUsersList,
+                "situation" => $situation
             ];
 
         }elseif($question->limit_answer <= $now && $now <= $question->limit_vote && $answerCount > 2)
         {
             $situation = "voting";
-            $x = 3;
-
             $likeUsers = Functions::likeUsersList($answers);
 
-
             $data = [
-                "answers" => $answers,
-                "likeUsers" => $likeUsers,
-                "question" => $question,
-                "questionMakerName" => $questionMakerName,
+                "items" => Functions::makeItems($answers),
+                "likeUsersList" => $likeUsers,
+                "question" => Functions::makeItems(collect([$question])),
+                "questionLikeUsers" => Functions::likeUsersList(collect([$question])),
                 "situation" => $situation,
                 "now" => strtotime($now),
                 "limit_vote" => strtotime($question->limit_vote)
@@ -166,7 +159,6 @@ class BattleController extends Controller
             $question->save();
 
             $situation = "recrutingAnswer";
-            $x = 4;
 
             $data = [
                 "question" => $question,

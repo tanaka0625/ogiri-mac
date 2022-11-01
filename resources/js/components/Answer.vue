@@ -2,6 +2,7 @@
     <div class="item answer" v-bind:class="{'liked-answer':isLiked()}">
 
         <p class="vote-msg" v-if="isVoted() && item['content'].kind === 1">※あなたがナゲットしました</p>
+        <p class="vote-msg" v-if="isVoted() && item['content'].kind === 2">※あなたがシェイクしました</p>
 
         <a v-bind:href="'/grouped_answer/' + item['content'].question_id" class="question-text">{{item['question_text']}}</a>
 
@@ -33,6 +34,7 @@
             <p>{{created_at}}</p>
             <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-on:click="like()" v-if="btnType === 'like' && myUser != null">
             <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-on:click="vote()" v-if="btnType === 'vote' && myUser != null">
+            <img class="vote-btn" src="/images/icon/shake.png" alt="" v-on:click="battleVote()" v-if="btnType === 'fast' && myUser != null">
             <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
             <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-if="btnType === 'vote' && myUser === null">
             <button class="delete-btn" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
@@ -180,6 +182,34 @@
                 axios.post("/vote",{
                     id: this.item["content"].id,
                     itemType: "answer"
+                })
+                .then(function (response) {
+
+                    // 投票
+                    if(!this.likeUsers['vote'].some(user => user.id == this.myUser.id)){
+                        this.$emit('add-vote', this.likeUsers, this.myUser);
+                    }else{
+                        this.$emit('minus-vote', this.likeUsers, this.myUser);
+                    }
+
+                    // いいね
+                    if(!this.likeUsers['like'].some(user => user.id == this.myUser.id)){
+                        this.$emit('add-like', this.likeUsers, this.myUser);
+                    }
+
+                }.bind(this))
+                .catch(function (error){
+                })
+            },
+            battleVote: function () {
+
+                if(this.item["content"].user_id == this.myUser.id){
+                    return;
+                }
+
+                axios.post("/battle/vote",{
+                    id: this.item["content"].id,
+                    questionId: this.item["content"].question_id
                 })
                 .then(function (response) {
 

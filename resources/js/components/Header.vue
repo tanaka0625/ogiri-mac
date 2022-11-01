@@ -15,6 +15,7 @@
             <p class="link-btn"><a href="/search" >検索</a></p>
             <p class="link-btn"><a href="/question_list?situation=recruting">回答する</a></p>
             <p class="link-btn"><a href="/question_list?situation=voting">ナゲット</a></p>
+            <p class="link-btn"><a href="/battle">ファスト</a></p>
             <p class="link-btn" v-if="myUser != null"><a href="/my_page">マイページ</a></p>
             <p class="link-btn" v-if="myUser != null"><a href="/notice">通知</a></p>
             <p class="link-btn" v-if="myUser === null"><a href="/login">ログイン</a></p>

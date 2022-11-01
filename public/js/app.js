@@ -5308,6 +5308,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     item: {
@@ -5435,6 +5437,34 @@ __webpack_require__.r(__webpack_exports__);
 
         if (!this.likeUsers['like'].some(function (user) {
           return user.id == _this2.myUser.id;
+        })) {
+          this.$emit('add-like', this.likeUsers, this.myUser);
+        }
+      }.bind(this))["catch"](function (error) {});
+    },
+    battleVote: function battleVote() {
+      if (this.item["content"].user_id == this.myUser.id) {
+        return;
+      }
+
+      axios.post("/battle/vote", {
+        id: this.item["content"].id,
+        questionId: this.item["content"].question_id
+      }).then(function (response) {
+        var _this3 = this;
+
+        // 投票
+        if (!this.likeUsers['vote'].some(function (user) {
+          return user.id == _this3.myUser.id;
+        })) {
+          this.$emit('add-vote', this.likeUsers, this.myUser);
+        } else {
+          this.$emit('minus-vote', this.likeUsers, this.myUser);
+        } // いいね
+
+
+        if (!this.likeUsers['like'].some(function (user) {
+          return user.id == _this3.myUser.id;
         })) {
           this.$emit('add-like', this.likeUsers, this.myUser);
         }
@@ -5747,6 +5777,184 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FastPage.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FastPage.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ItemsList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ItemsList.vue */ "./resources/js/components/ItemsList.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    ItemsList: _ItemsList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    myUser: {
+      required: true
+    }
+  },
+  created: function created() {
+    setInterval(function () {
+      axios.post("/battle", {
+        id: 1
+      }).then(function (response) {
+        if (response.data.situation === "recrutingQuestion") {
+          this.situation = response.data.situation;
+
+          for (var i = 0; i < response.data.items.length; i++) {
+            this.$set(this.items, i, response.data.items[i]);
+            this.$set(this.likeUsersList, i, response.data.likeUsersList[i]);
+          }
+
+          this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
+          this.$set(this.question, 0, response.data.question[0]);
+          this.title = "お題募集中";
+          this.answerBtnType = "like";
+        } else if (response.data.situation === "recrutingAnswer") {
+          this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
+          this.$set(this.question, 0, response.data.question[0]);
+          this.situation = response.data.situation;
+          this.timer = response.data.limit_answer - response.data.now;
+
+          for (var _i = 0; _i < response.data.previousItems.length; _i++) {
+            this.$set(this.previousItems, _i, response.data.previousItems[_i]);
+            this.$set(this.previousLikeUsersList, _i, response.data.previousLikeUsersList[_i]);
+          }
+
+          this.$set(this.previousQuestion, 0, response.data.previousQuestion[0]);
+          this.$set(this.previousQuestionLikeUsers, 0, response.data.previousQuestionLikeUsers[0]);
+          this.title = "回答受付中";
+          this.answerBtnType = "like";
+          console.log(this.previousQuestion);
+        } else if (response.data.situation === "voting") {
+          this.situation = response.data.situation;
+
+          for (var _i2 = 0; _i2 < response.data.items.length; _i2++) {
+            this.$set(this.items, _i2, response.data.items[_i2]);
+            this.$set(this.likeUsersList, _i2, response.data.likeUsersList[_i2]);
+          }
+
+          this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
+          this.$set(this.question, 0, response.data.question[0]);
+          this.timer = response.data.limit_vote - response.data.now;
+          this.title = "投票中";
+          this.answerBtnType = "fast";
+        } else if (response.data.situation === "watingQuestion") {
+          this.situation = response.data.situation;
+
+          for (var _i3 = 0; _i3 < response.data.items.length; _i3++) {
+            this.$set(this.items, _i3, response.data.items[_i3]);
+            this.$set(this.likeUsersList, _i3, response.data.likeUsersList[_i3]);
+          }
+
+          this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
+          this.$set(this.question, 0, response.data.question[0]);
+          this.timer = response.data.limit_question - response.data.now;
+          this.title = "お題待機時間";
+          this.answerBtnType = "like";
+          this.winnerId = response.data.winner.id;
+        } // console.log(response.data);
+
+      }.bind(this))["catch"](function (error) {});
+    }.bind(this), 1000);
+  },
+  data: function data() {
+    return {
+      items: [],
+      likeUsersList: [],
+      question: [],
+      questionLikeUsers: [],
+      situation: 0,
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      timer: 0,
+      title: 0,
+      answerBtnType: 0,
+      winnerId: 0,
+      previousItems: [],
+      previousLikeUsersList: [],
+      previousQuestion: [],
+      previousQuestionLikeUsers: [],
+      isActiveRule: false
+    };
+  },
+  methods: {
+    activeRule: function activeRule() {
+      this.isActiveRule = !this.isActiveRule;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Footer.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Footer.vue?vue&type=script&lang=js& ***!
@@ -5819,6 +6027,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -5939,6 +6148,8 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true
     }
+  },
+  mounted: function mounted() {// console.log(this.items[0]["content"]);
   },
   data: function data() {
     return {
@@ -6640,6 +6851,7 @@ Vue.component('footer-component', (__webpack_require__(/*! ./components/Footer.v
 Vue.component('user-info', (__webpack_require__(/*! ./components/UserInfo.vue */ "./resources/js/components/UserInfo.vue")["default"]));
 Vue.component('setting-page', (__webpack_require__(/*! ./components/Setting.vue */ "./resources/js/components/Setting.vue")["default"]));
 Vue.component('top-page', (__webpack_require__(/*! ./components/TopPage.vue */ "./resources/js/components/TopPage.vue")["default"]));
+Vue.component('fast-page', (__webpack_require__(/*! ./components/FastPage.vue */ "./resources/js/components/FastPage.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -30530,6 +30742,45 @@ component.options.__file = "resources/js/components/ExampleComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/FastPage.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/FastPage.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _FastPage_vue_vue_type_template_id_8e988e14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FastPage.vue?vue&type=template&id=8e988e14& */ "./resources/js/components/FastPage.vue?vue&type=template&id=8e988e14&");
+/* harmony import */ var _FastPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FastPage.vue?vue&type=script&lang=js& */ "./resources/js/components/FastPage.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FastPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FastPage_vue_vue_type_template_id_8e988e14___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FastPage_vue_vue_type_template_id_8e988e14___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FastPage.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Footer.vue":
 /*!********************************************!*\
   !*** ./resources/js/components/Footer.vue ***!
@@ -31000,6 +31251,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FastPage.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/FastPage.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FastPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FastPage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FastPage.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FastPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Footer.vue?vue&type=script&lang=js&":
 /*!*********************************************************************!*\
   !*** ./resources/js/components/Footer.vue?vue&type=script&lang=js& ***!
@@ -31371,6 +31638,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FastPage.vue?vue&type=template&id=8e988e14&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/FastPage.vue?vue&type=template&id=8e988e14& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FastPage_vue_vue_type_template_id_8e988e14___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FastPage_vue_vue_type_template_id_8e988e14___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FastPage_vue_vue_type_template_id_8e988e14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FastPage.vue?vue&type=template&id=8e988e14& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FastPage.vue?vue&type=template&id=8e988e14&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&scoped=true&":
 /*!***************************************************************************************!*\
   !*** ./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&scoped=true& ***!
@@ -31567,6 +31851,12 @@ var render = function () {
           ])
         : _vm._e(),
       _vm._v(" "),
+      _vm.isVoted() && _vm.item["content"].kind === 2
+        ? _c("p", { staticClass: "vote-msg" }, [
+            _vm._v("※あなたがシェイクしました"),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "a",
         {
@@ -31744,6 +32034,18 @@ var render = function () {
               on: {
                 click: function ($event) {
                   return _vm.vote()
+                },
+              },
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.btnType === "fast" && _vm.myUser != null
+          ? _c("img", {
+              staticClass: "vote-btn",
+              attrs: { src: "/images/icon/shake.png", alt: "" },
+              on: {
+                click: function ($event) {
+                  return _vm.battleVote()
                 },
               },
             })
@@ -32130,6 +32432,206 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FastPage.vue?vue&type=template&id=8e988e14&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FastPage.vue?vue&type=template&id=8e988e14& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "button",
+        {
+          staticClass: "rule-btn",
+          on: {
+            click: function ($event) {
+              return _vm.activeRule()
+            },
+          },
+        },
+        [_vm._v("ルール")]
+      ),
+      _vm._v(" "),
+      _vm.isActiveRule
+        ? _c("p", { staticClass: "rule-msg" }, [
+            _vm._v(
+              "\n        回答時間2分→シェイク時間20秒で1位の回答を決めます。"
+            ),
+            _c("br"),
+            _vm._v(
+              "\n        1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。"
+            ),
+            _c("br"),
+            _vm._v("\n        回答は制限時間内なら何答でも出来ます。"),
+            _c("br"),
+            _vm._v(
+              "\n        時間内に3答以上回答が集まらない場合、もう一度2分間の回答時間となります。"
+            ),
+            _c("br"),
+            _vm._v(
+              "\n        シェイクが同数の場合、先に投稿された回答の勝利となります。\n        "
+            ),
+            _c(
+              "span",
+              {
+                staticClass: "rule-btn",
+                staticStyle: { color: "blue" },
+                on: {
+                  click: function ($event) {
+                    return _vm.activeRule()
+                  },
+                },
+              },
+              [_vm._v("閉じる")]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("h2", [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _vm.situation === "recrutingQuestion" || _vm.winnerId === _vm.myUser.id
+        ? _c("div", { attrs: { id: "question-form" } }, [
+            _c(
+              "form",
+              { attrs: { action: "/battle/addQuestion", method: "post" } },
+              [
+                _c("label", { attrs: { for: "text" } }, [_vm._v("お題")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  attrs: { name: "text", id: "text", cols: "30", rows: "10" },
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "kind", value: "1" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf },
+                }),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "watingQuestion" ||
+      _vm.situation === "recrutingQuestion"
+        ? _c("h1", [_vm._v("前回の結果")])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("h2", [_vm._v("お題")]),
+      _vm._v(" "),
+      _c("ItemsList", {
+        attrs: {
+          items: _vm.question,
+          likeUsersList: _vm.questionLikeUsers,
+          myUser: _vm.myUser,
+          "answer-btn-type": "like",
+        },
+      }),
+      _vm._v(" "),
+      _vm.situation != "recrutingQuestion"
+        ? _c("p", { attrs: { id: "timer" } }, [
+            _vm._v("残り" + _vm._s(_vm.timer) + "秒"),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "recrutingAnswer"
+        ? _c("div", { attrs: { id: "answer-form" } }, [
+            _c(
+              "form",
+              { attrs: { action: "/battle/addAnswer", method: "post" } },
+              [
+                _c("label", { attrs: { for: "text" } }, [_vm._v("回答")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  attrs: { name: "text", id: "text", cols: "30", rows: "10" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "kind", value: "2" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf },
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "voting" ||
+      _vm.situation === "recrutingQuestion" ||
+      _vm.situation === "watingQuestion"
+        ? _c("ItemsList", {
+            attrs: {
+              items: _vm.items,
+              likeUsersList: _vm.likeUsersList,
+              myUser: _vm.myUser,
+              answerBtnType: _vm.answerBtnType,
+            },
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "recrutingAnswer"
+        ? _c(
+            "div",
+            [
+              _c("h1", [_vm._v("前回の結果")]),
+              _vm._v(" "),
+              _c("ItemsList", {
+                attrs: {
+                  items: _vm.previousQuestion,
+                  likeUsersList: _vm.previousQuestionLikeUsers,
+                  myUser: _vm.myUser,
+                  "answer-btn-type": "like",
+                },
+              }),
+              _vm._v(" "),
+              _c("ItemsList", {
+                attrs: {
+                  items: _vm.previousItems,
+                  likeUsersList: _vm.previousLikeUsersList,
+                  myUser: _vm.myUser,
+                  answerBtnType: "like",
+                },
+              }),
+            ],
+            1
+          )
+        : _vm._e(),
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Footer.vue?vue&type=template&id=61a7c374&scoped=true& ***!
@@ -32294,6 +32796,8 @@ var render = function () {
           _vm._v(" "),
           _vm._m(5),
           _vm._v(" "),
+          _vm._m(6),
+          _vm._v(" "),
           _vm.myUser != null
             ? _c("p", { staticClass: "link-btn" }, [
                 _c("a", { attrs: { href: "/my_page" } }, [
@@ -32314,9 +32818,9 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(6),
-          _vm._v(" "),
           _vm._m(7),
+          _vm._v(" "),
+          _vm._m(8),
           _vm._v(" "),
           _c(
             "p",
@@ -32391,6 +32895,14 @@ var staticRenderFns = [
       _c("a", { attrs: { href: "/question_list?situation=voting" } }, [
         _vm._v("ナゲット"),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "link-btn" }, [
+      _c("a", { attrs: { href: "/battle" } }, [_vm._v("ファスト")]),
     ])
   },
   function () {
@@ -32836,7 +33348,7 @@ var render = function () {
             _vm._v("\n            メニューの「ファスト」から飛べます。"),
             _c("br"),
             _vm._v(
-              "\n            回答時間2分→シェイク時間20秒で1位の回答を決めます。"
+              "\n            回答時間2分→シェイク時間30秒で1位の回答を決めます。"
             ),
             _c("br"),
             _vm._v(

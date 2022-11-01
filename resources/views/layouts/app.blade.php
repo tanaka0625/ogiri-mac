@@ -33,7 +33,6 @@
     </div>
 
     @section('script')
-    <script src=" {{ asset('/js/count-logined-user.js') }} "></script>
     <script src=" {{ mix('/js/app.js') }} "></script>
     @show
 </body>
