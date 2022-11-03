@@ -15,9 +15,22 @@
 
 
         <h2>{{title}}</h2>
+        <p id="timer" v-if="situation != 'recrutingQuestion'">残り{{timer}}秒</p>
 
 
-        <div id="question-form" v-if="situation === 'recrutingQuestion' || winnerId === myUser.id">
+        <div id="question-form" v-if="situation === 'watingQuestion' && winnerId === myUser.id">
+            <form action=/battle/addQuestion  method="post">
+                <label for="text">お題</label>
+                <textarea name="text" id="text" cols="30" rows="10"></textarea>
+                <br>
+                <button type="submit">送信</button>
+                <input type="hidden" name="kind" value=1>
+                <input type="hidden" name="_token" :value="csrf">
+            </form>
+        </div>
+
+
+        <div id="question-form" v-if="situation === 'recrutingQuestion'">
             <form action=/battle/addQuestion  method="post">
                 <label for="text">お題</label>
                 <textarea name="text" id="text" cols="30" rows="10"></textarea>
@@ -29,12 +42,15 @@
             </form>
         </div>
 
+
+
         <h1 v-if="situation === 'watingQuestion' || situation === 'recrutingQuestion'">前回の結果</h1>
         <h2>お題</h2>
-        <ItemsList :items="question" :likeUsersList="questionLikeUsers" :myUser="myUser" answer-btn-type="like"></ItemsList>
+        <div id="question-container">
+            <ItemsList :items="question" :likeUsersList="questionLikeUsers" :myUser="myUser" answer-btn-type="like"></ItemsList>
+        </div>
 
 
-        <p id="timer" v-if="situation != 'recrutingQuestion'">残り{{timer}}秒</p>
 
         <div id="answer-form" v-if="situation === 'recrutingAnswer'">
             <form action=/battle/addAnswer method="post">
@@ -47,12 +63,18 @@
             </form>
         </div>
 
-        <ItemsList v-if="situation === 'voting' || situation === 'recrutingQuestion' || situation === 'watingQuestion'" :items="items" :likeUsersList="likeUsersList" :myUser="myUser" :answerBtnType="answerBtnType"></ItemsList>
+        <div id="items-container">
+            <ItemsList v-if="situation === 'voting' || situation === 'recrutingQuestion' || situation === 'watingQuestion'" :items="items" :likeUsersList="likeUsersList" :myUser="myUser" :answerBtnType="answerBtnType"></ItemsList>
+        </div>
 
         <div v-if="situation === 'recrutingAnswer'">
             <h1>前回の結果</h1>
-            <ItemsList :items="previousQuestion" :likeUsersList="previousQuestionLikeUsers" :myUser="myUser" answer-btn-type="like"></ItemsList>
-            <ItemsList :items="previousItems" :likeUsersList="previousLikeUsersList" :myUser="myUser" answerBtnType="like"></ItemsList>
+            <div id="previous-question-container">
+                <ItemsList :items="previousQuestion" :likeUsersList="previousQuestionLikeUsers" :myUser="myUser" answer-btn-type="like"></ItemsList>
+            </div>
+            <div id="previous-items-container">
+                <ItemsList :items="previousItems" :likeUsersList="previousLikeUsersList" :myUser="myUser" answerBtnType="like"></ItemsList>
+            </div>
         </div>
 
 
@@ -101,6 +123,7 @@ export default {
 
                     this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
                     this.$set(this.question, 0, response.data.question[0]);
+
 
 
                     this.situation = response.data.situation;
@@ -152,6 +175,8 @@ export default {
                         this.$set(this.likeUsersList, i, response.data.likeUsersList[i]);
 
                     }
+
+
                     this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
                     this.$set(this.question, 0, response.data.question[0]);
 
@@ -163,7 +188,8 @@ export default {
 
                 }
 
-
+                console.log(this._data);
+                
 
             }.bind(this))
             .catch(function (error){

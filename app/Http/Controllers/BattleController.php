@@ -65,7 +65,7 @@ class BattleController extends Controller
     public function makeHtml(Request $request)
     {
         $now = date("Y-m-d H:i:s");
-        $question = Question::where('kind', "1")->latest()->first();
+        $question = Question::where('kind', 1)->latest()->first();
         $questionMakerName = $question->getMaker();
         $answers = Answer::where("question_id", $question->id)->where("kind", 2)->oldest()->get();
         $answerCount = $answers->count();
@@ -91,7 +91,7 @@ class BattleController extends Controller
                 "winner" => $winner
             ];
 
-        }elseif($question->limit_vote < $now && $answerCount > 2){
+        }elseif(strtotime($question->limit_vote) < strtotime($now) && $answerCount > 2){
 
             $situation = "recrutingQuestion";
 
