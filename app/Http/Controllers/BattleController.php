@@ -119,19 +119,17 @@ class BattleController extends Controller
         {
             $situation = "recrutingAnswer";
 
-            $previousQuestion = Question::where("id", "<", $question->id)->where("kind", 1)->orderBy("id", "desc")->first();
-            $previousQuestionLikeUsers = Functions::likeUsersList(collect([$previousQuestion]));
-            $previousItemsIngredients = Answer::where("question_id", $previousQuestion->id)->where("kind", 2)->orderBy("battle_vote", "desc")->get();
+            $previousQuestionIngredients = Question::where("id", "<", $question->id)->where("kind", 1)->orderBy("id", "desc")->first();
+            $previousItemsIngredients = Answer::where("question_id", $previousQuestionIngredients->id)->where("kind", 2)->orderBy("battle_vote", "desc")->get();
+            $previousItemsIngredients->prepend($previousQuestionIngredients);
             $previousItems = Functions::makeItems($previousItemsIngredients);
-            $previousLikeUsersList = Functions::likeUsersList($previousQuestion->answers->sortByDesc('battle_vote')->values());
+            $previousLikeUsersList = Functions::likeUsersList($previousItemsIngredients);
 
             $data = [
                 "question" => Functions::makeItems(collect([$question])),
                 "questionLikeUsers" => Functions::likeUsersList(collect([$question])),
                 "now" => strtotime($now),
                 "limit_answer" => strtotime($question->limit_answer),
-                "previousQuestion" => Functions::makeItems(collect([$previousQuestion])),
-                "previousQuestionLikeUsers" => $previousQuestionLikeUsers,
                 "previousItems" => $previousItems,
                 "previousLikeUsersList" => $previousLikeUsersList,
                 "situation" => $situation

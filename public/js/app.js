@@ -5868,12 +5868,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -5889,6 +5883,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/battle", {
         id: 1
       }).then(function (response) {
+        this.question.splice(0);
+        this.questionLikeUsers.splice(0);
+        this.items.splice(0);
+        this.likeUsersList.splice(0);
+        this.previousItems.splice(0);
+        this.previousLikeUsersList.splice(0);
+
         if (response.data.situation === "recrutingQuestion") {
           this.situation = response.data.situation;
 
@@ -5902,18 +5903,16 @@ __webpack_require__.r(__webpack_exports__);
           this.title = "お題募集中";
           this.answerBtnType = "like";
         } else if (response.data.situation === "recrutingAnswer") {
-          this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
-          this.$set(this.question, 0, response.data.question[0]);
           this.situation = response.data.situation;
           this.timer = response.data.limit_answer - response.data.now;
+          this.question.push(response.data.question[0]);
+          this.questionLikeUsers.push(response.data.questionLikeUsers[0]);
 
           for (var _i = 0; _i < response.data.previousItems.length; _i++) {
             this.$set(this.previousItems, _i, response.data.previousItems[_i]);
             this.$set(this.previousLikeUsersList, _i, response.data.previousLikeUsersList[_i]);
           }
 
-          this.$set(this.previousQuestion, 0, response.data.previousQuestion[0]);
-          this.$set(this.previousQuestionLikeUsers, 0, response.data.previousQuestionLikeUsers[0]);
           this.title = "回答受付中";
           this.answerBtnType = "like";
         } else if (response.data.situation === "voting") {
@@ -5944,8 +5943,6 @@ __webpack_require__.r(__webpack_exports__);
           this.answerBtnType = "like";
           this.winnerId = response.data.winner.id;
         }
-
-        console.log(this._data);
       }.bind(this))["catch"](function (error) {});
     }.bind(this), 1000);
   },
@@ -5963,8 +5960,6 @@ __webpack_require__.r(__webpack_exports__);
       winnerId: 0,
       previousItems: [],
       previousLikeUsersList: [],
-      previousQuestion: [],
-      previousQuestionLikeUsers: [],
       isActiveRule: false
     };
   },
@@ -32470,230 +32465,211 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "rule-btn",
-        on: {
-          click: function ($event) {
-            return _vm.activeRule()
+  return _c(
+    "div",
+    [
+      _c(
+        "button",
+        {
+          staticClass: "rule-btn",
+          on: {
+            click: function ($event) {
+              return _vm.activeRule()
+            },
           },
         },
-      },
-      [_vm._v("ルール")]
-    ),
-    _vm._v(" "),
-    _vm.isActiveRule
-      ? _c("p", { staticClass: "rule-msg" }, [
-          _vm._v(
-            "\n        回答時間2分→シェイク時間20秒で1位の回答を決めます。"
-          ),
-          _c("br"),
-          _vm._v(
-            "\n        1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。"
-          ),
-          _c("br"),
-          _vm._v("\n        回答は制限時間内なら何答でも出来ます。"),
-          _c("br"),
-          _vm._v(
-            "\n        時間内に3答以上回答が集まらない場合、もう一度2分間の回答時間となります。"
-          ),
-          _c("br"),
-          _vm._v(
-            "\n        シェイクが同数の場合、先に投稿された回答の勝利となります。\n        "
-          ),
-          _c(
-            "span",
-            {
-              staticClass: "rule-btn",
-              staticStyle: { color: "blue" },
-              on: {
-                click: function ($event) {
-                  return _vm.activeRule()
+        [_vm._v("ルール")]
+      ),
+      _vm._v(" "),
+      _vm.isActiveRule
+        ? _c("p", { staticClass: "rule-msg" }, [
+            _vm._v(
+              "\n        回答時間2分→シェイク時間20秒で1位の回答を決めます。"
+            ),
+            _c("br"),
+            _vm._v(
+              "\n        1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。"
+            ),
+            _c("br"),
+            _vm._v("\n        回答は制限時間内なら何答でも出来ます。"),
+            _c("br"),
+            _vm._v(
+              "\n        時間内に3答以上回答が集まらない場合、もう一度2分間の回答時間となります。"
+            ),
+            _c("br"),
+            _vm._v(
+              "\n        シェイクが同数の場合、先に投稿された回答の勝利となります。\n        "
+            ),
+            _c(
+              "span",
+              {
+                staticClass: "rule-btn",
+                staticStyle: { color: "blue" },
+                on: {
+                  click: function ($event) {
+                    return _vm.activeRule()
+                  },
                 },
               },
-            },
-            [_vm._v("閉じる")]
-          ),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("h2", [_vm._v(_vm._s(_vm.title))]),
-    _vm._v(" "),
-    _vm.situation != "recrutingQuestion"
-      ? _c("p", { attrs: { id: "timer" } }, [
-          _vm._v("残り" + _vm._s(_vm.timer) + "秒"),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.situation === "watingQuestion" && _vm.winnerId === _vm.myUser.id
-      ? _c("div", { attrs: { id: "question-form" } }, [
-          _c(
-            "form",
-            { attrs: { action: "/battle/addQuestion", method: "post" } },
-            [
-              _c("label", { attrs: { for: "text" } }, [_vm._v("お題")]),
-              _vm._v(" "),
-              _c("textarea", {
-                attrs: { name: "text", id: "text", cols: "30", rows: "10" },
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "kind", value: "1" },
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf },
-              }),
-            ]
-          ),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.situation === "recrutingQuestion"
-      ? _c("div", { attrs: { id: "question-form" } }, [
-          _c(
-            "form",
-            { attrs: { action: "/battle/addQuestion", method: "post" } },
-            [
-              _c("label", { attrs: { for: "text" } }, [_vm._v("お題")]),
-              _vm._v(" "),
-              _c("textarea", {
-                attrs: { name: "text", id: "text", cols: "30", rows: "10" },
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "kind", value: "1" },
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf },
-              }),
-            ]
-          ),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.situation === "watingQuestion" || _vm.situation === "recrutingQuestion"
-      ? _c("h1", [_vm._v("前回の結果")])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("h2", [_vm._v("お題")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { attrs: { id: "question-container" } },
-      [
-        _c("ItemsList", {
-          attrs: {
-            items: _vm.question,
-            likeUsersList: _vm.questionLikeUsers,
-            myUser: _vm.myUser,
-            "answer-btn-type": "like",
-          },
-        }),
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm.situation === "recrutingAnswer"
-      ? _c("div", { attrs: { id: "answer-form" } }, [
-          _c(
-            "form",
-            { attrs: { action: "/battle/addAnswer", method: "post" } },
-            [
-              _c("label", { attrs: { for: "text" } }, [_vm._v("回答")]),
-              _vm._v(" "),
-              _c("textarea", {
-                attrs: { name: "text", id: "text", cols: "30", rows: "10" },
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "kind", value: "2" },
-              }),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf },
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
-            ]
-          ),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      { attrs: { id: "items-container" } },
-      [
-        _vm.situation === "voting" ||
-        _vm.situation === "recrutingQuestion" ||
-        _vm.situation === "watingQuestion"
-          ? _c("ItemsList", {
-              attrs: {
-                items: _vm.items,
-                likeUsersList: _vm.likeUsersList,
-                myUser: _vm.myUser,
-                answerBtnType: _vm.answerBtnType,
-              },
-            })
-          : _vm._e(),
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm.situation === "recrutingAnswer"
-      ? _c("div", [
-          _c("h1", [_vm._v("前回の結果")]),
-          _vm._v(" "),
-          _c(
+              [_vm._v("閉じる")]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("h2", [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _vm.situation != "recrutingQuestion"
+        ? _c("p", { attrs: { id: "timer" } }, [
+            _vm._v("残り" + _vm._s(_vm.timer) + "秒"),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "watingQuestion" && _vm.winnerId === _vm.myUser.id
+        ? _c("div", { attrs: { id: "question-form" } }, [
+            _c(
+              "form",
+              { attrs: { action: "/battle/addQuestion", method: "post" } },
+              [
+                _c("label", { attrs: { for: "text" } }, [_vm._v("お題")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  attrs: { name: "text", id: "text", cols: "30", rows: "10" },
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "kind", value: "1" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf },
+                }),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "recrutingQuestion"
+        ? _c("div", { attrs: { id: "question-form" } }, [
+            _c(
+              "form",
+              { attrs: { action: "/battle/addQuestion", method: "post" } },
+              [
+                _c("label", { attrs: { for: "text" } }, [_vm._v("お題")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  attrs: { name: "text", id: "text", cols: "30", rows: "10" },
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "kind", value: "1" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf },
+                }),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "watingQuestion" ||
+      _vm.situation === "recrutingQuestion"
+        ? _c("h1", [_vm._v("前回の結果")])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("h2", [_vm._v("お題")]),
+      _vm._v(" "),
+      _c("ItemsList", {
+        attrs: {
+          items: _vm.question,
+          "like-users-list": _vm.questionLikeUsers,
+          "my-user": _vm.myUser,
+          "answer-btn-type": "like",
+        },
+      }),
+      _vm._v(" "),
+      _vm.situation === "recrutingAnswer"
+        ? _c("div", { attrs: { id: "answer-form" } }, [
+            _c(
+              "form",
+              { attrs: { action: "/battle/addAnswer", method: "post" } },
+              [
+                _c("label", { attrs: { for: "text" } }, [_vm._v("回答")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  attrs: { name: "text", id: "text", cols: "30", rows: "10" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "kind", value: "2" },
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf },
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("button", { attrs: { type: "submit" } }, [_vm._v("送信")]),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation != "recrutingAnswer"
+        ? _c(
             "div",
-            { attrs: { id: "previous-question-container" } },
+            { attrs: { id: "items-container" } },
             [
+              _vm.situation === "voting" ||
+              _vm.situation === "recrutingQuestion" ||
+              _vm.situation === "watingQuestion"
+                ? _c("ItemsList", {
+                    attrs: {
+                      items: _vm.items,
+                      "like-users-list": _vm.likeUsersList,
+                      "my-user": _vm.myUser,
+                      "answer-btn-type": _vm.answerBtnType,
+                    },
+                  })
+                : _vm._e(),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.situation === "recrutingAnswer"
+        ? _c(
+            "div",
+            [
+              _c("h1", [_vm._v("前回の結果")]),
+              _vm._v(" "),
               _c("ItemsList", {
                 attrs: {
-                  items: _vm.previousQuestion,
-                  likeUsersList: _vm.previousQuestionLikeUsers,
-                  myUser: _vm.myUser,
+                  items: _vm.previousItems,
+                  "like-users-list": _vm.previousLikeUsersList,
+                  "my-user": _vm.myUser,
                   "answer-btn-type": "like",
                 },
               }),
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { attrs: { id: "previous-items-container" } },
-            [
-              _c("ItemsList", {
-                attrs: {
-                  items: _vm.previousItems,
-                  likeUsersList: _vm.previousLikeUsersList,
-                  myUser: _vm.myUser,
-                  answerBtnType: "like",
-                },
-              }),
-            ],
-            1
-          ),
-        ])
-      : _vm._e(),
-  ])
+          )
+        : _vm._e(),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

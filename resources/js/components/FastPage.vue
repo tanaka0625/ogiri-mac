@@ -46,10 +46,7 @@
 
         <h1 v-if="situation === 'watingQuestion' || situation === 'recrutingQuestion'">前回の結果</h1>
         <h2>お題</h2>
-        <div id="question-container">
-            <ItemsList :items="question" :likeUsersList="questionLikeUsers" :myUser="myUser" answer-btn-type="like"></ItemsList>
-        </div>
-
+        <ItemsList :items="question" :like-users-list="questionLikeUsers" :my-user="myUser" answer-btn-type="like"></ItemsList>
 
 
         <div id="answer-form" v-if="situation === 'recrutingAnswer'">
@@ -63,18 +60,15 @@
             </form>
         </div>
 
-        <div id="items-container">
-            <ItemsList v-if="situation === 'voting' || situation === 'recrutingQuestion' || situation === 'watingQuestion'" :items="items" :likeUsersList="likeUsersList" :myUser="myUser" :answerBtnType="answerBtnType"></ItemsList>
+        <div id="items-container" v-if="situation != 'recrutingAnswer'">
+            <ItemsList v-if="situation === 'voting' || situation === 'recrutingQuestion' || situation === 'watingQuestion'" :items="items" :like-users-list="likeUsersList" :my-user="myUser" :answer-btn-type="answerBtnType"></ItemsList>
         </div>
 
         <div v-if="situation === 'recrutingAnswer'">
             <h1>前回の結果</h1>
-            <div id="previous-question-container">
-                <ItemsList :items="previousQuestion" :likeUsersList="previousQuestionLikeUsers" :myUser="myUser" answer-btn-type="like"></ItemsList>
-            </div>
-            <div id="previous-items-container">
-                <ItemsList :items="previousItems" :likeUsersList="previousLikeUsersList" :myUser="myUser" answerBtnType="like"></ItemsList>
-            </div>
+
+            <ItemsList :items="previousItems" :like-users-list="previousLikeUsersList" :my-user="myUser" answer-btn-type="like"></ItemsList>
+            
         </div>
 
 
@@ -85,8 +79,6 @@
 
 <script>
 import ItemsList from './ItemsList.vue';
-
-
 export default {
     components: {ItemsList},
     props: {
@@ -97,22 +89,29 @@ export default {
     },
     created () {
         setInterval(function(){
-
             axios.post("/battle",{
                 id: 1,
             })
             .then(function (response) {
+
+                this.question.splice(0);
+                this.questionLikeUsers.splice(0);
+
+                this.items.splice(0);
+                this.likeUsersList.splice(0);
+
+                this.previousItems.splice(0);
+                this.previousLikeUsersList.splice(0);
 
                 if(response.data.situation === "recrutingQuestion") {
 
                     this.situation = response.data.situation;
 
                     for(let i=0; i<response.data.items.length; i++) {
-
                         this.$set(this.items, i, response.data.items[i]);
                         this.$set(this.likeUsersList, i, response.data.likeUsersList[i]);
-
                     }
+
                     this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
                     this.$set(this.question, 0, response.data.question[0]);
 
@@ -121,89 +120,65 @@ export default {
 
                 }else if(response.data.situation === "recrutingAnswer") {
 
-                    this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
-                    this.$set(this.question, 0, response.data.question[0]);
-
-
-
                     this.situation = response.data.situation;
                     this.timer = response.data.limit_answer - response.data.now;
 
+                    this.question.push(response.data.question[0]);
+                    this.questionLikeUsers.push(response.data.questionLikeUsers[0]);
 
                     for(let i=0; i<response.data.previousItems.length; i++) {
-
                         this.$set(this.previousItems, i, response.data.previousItems[i]);
                         this.$set(this.previousLikeUsersList, i, response.data.previousLikeUsersList[i]);
-
                     }
-
-
-                    this.$set(this.previousQuestion, 0, response.data.previousQuestion[0]);
-                    this.$set(this.previousQuestionLikeUsers, 0, response.data.previousQuestionLikeUsers[0]);
-
 
                     this.title = "回答受付中";
                     this.answerBtnType = "like";
-
 
                 }else if(response.data.situation === "voting") {
 
                     this.situation = response.data.situation;
 
                     for(let i=0; i<response.data.items.length; i++) {
-
                         this.$set(this.items, i, response.data.items[i]);
                         this.$set(this.likeUsersList, i, response.data.likeUsersList[i]);
-
                     }
+
                     this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
                     this.$set(this.question, 0, response.data.question[0]);
 
                     this.timer = response.data.limit_vote - response.data.now;
-
                     this.title = "投票中";
                     this.answerBtnType = "fast";
-
 
                 }else if(response.data.situation === "watingQuestion") {
 
                     this.situation = response.data.situation;
 
                     for(let i=0; i<response.data.items.length; i++) {
-
                         this.$set(this.items, i, response.data.items[i]);
                         this.$set(this.likeUsersList, i, response.data.likeUsersList[i]);
-
                     }
-
 
                     this.$set(this.questionLikeUsers, 0, response.data.questionLikeUsers[0]);
                     this.$set(this.question, 0, response.data.question[0]);
 
                     this.timer = response.data.limit_question - response.data.now;
-
                     this.title = "お題待機時間";
                     this.answerBtnType = "like";
                     this.winnerId = response.data.winner.id;
 
                 }
-
-                console.log(this._data);
                 
-
             }.bind(this))
             .catch(function (error){
             })
-
-
         }.bind(this), 1000)
-
     },
     data: function() {
         return {
             items: [],
             likeUsersList: [],
-            question : [],
+            question: [],
             questionLikeUsers: [],
             situation: 0,
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -213,11 +188,8 @@ export default {
             winnerId: 0,
             previousItems: [],
             previousLikeUsersList: [],
-            previousQuestion: [],
-            previousQuestionLikeUsers: [],
             isActiveRule: false
         }
-
     },
     methods: {
         activeRule: function () {
