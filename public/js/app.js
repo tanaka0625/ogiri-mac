@@ -5310,6 +5310,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     item: {
@@ -6357,6 +6361,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
 //
 //
 //
@@ -12166,7 +12174,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.answer[data-v-98a0422e] {\n    border: solid yellow 10px;\n    margin-bottom: 4px;\n    position: relative;\n    word-break: break-all;\n    background-color: white;\n}\n.liked-answer[data-v-98a0422e] {\n    border: solid red 10px;\n    margin-bottom: 4px;\n    position: relative;\n}\n.question-img[data-v-98a0422e] {\n    width: 100%;\n}\n.text[data-v-98a0422e] {\n    margin-bottom: 20px;\n    margin-top: 10px;\n}\n.like-btn[data-v-98a0422e] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.vote-btn[data-v-98a0422e] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.delete-btn[data-v-98a0422e] {\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.info[data-v-98a0422e] {\n    margin: 0;\n    width: 80%;\n}\n.answer-footer p[data-v-98a0422e] {\n    margin: 0;\n}\n.question-text[data-v-98a0422e] {\n    margin: 0;\n    color: black;\n}\n.like-users[data-v-98a0422e] {\n    width: 80%;\n}\n.like-user-name[data-v-98a0422e] {\n    text-decoration: none;\n}\n.vote-users[data-v-98a0422e] {\n    width: 80%;\n}\n.battle-vote-users[data-v-98a0422e] {\n    width: 80%;\n}\n.vote-user-name[data-v-98a0422e] {\n    text-decoration: none;\n}\n.users-title[data-v-98a0422e] {\n    margin: 0;\n}\n.vote-msg[data-v-98a0422e] {\n    color: red;\n    margin: 0;\n}\n.maker[data-v-98a0422e] {\n    text-decoration: none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.answer[data-v-98a0422e] {\n    border: solid yellow 10px;\n    margin-bottom: 4px;\n    position: relative;\n    word-break: break-all;\n    background-color: white;\n}\n.liked-answer[data-v-98a0422e] {\n    border: solid red 10px;\n    margin-bottom: 4px;\n    position: relative;\n}\n.question-img[data-v-98a0422e] {\n    width: 100%;\n}\n.text[data-v-98a0422e] {\n    margin-bottom: 20px;\n    margin-top: 10px;\n}\n.like-btn[data-v-98a0422e] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.vote-btn[data-v-98a0422e] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.delete-btn[data-v-98a0422e] {\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.info[data-v-98a0422e] {\n    margin: 0;\n    width: 80%;\n}\n.answer-footer p[data-v-98a0422e] {\n    margin: 0;\n}\n.question-text[data-v-98a0422e] {\n    margin: 0;\n    color: black;\n}\n.like-users[data-v-98a0422e] {\n    width: 80%;\n}\n.like-user-name[data-v-98a0422e] {\n    text-decoration: none;\n}\n.vote-users[data-v-98a0422e] {\n    width: 80%;\n}\n.battle-vote-users[data-v-98a0422e] {\n    width: 80%;\n}\n.vote-user-name[data-v-98a0422e] {\n    text-decoration: none;\n}\n.users-title[data-v-98a0422e] {\n    margin: 0;\n}\n.vote-msg[data-v-98a0422e] {\n    color: red;\n    margin: 0;\n}\n.maker[data-v-98a0422e] {\n    text-decoration: none;\n}\n.question-img-container[data-v-98a0422e] {\n    width: 100%;\n}\n.question-img[data-v-98a0422e] {\n    width: 100%;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12286,7 +12294,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.question[data-v-0fecee51] {\n    border: solid black 10px;\n    margin-bottom: 4px;\n    position: relative;\n    word-break: break-all;\n}\n.liked-question[data-v-0fecee51] {\n    border: solid brown 10px;\n}\n.text[data-v-0fecee51] {\n    margin-bottom: 20px;\n    margin-top: 10px;\n    color: black;\n}\n.like-btn[data-v-0fecee51] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.info[data-v-0fecee51] {\n    margin: 0;\n    width: 80%;\n}\n.question-footer p[data-v-0fecee51] {\n    margin: 0;\n}\n.question-img[data-v-0fecee51] {\n    width: 100%;\n}\n.like-users[data-v-0fecee51] {\n    width: 80%;\n}\n.like-user-name[data-v-0fecee51] {\n    text-decoration: none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.question[data-v-0fecee51] {\n    border: solid black 10px;\n    margin-bottom: 4px;\n    position: relative;\n    word-break: break-all;\n}\n.liked-question[data-v-0fecee51] {\n    border: solid brown 10px;\n}\n.text[data-v-0fecee51] {\n    margin-bottom: 20px;\n    margin-top: 10px;\n    color: black;\n}\n.like-btn[data-v-0fecee51] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.info[data-v-0fecee51] {\n    margin: 0;\n    width: 80%;\n}\n.question-footer p[data-v-0fecee51] {\n    margin: 0;\n}\n.question-img[data-v-0fecee51] {\n    width: 100%;\n}\n.like-users[data-v-0fecee51] {\n    width: 80%;\n}\n.like-user-name[data-v-0fecee51] {\n    text-decoration: none;\n}\n.question-img-container[data-v-0fecee51] {\n    width: 100%;\n}\n.question-img[data-v-0fecee51] {\n    width: 100%;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31883,6 +31891,16 @@ var render = function () {
         [_vm._v(_vm._s(_vm.item["question_text"]))]
       ),
       _vm._v(" "),
+      _c("div", { staticClass: "question-img-container" }, [
+        _c("img", {
+          staticClass: "question-img",
+          attrs: {
+            src: "/storage/question/" + _vm.item["image_name"],
+            alt: "",
+          },
+        }),
+      ]),
+      _vm._v(" "),
       _c(
         "h3",
         {
@@ -33159,6 +33177,16 @@ var render = function () {
         },
         [_c("h3", [_vm._v(_vm._s(_vm.item["content"].text))])]
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "question-img-container" }, [
+        _c("img", {
+          staticClass: "question-img",
+          attrs: {
+            src: "/storage/question/" + _vm.item["content"].image_name,
+            alt: "",
+          },
+        }),
+      ]),
       _vm._v(" "),
       _c("p", { staticClass: "info" }, [
         _vm._v("作:"),

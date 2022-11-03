@@ -6,6 +6,10 @@
 
         <a v-bind:href="'/grouped_answer/' + item['content'].question_id" class="question-text">{{item['question_text']}}</a>
 
+        <div class="question-img-container">
+            <img :src="'/storage/question/' + item['image_name']" alt="" class="question-img">
+        </div>
+
         <h3 class="text" v-on:click.stop="enlargeAnswer()">{{item['content'].text}}</h3>
 
         <p class="info" v-if="item['question_situation'] != 'recruting' && item['question_situation'] != 'voting'">
@@ -341,6 +345,14 @@
 
     .maker {
         text-decoration: none;
+    }
+
+    .question-img-container {
+        width: 100%;
+    }
+
+    .question-img {
+        width: 100%;
     }
 
 </style>

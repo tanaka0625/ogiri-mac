@@ -2,6 +2,10 @@
     <div class='item question' v-bind:class="{'liked-question':isLiked()}">
         <a v-bind:href="'/grouped_answer/' + item['content'].id" class="text"><h3>{{item['content'].text}}</h3></a>
 
+        <div class="question-img-container">
+            <img :src="'/storage/question/' + item['content'].image_name" alt="" class="question-img">
+        </div>
+
         <p class="info">作:<a v-bind:href="'/user/' + item['content'].user_id">{{item['maker']}}</a> <span class="answer-number">{{item['content'].answer_number}}回答</span> <span class="like" v-on:click="activeLikeUsers()">{{likeUsers['like'].length}}コーラ</span></p>
 
         <div class='like-users' v-if="isActiveLikeUsers">
@@ -155,6 +159,14 @@
 
     .like-user-name {
         text-decoration: none;
+    }
+
+    .question-img-container {
+        width: 100%;
+    }
+
+    .question-img {
+        width: 100%;
     }
 
 </style>

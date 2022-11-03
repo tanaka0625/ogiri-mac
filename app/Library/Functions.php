@@ -172,6 +172,7 @@ class Functions
                     'content' => $itemsIngredients[$i],
                     'question_text' => $itemsIngredients[$i]->getQuestionText(),
                     'question_situation' => Question::find($itemsIngredients[$i]->question_id)->getSituation(),
+                    'image_name' => $itemsIngredients[$i]->question->image_name,
                     'maker' => $itemsIngredients[$i]->user->name
                 ];
 
