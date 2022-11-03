@@ -6,7 +6,7 @@
 
         <a v-bind:href="'/grouped_answer/' + item['content'].question_id" class="question-text">{{item['question_text']}}</a>
 
-        <div class="question-img-container">
+        <div class="question-img-container" v-if="item['image_name'] != null">
             <img :src="'/storage/question/' + item['image_name']" alt="" class="question-img">
         </div>
 

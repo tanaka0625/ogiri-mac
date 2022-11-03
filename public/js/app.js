@@ -31891,15 +31891,17 @@ var render = function () {
         [_vm._v(_vm._s(_vm.item["question_text"]))]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "question-img-container" }, [
-        _c("img", {
-          staticClass: "question-img",
-          attrs: {
-            src: "/storage/question/" + _vm.item["image_name"],
-            alt: "",
-          },
-        }),
-      ]),
+      _vm.item["image_name"] != null
+        ? _c("div", { staticClass: "question-img-container" }, [
+            _c("img", {
+              staticClass: "question-img",
+              attrs: {
+                src: "/storage/question/" + _vm.item["image_name"],
+                alt: "",
+              },
+            }),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "h3",
@@ -33178,15 +33180,17 @@ var render = function () {
         [_c("h3", [_vm._v(_vm._s(_vm.item["content"].text))])]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "question-img-container" }, [
-        _c("img", {
-          staticClass: "question-img",
-          attrs: {
-            src: "/storage/question/" + _vm.item["content"].image_name,
-            alt: "",
-          },
-        }),
-      ]),
+      _vm.item["content"].image_name != null
+        ? _c("div", { staticClass: "question-img-container" }, [
+            _c("img", {
+              staticClass: "question-img",
+              attrs: {
+                src: "/storage/question/" + _vm.item["content"].image_name,
+                alt: "",
+              },
+            }),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("p", { staticClass: "info" }, [
         _vm._v("作:"),

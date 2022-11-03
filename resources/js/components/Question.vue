@@ -2,7 +2,7 @@
     <div class='item question' v-bind:class="{'liked-question':isLiked()}">
         <a v-bind:href="'/grouped_answer/' + item['content'].id" class="text"><h3>{{item['content'].text}}</h3></a>
 
-        <div class="question-img-container">
+        <div class="question-img-container" v-if="item['content'].image_name != null">
             <img :src="'/storage/question/' + item['content'].image_name" alt="" class="question-img">
         </div>
 
