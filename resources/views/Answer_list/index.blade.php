@@ -15,7 +15,6 @@
         <h3>{{$itemsTitle}}</h3>
     </div>
 
-    <div>test</div>
 
     <div class="btns">
         @if($period === 'all')
