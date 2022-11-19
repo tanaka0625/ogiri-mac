@@ -5586,6 +5586,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -12222,7 +12224,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.enlarged-answer-container[data-v-00c267fb] {\n    position: fixed;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 375px;\n    height: 100%;\n    z-index: 5;\n    background-color: aliceblue;\n    background-color: rgba(255, 255, 255,0.9 )\n}\n.answer[data-v-00c267fb] {\n    border: solid yellow 10px;\n    margin-bottom: 4px;\n    position: relative;\n    word-break: break-all;\n    background-color: white;\n    margin-top: 100px;\n    -webkit-animation-name: fadein-data-v-00c267fb;\n            animation-name: fadein-data-v-00c267fb;\n    -webkit-animation-duration: 1s;\n            animation-duration: 1s;\n    -webkit-animation-delay: 0s;\n            animation-delay: 0s;\n    -webkit-animation-iteration-count: 1;\n            animation-iteration-count: 1;\n    -webkit-animation-direction: normal;\n            animation-direction: normal;\n    -webkit-animation-fill-mode: forwards;\n            animation-fill-mode: forwards;\n}\n@-webkit-keyframes fadein-data-v-00c267fb {\nfrom {\n        opacity: 0;\n        transform: translateY(-500px);\n}\nto {\n        opacity: 1;\n        transform: translateY(0);\n}\n}\n@keyframes fadein-data-v-00c267fb {\nfrom {\n        opacity: 0;\n        transform: translateY(-500px);\n}\nto {\n        opacity: 1;\n        transform: translateY(0);\n}\n}\n.liked-answer[data-v-00c267fb] {\n    border: solid red 10px;\n    margin-bottom: 4px;\n    position: relative;\n}\n.question-img[data-v-00c267fb] {\n    width: 100%;\n}\n.text[data-v-00c267fb] {\n    margin-bottom: 20px;\n    font-weight: 600;\n    text-align: center;\n}\n.like-btn[data-v-00c267fb] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.vote-btn[data-v-00c267fb] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.delete-btn[data-v-00c267fb] {\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.info[data-v-00c267fb] {\n    margin: 0;\n    width: 80%;\n}\n.answer-footer p[data-v-00c267fb] {\n    margin: 0;\n}\n.question-text[data-v-00c267fb] {\n    display: inline-block;\n    margin: 20px 0 40px 0;\n    color: black;\n}\n.like-users[data-v-00c267fb] {\n    width: 80%;\n}\n.like-user-name[data-v-00c267fb] {\n    text-decoration: none;\n}\n.vote-users[data-v-00c267fb] {\n    width: 80%;\n}\n.battle-vote-users[data-v-00c267fb] {\n    width: 80%;\n}\n.vote-user-name[data-v-00c267fb] {\n    text-decoration: none;\n}\n.users-title[data-v-00c267fb] {\n    margin: 0;\n}\n.vote-msg[data-v-00c267fb] {\n    color: red;\n    margin: 0;\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n.maker[data-v-00c267fb] {\n    text-decoration: none;\n}\n.back-btn[data-v-00c267fb] {\n    position: absolute;\n    top: -10px;\n    right: -10px;\n    color: aliceblue;\n    background-color: black;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.enlarged-answer-container[data-v-00c267fb] {\n    position: fixed;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 375px;\n    height: 100%;\n    z-index: 5;\n}\n.back-ground[data-v-00c267fb] {\n    position: fixed;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    width: 375px;\n    height: 100%;\n    z-index: 6;\n    background-color: aliceblue;\n    background-color: rgba(255, 255, 255,0.9 )\n}\n.answer[data-v-00c267fb] {\n    border: solid yellow 10px;\n    margin-bottom: 4px;\n    position: relative;\n    word-break: break-all;\n    background-color: white;\n    margin-top: 100px;\n    z-index: 7;\n    -webkit-animation-name: fadein-data-v-00c267fb;\n            animation-name: fadein-data-v-00c267fb;\n    -webkit-animation-duration: 1s;\n            animation-duration: 1s;\n    -webkit-animation-delay: 0s;\n            animation-delay: 0s;\n    -webkit-animation-iteration-count: 1;\n            animation-iteration-count: 1;\n    -webkit-animation-direction: normal;\n            animation-direction: normal;\n    -webkit-animation-fill-mode: forwards;\n            animation-fill-mode: forwards;\n}\n@-webkit-keyframes fadein-data-v-00c267fb {\nfrom {\n        opacity: 0;\n        transform: translateY(-500px);\n}\nto {\n        opacity: 1;\n        transform: translateY(0);\n}\n}\n@keyframes fadein-data-v-00c267fb {\nfrom {\n        opacity: 0;\n        transform: translateY(-500px);\n}\nto {\n        opacity: 1;\n        transform: translateY(0);\n}\n}\n.liked-answer[data-v-00c267fb] {\n    border: solid red 10px;\n    margin-bottom: 4px;\n    position: relative;\n}\n.question-img[data-v-00c267fb] {\n    width: 100%;\n}\n.text[data-v-00c267fb] {\n    margin-bottom: 20px;\n    font-weight: 600;\n    text-align: center;\n}\n.like-btn[data-v-00c267fb] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.vote-btn[data-v-00c267fb] {\n    background-color: white;\n    width: 10%;\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.delete-btn[data-v-00c267fb] {\n    position: absolute;\n    right: 0%;\n    bottom: 0%;\n}\n.info[data-v-00c267fb] {\n    margin: 0;\n    width: 80%;\n}\n.answer-footer p[data-v-00c267fb] {\n    margin: 0;\n}\n.question-text[data-v-00c267fb] {\n    display: inline-block;\n    margin: 20px 0 40px 0;\n    color: black;\n}\n.like-users[data-v-00c267fb] {\n    width: 80%;\n}\n.like-user-name[data-v-00c267fb] {\n    text-decoration: none;\n}\n.vote-users[data-v-00c267fb] {\n    width: 80%;\n}\n.battle-vote-users[data-v-00c267fb] {\n    width: 80%;\n}\n.vote-user-name[data-v-00c267fb] {\n    text-decoration: none;\n}\n.users-title[data-v-00c267fb] {\n    margin: 0;\n}\n.vote-msg[data-v-00c267fb] {\n    color: red;\n    margin: 0;\n    position: absolute;\n    top: 0;\n    left: 0;\n}\n.maker[data-v-00c267fb] {\n    text-decoration: none;\n}\n.back-btn[data-v-00c267fb] {\n    position: absolute;\n    top: -10px;\n    right: -10px;\n    color: aliceblue;\n    background-color: black;\n}\n\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -32194,14 +32196,6 @@ var render = function () {
     _c(
       "div",
       {
-        directives: [
-          {
-            name: "click-outside",
-            rawName: "v-click-outside",
-            value: _vm.back,
-            expression: "back",
-          },
-        ],
         staticClass: "item answer enlarged-answer",
         class: { "liked-answer": _vm.isLiked() },
       },
@@ -32417,6 +32411,15 @@ var render = function () {
         ]),
       ]
     ),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "back-ground",
+      on: {
+        click: function ($event) {
+          return _vm.back()
+        },
+      },
+    }),
   ])
 }
 var staticRenderFns = []

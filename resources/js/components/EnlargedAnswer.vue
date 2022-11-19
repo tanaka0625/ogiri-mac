@@ -1,6 +1,6 @@
 <template>
     <div class="enlarged-answer-container">
-        <div class="item answer enlarged-answer" v-bind:class="{'liked-answer':isLiked()}" v-click-outside="back">
+        <div class="item answer enlarged-answer" v-bind:class="{'liked-answer':isLiked()}">
 
             <p class="vote-msg" v-if="isVoted() && item['content'].kind === 1">※あなたがナゲットしました</p>
 
@@ -39,12 +39,18 @@
                 <button class="delete-btn" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
             </div>
         </div>
+        <div class="back-ground" v-on:click="back()"></div>
+
     </div>
 
 </template>
 
 <script>
-    import ClickOutside from 'vue-click-outside'
+
+
+
+
+    import ClickOutside from 'vue-click-outside';
 
     export default {
 
@@ -236,9 +242,20 @@
         width: 375px;
         height: 100%;
         z-index: 5;
+
+
+    }
+
+    .back-ground {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 375px;
+        height: 100%;
+        z-index: 6;
         background-color: aliceblue;
         background-color: rgba(255, 255, 255,0.9 )
-
     }
 
     .answer {
@@ -248,6 +265,7 @@
         word-break: break-all;
         background-color: white;
         margin-top: 100px;
+        z-index: 7;
         animation-name: fadein;
         animation-duration: 1s;
         animation-delay: 0s;
@@ -364,5 +382,7 @@
         color: aliceblue;
         background-color: black;
     }
+
+ 
 
 </style>
