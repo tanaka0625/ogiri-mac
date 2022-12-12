@@ -43,6 +43,12 @@ export default {
         width: 100%;
     }
 
+    .imgs {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
     .imgs img {
         width: 30px;
     }

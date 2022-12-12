@@ -6027,8 +6027,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {},
   data: function data() {
@@ -12248,7 +12246,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#footer[data-v-61a7c374] {\r\n    width: 100%;\n}\n#footer img[data-v-61a7c374] { \r\n    width:30px;\n}\n.imgs[data-v-61a7c374] {\r\n    margin: 0 auto;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#footer[data-v-61a7c374] {\r\n    width: 100%;\n}\n#footer img[data-v-61a7c374] { \r\n    width:30px;\r\n    flex-shrink: 0;\n}\n.imgs[data-v-61a7c374] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: flex-start;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12392,7 +12390,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.avator img[data-v-4ffbace9] {\n    width: 100%;\n}\n.imgs img[data-v-4ffbace9] {\n    width: 30px;\n}\n.avator[data-v-4ffbace9] {\n    position: relative;\n}\n.avator-comment[data-v-4ffbace9] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 30%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.avator img[data-v-4ffbace9] {\n    width: 100%;\n}\n.imgs[data-v-4ffbace9] {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-start;\n}\n.imgs img[data-v-4ffbace9] {\n    width: 30px;\n}\n.avator[data-v-4ffbace9] {\n    position: relative;\n}\n.avator-comment[data-v-4ffbace9] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 30%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -32749,8 +32747,6 @@ var staticRenderFns = [
         _c("img", { attrs: { src: "/images/icon/cola.png", alt: "" } }),
         _vm._v(" "),
         _c("img", { attrs: { src: "/images/avator/avator(75).png", alt: "" } }),
-        _vm._v(" "),
-        _c("img", { attrs: { src: "/images/icon/hamburger.png", alt: "" } }),
       ]),
       _vm._v(" "),
       _c("div", [
@@ -32803,8 +32799,6 @@ var staticRenderFns = [
         _c("img", { attrs: { src: "/images/icon/cola.png", alt: "" } }),
         _vm._v(" "),
         _c("img", { attrs: { src: "/images/avator/avator(75).png", alt: "" } }),
-        _vm._v(" "),
-        _c("img", { attrs: { src: "/images/icon/hamburger.png", alt: "" } }),
       ]),
     ])
   },

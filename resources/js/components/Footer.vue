@@ -11,7 +11,6 @@
             <img src="/images/icon/frenchfry.png" alt="">
             <img src="/images/icon/cola.png" alt="">
             <img src="/images/avator/avator(75).png" alt="">
-            <img src="/images/icon/hamburger.png" alt="">
 
         </div>
 
@@ -31,7 +30,6 @@
             <img src="/images/icon/frenchfry.png" alt="">
             <img src="/images/icon/cola.png" alt="">
             <img src="/images/avator/avator(75).png" alt="">
-            <img src="/images/icon/hamburger.png" alt="">
 
         </div>
 
@@ -63,10 +61,14 @@ export default {
 
 #footer img { 
     width:30px;
+    flex-shrink: 0;
+
 }
 
 .imgs {
-    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 </style>
