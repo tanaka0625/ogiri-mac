@@ -19,23 +19,24 @@
     <div class="btns">
         @if($period === 'all')
 
-            <a href=" {{ url('/answer_list?order=' .$order. '&period=' .$nowPeriod) }} " class="period-btn"><button>月別</button></a>
+            <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=' .$order. '&period=' .$nowPeriod) }} '">月別</button>
             
         @else
             @if($period > '202110')
-                <a class="period-btn" href=" {{ url('/answer_list?order=' .$order. '&period=' .$previousPeriod) }} "><button>1月前</button></a>
+            <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=' .$order. '&period=' .$previousPeriod) }} '">1月前</button>
             @endif
-            <a class="period-btn" href=" {{ url('/answer_list?order=' .$order. '&period=' .$nowPeriod) }} "><button>今月</button></a>
+            <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=' .$order. '&period=' .$nowPeriod) }} '">今月</button>
             @if($nowPeriod != $period)
-                <a class="period-btn" href=" {{ url('/answer_list?order=' .$order. '&period=' .$nextPeriod) }} "><button>1月後</button></a>
+            <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=' .$order. '&period=' .$nextPeriod) }} '">1月後</button>
             @endif
-            <a class="period-btn" href=" {{ url('/answer_list?order=' .$order) }} "><button>全回答</button></a>
+            <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=' .$order) }} '">全回答</button>
+
         @endif
 
         @if($order === 'like')
-            <a class="order-btn" href=" {{ url('/answer_list?order=id&period=' .$period) }} "><button>新着順に並び替える</button></a>
+        <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=id&period=' .$period) }} '">新着順に並び替える</button>
         @else
-            <a class="order-btn" href=" {{ url('/answer_list?order=like&period=' .$period) }} "><button>ポテト順に並び替える</button></a>
+        <button class="btn btn-dark" onclick="location.href=' {{ url('/answer_list?order=like&period=' .$period) }} '">ポテト順に並び替える</button>
         @endif
     </div>
 
