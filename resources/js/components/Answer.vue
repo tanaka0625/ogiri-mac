@@ -41,7 +41,7 @@
             <img class="vote-btn" src="/images/icon/shake.png" alt="" v-on:click="battleVote()" v-if="btnType === 'fast' && myUser != null">
             <img class="like-btn" src="/images/icon/frenchfry.png" alt="" v-if="btnType === 'like' && myUser === null">
             <img class="vote-btn" src="/images/icon/chicken_nugget.png" alt="" v-if="btnType === 'vote' && myUser === null">
-            <button class="delete-btn" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
+            <button class="delete-btn btn btn-danger text-white" v-if="btnType === 'delete'" v-on:click="deleteAnswer()">削除</button>
         </div>
     </div>
 </template>

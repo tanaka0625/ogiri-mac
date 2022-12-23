@@ -53,7 +53,7 @@
         @if($questionSituation === "recruting" && Auth::user()->energy < 100)
         <p>お金が無いので回答できないよ💦ナゲットをすると200円貰えます</p>
         @else
-        <button type="submit">送信</button>
+        <button type="submit" class="btn btn-dark">送信</button>
         @endif
     </form>
 

@@ -21,17 +21,13 @@
     <title>@yield('title')/大喜利マック</title>
 </head>
 <body>
-
     <div id="app">
         <header-component title="@yield('header-title')" :my-user="{{ Js::from(Auth::user()) }}"></header-component>
-
         <div id="content">
             @yield('content')
             <footer-component></footer-component>
         </div>
-
     </div>
-
     @section('script')
     <script src=" {{ mix('/js/app.js') }} "></script>
     @show

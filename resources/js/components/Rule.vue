@@ -7,7 +7,7 @@
         <p>長期戦と短期戦の2種類の大喜利を遊べます。</p>
 
         <div class="rule">
-            <button class="rule-btn" v-on:click="active(0)">長期戦のルール</button>
+            <button class="rule-btn btn btn-dark" v-on:click="active(0)">長期戦のルール</button>
             <p class="rule-msg" v-if="toggleList[0]">
                 長期戦では回答期間4日間、ナゲット期間4日間の計8日間で1位の回答を決めます。<br>
                 お題は誰でも投稿できます。<br>
@@ -21,7 +21,7 @@
 
 
         <div class="rule">
-            <button class="rule-btn" v-on:click="active(1)">短期戦のルール</button>
+            <button class="rule-btn btn btn-dark" v-on:click="active(1)">短期戦のルール</button>
             <p class="rule-msg" v-if="toggleList[1]">
                 メニューの「ファスト」から飛べます。<br>
                 回答時間2分→シェイク時間30秒で1位の回答を決めます。<br>

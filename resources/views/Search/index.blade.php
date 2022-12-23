@@ -13,7 +13,7 @@
         @csrf
         <p>検索したいキーワードを入力してください(※1単語)</p>
         <input type="search" name="keyWord" placeholder="キーワードを入力">
-        <input type="submit" value="検索">
+        <button class="btn btn-dark" type="submit">検索</button>
     </form>
 
     @if(!empty($keyWord))

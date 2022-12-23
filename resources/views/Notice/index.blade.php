@@ -12,7 +12,6 @@
 @section('content')
 
     <div class="items">
-
         <notices-list :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :my-user="{{Js::from(Auth::user())}}"></notices-list>
     </div>
 

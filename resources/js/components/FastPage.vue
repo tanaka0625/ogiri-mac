@@ -3,7 +3,7 @@
     <div>
 
 
-        <button class="rule-btn" v-on:click="activeRule()">ルール</button>
+        <button class="rule-btn btn btn-dark" v-on:click="activeRule()">ルール</button>
         <p class="rule-msg" v-if="isActiveRule">
             回答時間2分→シェイク時間20秒で1位の回答を決めます。<br>
             1位になった人が次のお題を投稿します。1位になった人が60秒以内にお題を投稿しなかった場合お題を募集します。<br>
@@ -23,7 +23,7 @@
                 <label for="text">お題</label>
                 <textarea name="text" id="text" cols="30" rows="10"></textarea>
                 <br>
-                <button type="submit">送信</button>
+                <button type="submit" class="btn btn-dark">送信</button>
                 <input type="hidden" name="kind" value=1>
                 <input type="hidden" name="_token" :value="csrf">
             </form>
@@ -35,7 +35,7 @@
                 <label for="text">お題</label>
                 <textarea name="text" id="text" cols="30" rows="10"></textarea>
                 <br>
-                <button type="submit">送信</button>
+                <button type="submit" class="btn btn-dark">送信</button>
                 <input type="hidden" name="kind" value=1>
                 <input type="hidden" name="_token" :value="csrf">
 
@@ -56,7 +56,7 @@
                 <input type="hidden" name='kind' value=2>
                 <input type="hidden" name="_token" :value="csrf">
                 <br>
-                <button type="submit">送信</button>
+                <button type="submit" class="btn btn-dark">送信</button>
             </form>
         </div>
 

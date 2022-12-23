@@ -9,7 +9,7 @@
 
         <p>大喜利をいっぱいして、デブにしてあげよう！</p>
 
-        <div class="imgs">
+        <div class="imgs align-items-center">
             <img src="/images/icon/hamburger.png" alt="">
             <img src="/images/icon/chicken_nugget.png" alt="">
             <img src="/images/icon/frenchfry.png" alt="">

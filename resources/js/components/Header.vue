@@ -1,34 +1,29 @@
 <template>
-    
     <div class="header">
         <div id="title">
             <h3>{{title}}</h3>
         </div>
-
-
-        <button class="menu-btn" v-if="isActive" v-on:click="active()">メニュー</button>
-
-        <div class="menu" v-if="!isActive">
-            <p class="link-btn"><a href="/" >トップ</a></p>
-            <p class="link-btn"><a href="/answer_list" >回答一覧</a></p>
-            <p class="link-btn"><a href="/question_list" >お題一覧</a></p>
-            <p class="link-btn"><a href="/search" >検索</a></p>
-            <p class="link-btn"><a href="/question_list?situation=recruting">回答する</a></p>
-            <p class="link-btn"><a href="/question_list?situation=voting">ナゲット</a></p>
-            <p class="link-btn"><a href="/battle">ファスト</a></p>
-            <p class="link-btn" v-if="myUser != null"><a href="/my_page">マイページ</a></p>
-            <p class="link-btn" v-if="myUser != null"><a href="/notice">通知</a></p>
-            <p class="link-btn" v-if="myUser === null"><a href="/login">ログイン</a></p>
-            <p class="link-btn"><a href="/ranking">ランキング</a></p>
-            <p class="link-btn"><a href="/rule">ルール</a></p>
-            
-            <p class="close" v-on:click="active()">閉じる</p>
+        <div class="menu dropdown">
+            <button class="btn btn-dark dropdown-toggle"  id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                メニュー
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item link-primary" href="/">トップ</a></li>
+                <li><a class="dropdown-item link-primary" href="/answer_list">回答一覧</a></li>
+                <li><a class="dropdown-item link-primary" href="/question_list">お題一覧</a></li>
+                <li><a class="dropdown-item link-primary" href="/search">検索</a></li>
+                <li><a class="dropdown-item link-primary" href="/question_list?situation=recruting">回答する</a></li>
+                <li><a class="dropdown-item link-primary" href="/question_list?situation=voting">ナゲット</a></li>
+                <li><a class="dropdown-item link-primary" href="/battle">ファスト</a></li>
+                <li v-if="myUser != null"><a class="dropdown-item link-primary" href="/my_page">マイページ</a></li>
+                <li v-if="myUser != null"><a class="dropdown-item link-primary" href="/notice">通知</a></li>
+                <li v-if="myUser === null"><a class="dropdown-item link-primary" href="/login">ログイン</a></li>
+                <li><a class="dropdown-item link-primary" href="/ranking">ランキング</a></li>
+                <li><a class="dropdown-item link-primary" href="/rule">ルール</a></li>
+            </ul>
         </div>
-
         <p id="logged-in-user-cnt">10分以内にログインしたユーザー:{{loggedInUserCnt}}人</p>
-
     </div>
-
 </template>
 
 <script>
@@ -45,7 +40,6 @@ export default {
     },
     data: function() {
         return {
-            isActive: true,
             loggedInUserCnt: '',
         }
     },
@@ -60,12 +54,6 @@ export default {
         }.bind(this))
         .catch(function (error){
         })
-    },
-    methods: {
-        active: function () {
-
-            this.isActive = !this.isActive;
-        },
     }
 }
 </script>
@@ -76,24 +64,6 @@ export default {
         top: 0;
         right: 0;
         z-index: 2;
-        color: white;
-        background-color: black;
-    }
-    .menu a {
-        color: white;
-    }
-
-    .menu-btn {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 2;
-        background-color: black;
-        color: white;
-        height: 40px;
-        padding: 0;
-        margin: 0;
-
     }
 
     .header {
@@ -103,7 +73,7 @@ export default {
         transform: translate(-50%);
         margin: auto;
         background-color:yellow;
-        z-index: 4;
+        z-index: 1;
         width: 100%;
     }
 

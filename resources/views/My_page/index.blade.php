@@ -9,7 +9,7 @@
 
 @section('content')
 
-<a class="setting-btn" href=" {{ url('/setting') }} "><button>設定</button></a>
+<button class="btn btn-dark" onclick="location.href=' {{ url('/setting') }} '">設定</button>
 <user-info v-if="{{Js::from($page)}} == 1" :user="{{Js::from(Auth::user())}}" :point="{{Js::from($point)}}" :avator-number="{{$avatorNumber}}"></user-info>
 
 {{$paginator->links()}}
@@ -29,19 +29,17 @@
 
 
 <div class="btns">
-
     @if($order === 'like')
-        <a class="order-btn" href=" {{ url('my_page?category=' .$category. '&order=created_at') }} "><button>新着順に並び替える</button></a>
-        @else
-        <a class="order-btn" href=" {{ url('my_page?category=' .$category. '&order=like') }} "><button>いいね順に並び替える</button></a>
+        <button class="btn btn-dark" onclick="location.href=' {{ url('my_page?category=' .$category. '&order=created_at') }} '">新着順に並び替える</button>
+    @else
+        <button class="btn btn-dark" onclick="location.href=' {{ url('my_page?category=' .$category. '&order=like') }} '">いいねに並び替える</button>
     @endif
 
     @if($category === 'post')
-        <a href=" {{ url('/my_page?category=like&order=' .$order) }} " class="category-btn"><button>いいね</button></a>
+        <button class="btn btn-dark" onclick="location.href=' {{ url('/my_page?category=like&order=' .$order) }} '">いいね</button>
     @elseif($category === 'like')
-        <a href=" {{ url('/my_page?category=post&order=' .$order) }} " class="category-btn"><button>投稿</button></a>
+        <button class="btn btn-dark" onclick="location.href=' {{ url('/my_page?category=post&order=' .$order) }} '">投稿</button>
     @endif
-
 </div>
 
 <items-list v-if="{{Js::from($category)}} === 'post'" :items="{{Js::from($items)}}" :like-users-list="{{Js::from($likeUsersList)}}" :my-user="{{Js::from(Auth::user())}}" answer-btn-type="delete"></items-list>

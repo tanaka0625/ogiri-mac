@@ -27,10 +27,10 @@
 @section('content')
 
 <div class="situation-btns">
-    <a href=" {{ url('/question_list?situation=recruting') }} " class="situation-btn"><button>募集中</button></a>
-    <a href=" {{ url('/question_list?situation=voting') }} " class="situation-btn"><button>ナゲット</button></a>
-    <a href=" {{ url('/question_list?situation=finished') }} " class="situation-btn"><button>過去お題</button></a>
-    <a href=" {{ url('/question_list?situation=fast') }} " class="situation-btn"><button>ファスト</button></a>
+    <button class="btn btn-dark" onclick="location.href=' {{ url('/question_list?situation=recruting') }} '">募集中</button>
+    <button class="btn btn-dark" onclick="location.href=' {{ url('/question_list?situation=voting') }} '">ナゲット</button>
+    <button class="btn btn-dark" onclick="location.href=' {{ url('/question_list?situation=finished') }} '">過去お題</button>
+    <button class="btn btn-dark" onclick="location.href=' {{ url('/question_list?situation=fast') }} '">ファスト</button>
 </div>
 
 @if(Auth::user())
@@ -53,7 +53,7 @@
         <textarea name="text" id="text" cols="30" rows="10"></textarea>
         <br>
         <input id="image" type="file" name="image">
-        <button type="submit">送信</button>
+        <button type="submit" class="btn btn-dark">送信</button>
         <input type="hidden" name="kind" value="0">
     </form>
 </div>
